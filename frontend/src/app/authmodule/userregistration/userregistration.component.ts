@@ -20,7 +20,9 @@ export class UserregistrationComponent {
   constructor(private authService: AuthService, private router: Router) {
     this.userRegistrationForm = new FormGroup({
       userName: new FormControl('',[Validators.required]),
+
       email: new FormControl('',[Validators.required,Validators.email]),
+
       password: new FormControl('',[Validators.required]), 
       confirmPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
       role:new FormControl('user')
@@ -83,8 +85,10 @@ return (control: AbstractControl): ValidationErrors | null => {
 
   onSubmit() {
     this.authService.pushUser(this.userRegistrationForm.value)
+
   }
   getControl(controlName:string){
     return this.userRegistrationForm.get(controlName);
+
   }
 }
