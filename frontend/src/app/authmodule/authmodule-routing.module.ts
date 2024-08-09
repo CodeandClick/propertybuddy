@@ -5,6 +5,7 @@ import { MasterComponent } from './master/master.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { UserregistrationComponent } from './userregistration/userregistration.component';
 import { AgentregistrationComponent } from './agentregistration/agentregistration.component';
+import { UserRegistration1Component } from './user-registration-1/user-registration-1.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path:'agentregistration',
         component:AgentregistrationComponent
+      },
+      {
+        path:'userregistration1',
+        component:UserRegistration1Component
       }
     ]
   }
