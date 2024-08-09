@@ -7,7 +7,7 @@ const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
 
 const userRegister = async (req, res) => {
-    console.log('sinann')
+    console.log("changed")
     try {
         console.log(req.body)
         const { email, password, userName,role, confirmPassword } = req.body;
@@ -15,8 +15,8 @@ const userRegister = async (req, res) => {
 
         // Validation checks
         let errors = [];
-
-  
+        
+        
 
          if (!userName || validator.isEmpty(userName.trim())) {
             errors.push('user name is required.');
