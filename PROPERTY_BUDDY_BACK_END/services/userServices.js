@@ -19,5 +19,39 @@ export async function isEmailisExist( email , role ){
 
 
 
+export async function registerValidation(body,res){
+    try {
+        const { email, password, userName,role, confirmPassword } = body;
+        
+        // Validation checks
+        let errors = [];
+        
+        if(!email || validator.isEmail(email)){
+            errors.push('invalid email or email not found')
+        }
+
+         if (!userName || validator.isEmpty(userName.trim())) {
+            errors.push('user name is required.');
+        }
+
+        if (!password || password.length < 6) {
+            errors.push('Password must be at least 6 characters long.');
+        }
+
+        if (password !== confirmPassword) {
+            errors.push('Passwords do not match.');
+        }
+
+        if (errors.length > 0) {
+            return res.status(400).json({ errors });
+        }
+    } catch (error) {
+        
+    }
+}
+
+
+
+
 
 
