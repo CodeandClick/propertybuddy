@@ -30,6 +30,7 @@ const userRegister = async (req, res) => {
             errors.push('user name is required.');
         }
 
+
         if (errors.length > 0) {
             return res.status(400).json({ errors });
         }
