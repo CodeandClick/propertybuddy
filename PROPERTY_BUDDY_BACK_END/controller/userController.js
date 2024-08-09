@@ -25,14 +25,6 @@ const userRegister = async (req, res) => {
             errors.push('Passwords do not match.');
         }
 
-        if (!firstName || validator.isEmpty(firstName.trim())) {
-            errors.push('First name is required.');
-        }
-
-        if (!lastName || validator.isEmpty(lastName.trim())) {
-            errors.push('Last name is required.');
-        }
-
         if (errors.length > 0) {
             return res.status(400).json({ errors });
         }
