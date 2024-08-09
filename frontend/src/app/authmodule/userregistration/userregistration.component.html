@@ -36,7 +36,14 @@
             <div class="col-lg-6 offset-lg-3">
                     <div class="account-login-inner">
                         <form class=" ltn__form-box  contact-form-box " [formGroup]="userRegistrationForm">
+                            <div class="form-messege" *ngIf="getControl('userName')?.invalid && getControl('userName')?.touched">
+                                <span class="error" *ngIf="getControl('userName')?.errors?.['required']">*username is required</span>
+                            </div>
                             <input type="text"  formControlName="userName" placeholder="User Name*">
+                            <div class="form-messege" *ngIf="getControl('email')?.invalid && getControl('email')?.touched">
+                                <span class="error" *ngIf="getControl('email')?.errors?.['required']">*email is required</span>
+                                <span class="error" *ngIf="getControl('email')?.errors?.['email']">*enter correct email</span>
+                            </div>
                             <input type="text" formControlName="email" placeholder="Email*">
                             <input type="password" formControlName="password" name="password" placeholder="Password*">
                             <input type="password" formControlName="confirmPassword" placeholder="Confirm Password*">
