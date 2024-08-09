@@ -1,38 +1,16 @@
 import userModel from '../model/userModel.js';
 import validator from 'validator';
-import { isEmailisExist } from '../services/userServices.js';
+import { isEmailisExist ,registerValidation} from '../services/userServices.js';
 import argon2 from 'argon2'
 
 const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
 
 const userRegister = async (req, res) => {
-    console.log("changed")
     try {
-        console.log(req.body)
         const { email, password, userName,role, confirmPassword } = req.body;
-
-
-        // Validation checks
-        let errors = [];
-        
-        
-
-         if (!userName || validator.isEmpty(userName.trim())) {
-            errors.push('user name is required.');
-        }
-
-        if (!password || password.length < 6) {
-            errors.push('Password must be at least 6 characters long.');
-        }
-
-        if (password !== confirmPassword) {
-            errors.push('Passwords do not match.');
-        }
-
-        if (errors.length > 0) {
-            return res.status(400).json({ errors });
-        }
+        //validate userbody
+        registerValidation(req.body,res)
 
         const result = await isEmailisExist(email , 'user')
 
@@ -67,7 +45,23 @@ const userRegister = async (req, res) => {
 
 
 
+const login = async (req , res)=>{
+     try {
+        const {email , password} = req.body
+        
+        const errors = []
+
+        if(!email || validator.isEmail(email)){
+            errors.push('invalid email')
+        }
+     } catch (error) {
+        
+     }
+}
+
+
 
 export default {
-    userRegister
+    userRegister,
+    login
 };
