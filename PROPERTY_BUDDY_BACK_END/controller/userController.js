@@ -8,7 +8,7 @@ const AgentDb = userModel.AgentDb
 const userRegister = async (req, res) => {
     console.log('here')
     try {
-        const { email, password, firstName, lastName, confirmPassword } = req.body;
+        const { email, password, username, confirmPassword } = req.body;
 
         // Validation checks
         let errors = [];
@@ -25,12 +25,8 @@ const userRegister = async (req, res) => {
             errors.push('Passwords do not match.');
         }
 
-        if (!firstName || validator.isEmpty(firstName.trim())) {
-            errors.push('First name is required.');
-        }
-
-        if (!lastName || validator.isEmpty(lastName.trim())) {
-            errors.push('Last name is required.');
+        if (!username || validator.isEmpty(firstName.trim())) {
+            errors.push('user name is required.');
         }
 
         if (errors.length > 0) {
@@ -62,6 +58,9 @@ const userRegister = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+
 
 export default {
     userRegister
