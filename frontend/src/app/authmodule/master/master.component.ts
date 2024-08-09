@@ -42,7 +42,7 @@ export class MasterComponent   implements OnInit , OnDestroy{
 
   ngOnDestroy(): void {
     // this.removeStyles();
-    this.removeScripts();
+    // this.removeScripts();
   }
 
   private addStyles(styles: string[]): void {

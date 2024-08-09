@@ -1,0 +1,35 @@
+/* .nice-select{margin: 0;
+height: 60px;
+line-height: 58px;
+padding-right: 40px;
+padding-left: 20px;
+border-radius: 0;
+min-width: 200px;
+font-size: 16px;
+font-weight: 500;
+font-family: var(--ltn__heading-font);
+width: 100%; }
+
+.nice-select .option {
+    margin-top: 0;
+    white-space: normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 1.8; }
+  
+  .nice-select .list {
+    min-width: 100%; } */
+
+    select{
+        margin: 0;
+        height: 60px;
+        line-height: 58px;
+        padding-right: 40px;
+        padding-left: 20px;
+        border-radius: 0;
+        min-width: 200px;
+        font-size: 16px;
+        font-weight: 500;
+        font-family: var(--ltn__heading-font);
+        width: 100%;
+    }
