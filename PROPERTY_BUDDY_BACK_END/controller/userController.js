@@ -12,6 +12,7 @@ const userRegister = async (req, res) => {
         console.log(req.body)
         const { email, password, userName,role, confirmPassword } = req.body;
 
+
         // Validation checks
         let errors = [];
 
@@ -19,8 +20,8 @@ const userRegister = async (req, res) => {
             errors.push('Invalid email.');
         }
 
-        if (!userName || !validator.isEmpty(userName)) {
-            errors.push('Username required.');
+         if (!userName || validator.isEmpty(userName.trim())) {
+            errors.push('user name is required.');
         }
 
         if (!password || password.length < 6) {
@@ -51,6 +52,7 @@ const userRegister = async (req, res) => {
             password: hashedpassword, // Note: you should hash the password before saving it
             userName,
             role
+
         });
 
         console.log(newUser);
@@ -64,6 +66,9 @@ const userRegister = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+
 
 export default {
     userRegister
