@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { ForgotpasswordComponent } from "../forgotpassword/forgotpassword.component";
 
 @Component({
   selector: 'app-master',
   standalone: true,
   imports: [RouterOutlet,
-    CommonModule,RouterLink
-  ],
+    CommonModule, RouterLink, ForgotpasswordComponent],
   templateUrl: './master.component.html',
   styleUrls: ['./master.component.css','./../../../../public/css/style.css'],
   encapsulation:ViewEncapsulation.Emulated
