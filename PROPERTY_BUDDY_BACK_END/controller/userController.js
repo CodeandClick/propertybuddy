@@ -8,8 +8,8 @@ const AgentDb = userModel.AgentDb
 const userRegister = async (req, res) => {
     console.log('here')
     try {
-        const { email, password, username, confirmPassword } = req.body;
-
+        const { email, password, userName, confirmPassword } = req.body;
+        console.log(req.body)
         // Validation checks
         let errors = [];
 
@@ -25,7 +25,8 @@ const userRegister = async (req, res) => {
             errors.push('Passwords do not match.');
         }
 
-        if (!username || validator.isEmpty(firstName.trim())) {
+
+        if (!userName || validator.isEmpty(userName.trim())) {
             errors.push('user name is required.');
         }
 
@@ -46,8 +47,7 @@ const userRegister = async (req, res) => {
         const newUser = new UserDb({
             email,
             password, // Note: you should hash the password before saving it
-            firstName,
-            lastName
+            userName
         });
 
         await newUser.save();
