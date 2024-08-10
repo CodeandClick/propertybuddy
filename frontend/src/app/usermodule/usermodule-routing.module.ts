@@ -10,6 +10,8 @@ import { AddpropertyComponent } from './addproperty/addproperty.component';
 import { MyaccountComponent } from './myaccount/myaccount.component';
 import { PremiumComponent } from './premium/premium.component';
 
+import { WishlistComponent } from './wishlist/wishlist.component';
+
 const routes: Routes = [
   {
     path:'',
@@ -43,6 +45,10 @@ const routes: Routes = [
       {
         path:'myaccount',
         component:MyaccountComponent
+      },
+      {
+        path:'wishlist',
+        component:WishlistComponent
       },
       {
         path:'premium',
