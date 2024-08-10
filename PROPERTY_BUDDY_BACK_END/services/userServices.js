@@ -1,4 +1,5 @@
 import userModel from "../model/userModel.js";
+import validator from "validator";
 const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
 
@@ -19,14 +20,14 @@ export async function isEmailisExist( email , role ){
 
 
 
-export async function registerValidation(body,res){
-    try {
+export async function registerValidation(body){
+
         const { email, password, userName,role, confirmPassword } = body;
         
         // Validation checks
         let errors = [];
         
-        if(!email || validator.isEmail(email)){
+        if(!email || !validator.isEmail(email)){
             errors.push('invalid email or email not found')
         }
 
@@ -42,12 +43,8 @@ export async function registerValidation(body,res){
             errors.push('Passwords do not match.');
         }
 
-        if (errors.length > 0) {
-            return res.status(400).json({ errors });
-        }
-    } catch (error) {
-        
-    }
+        return errors
+
 }
 
 

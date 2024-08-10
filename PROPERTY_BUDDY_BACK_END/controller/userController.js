@@ -2,17 +2,26 @@ import userModel from '../model/userModel.js';
 import validator from 'validator';
 import { isEmailisExist ,registerValidation} from '../services/userServices.js';
 import argon2 from 'argon2'
+import generateToken from '../services/generateToken.js';
 
 const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
 
 const userRegister = async (req, res) => {
+    console.log(process.env.ACCESS_TOKEN_PRIVAT_KEY)
     try {
-        const { email, password, userName,role, confirmPassword } = req.body;
+        console.log(req.body)
+        const { email, password, userName, confirmPassword } = req.body;
         //validate userbody
-        registerValidation(req.body,res)
+        const errors = await registerValidation(req.body)
+        if ( errors.length > 0) {
+            console.log('coming here')
+            return res.status(400).json({ error: errors });
+        }
+
 
         const result = await isEmailisExist(email , 'user')
+
 
 
         if(result){
@@ -27,19 +36,20 @@ const userRegister = async (req, res) => {
             email,
             password: hashedpassword, // Note: you should hash the password before saving it
             userName,
-            role
-
         });
 
         console.log(newUser);
-        
-
-        await newUser.save();
-        res.status(201).json({ message: 'User registered successfully.' });
-
+        const token  = await generateToken(newUser)
+        console.log(token)
+        await newUser.save()
+        res.status(201).json({
+             message: 'User registered successfully.',
+             accessToken : token.accessToken,
+             refreshToken : token.refreshToken
+         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error' ,error:error });
     }
 };
 

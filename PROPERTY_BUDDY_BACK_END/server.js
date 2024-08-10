@@ -5,11 +5,12 @@ import connectDb from './Database/connection.js';
 import "dotenv/config"
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
+import tokenRouter from './routes/tokenRouter.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-
+// Middleware
 app.use(cookieParser());
 app.use(session({
   secret: 'your_secret',
@@ -22,10 +23,11 @@ app.use(session({
   }
 }));
 
+// Add the URL-encoded middleware
+app.use(express.urlencoded({ extended: true }));
 
 //database connection
 connectDb()
-
 
 const corsOptions = {
   origin: 'http://localhost:4200', 
@@ -34,15 +36,14 @@ const corsOptions = {
 };
 
 // Use the CORS middleware with options
-app.use(cors(corsOptions));
+app.use(cors());
 
-
-// Middleware
+// Use the JSON middleware
 app.use(express.json());
 
 //user router
-app.use('/user',UserRouter)
-
+app.use('/user', UserRouter);
+app.use('/', tokenRouter);
 
 // Start Server
 app.listen(port, () => {
