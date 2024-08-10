@@ -5,6 +5,7 @@ import argon2 from 'argon2'
 import generateToken from '../services/generateToken.js';
 import otpDb from '../model/otpModel.js'
 import { sendOPTVerificationEmail } from '../services/generateOtp.js';
+import otpDb from '../model/otpModel.js';
 
 const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
