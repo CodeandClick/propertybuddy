@@ -49,9 +49,9 @@
     <span class="error" *ngIf="getControl('email')?.errors?.['required']">*Email is required</span>
     <span class="error" *ngIf="getControl('email')?.errors?.['email']">*Enter correct email</span>
   </div>
-  <input type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)" />
+  <input type="text"  formControlName="email" placeholder="Email*" (input)="emailClicked($event)"  [(ngModel)]="emailForOtp" />
                           
-  <button class="theme-btn-1 btn reverse-color btn-block verify-btn"  data-bs-toggle="modal" data-bs-target="#ltn_forget_password_modal"  *ngIf="emailStatus" [disabled]="getControl('email')?.invalid" >
+  <button class="theme-btn-1 btn reverse-color btn-block verify-btn"  data-bs-toggle="modal" data-bs-target="#ltn_forget_password_modal"  *ngIf="emailStatus"  [disabled]="getControl('email')?.invalid" (click)="sendOtp()" >
     Verify
   </button>
 

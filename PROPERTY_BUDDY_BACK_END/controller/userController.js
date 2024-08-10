@@ -1,6 +1,6 @@
 import userModel from '../model/userModel.js';
 import validator from 'validator';
-import { isEmailisExist ,registerValidation} from '../services/userServices.js';
+import { isEmailisExist ,registerValidation,isverifyOtp} from '../services/userServices.js';
 import argon2 from 'argon2'
 import generateToken from '../services/generateToken.js';
 import { sendOPTVerificationEmail } from '../services/generateOtp.js';
@@ -111,6 +111,20 @@ const verifyMail = async (req,res)=>{
         
     }
 }
+const verifyOtp = async (req,res)=>{
+    try {
+        const {otp,email} = req.body
+        console.log(otp,email)
+        const result =await isverifyOtp(otp,email)
+        console.log(result)
+        if(result){
+            res.status(200).json({result:"sucsess"})
+        }
+        
+    } catch (error) {
+        
+    }
+}
 
 
 
@@ -118,5 +132,6 @@ export default {
     userRegister,
     login,
     getDetails,
-    verifyMail
+    verifyMail,
+    verifyOtp
 };
