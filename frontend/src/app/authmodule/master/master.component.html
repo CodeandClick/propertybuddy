@@ -90,6 +90,8 @@
                                         <li class="menu-icon"><a [routerLink]="['./']">Home</a>
                                             
                                         </li>
+                                        <li class="menu-icon"><a [routerLink]="['/admin']">Admin</a>
+                                        </li>
                                         <li class="menu-icon"><a [routerLink]="['./']">About</a>
                                         </li>
                                         <li class="menu-icon"><a>Property</a>
@@ -246,8 +248,9 @@
                 </div>
                 <div class="ltn__utilize-menu">
                     <ul>
-                        <li><a [routerLink]="['./userhome']">Home</a>
+                        <li><a [routerLink]="['../user']">Home</a>
                         </li>
+                       
                         <li><a  [routerLink]="['./about']">About</a>
                         </li>
                         <li><a>Property</a>
@@ -436,7 +439,8 @@
     <!-- FOOTER AREA END -->
 
     <!-- MODAL AREA START (Reset Password Modal) -->
-   <app-forgotpassword></app-forgotpassword>
+   <!-- <app-forgotpassword></app-forgotpassword> -->
+    <app-otpmodal></app-otpmodal>
     <!-- MODAL AREA END -->
 
 </div>
