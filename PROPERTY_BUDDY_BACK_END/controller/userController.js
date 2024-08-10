@@ -3,6 +3,7 @@ import validator from 'validator';
 import { isEmailisExist ,registerValidation} from '../services/userServices.js';
 import argon2 from 'argon2'
 import generateToken from '../services/generateToken.js';
+import { sendOPTVerificationEmail } from '../services/generateOtp.js';
 
 const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
@@ -89,8 +90,33 @@ const getDetails = async (req,res)=>{
 
 
 
+const verifyMail = async (req,res)=>{
+    try {
+        const {email , role} = req.body
+        const result =await isEmailisExist(email,role)
+        console.log(result)
+        if(result){
+           return res.status(403).json({
+                error:true ,
+                message:'Email is already exists'
+            })
+        }
+
+       const otpResult = await sendOPTVerificationEmail(email)
+        if(otpResult.error){
+           return res.status(400).json(otpResult)
+        }
+        res.status(200).json(otpResult)
+    } catch (error) {
+        
+    }
+}
+
+
+
 export default {
     userRegister,
     login,
-    getDetails
+    getDetails,
+    verifyMail
 };

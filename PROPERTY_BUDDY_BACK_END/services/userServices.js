@@ -13,7 +13,7 @@ export async function isEmailisExist( email , role ){
             return result
         }
     } catch (error) {
-        
+        console.log(error)
     }
 }
 
