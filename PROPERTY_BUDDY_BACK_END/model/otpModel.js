@@ -3,8 +3,16 @@ const Schema = mongoose.Schema;
 
 
 const otpVerificationSchema = new Schema({
-    userId:String ,
+    userEmail:String ,
     otp: String ,
     createdAt :Date,
-    
+    expiresAt: Date
 })
+
+const otpDb = mongoose.model(
+    "OtpDb",
+    otpVerificationSchema
+)   
+
+
+export default otpDb;
