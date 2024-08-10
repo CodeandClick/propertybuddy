@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, EventEmitter, output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { interval } from 'rxjs/internal/observable/interval';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-otpmodal',
@@ -12,7 +13,12 @@ import { Subscription } from 'rxjs/internal/Subscription';
   styleUrl: './otpmodal.component.css'
 })
 export class OtpmodalComponent {
+
+  onOtpEvent = output<string>() 
+  email !: string
+
   form: FormGroup;
+
   formInput = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
   @ViewChildren('formRow') rows: any;
 
@@ -30,8 +36,9 @@ export class OtpmodalComponent {
     }
   }
 
-  constructor() {
+  constructor( private auth : AuthService) {
     this.form = this.toFormGroup(this.formInput);
+  
   }
 
   toFormGroup(elements: any[]) {
@@ -72,7 +79,15 @@ export class OtpmodalComponent {
   }
 
   onSubmit() {
-    console.log(this.form.value);
+  const otp = this.form.value.input1 +this.form.value.input2 + this.form.value.input3 + this.form.value.input4 + this.form.value.input5 + this.form.value.input6
+  const email = localStorage.getItem('Email');
+
+  if (email === null || email === undefined) {
+    console.error("No email found in localStorage.");
+  } else {
+    this.auth.validateOtp(otp, email);
+  }
+  
   }
   }
 
