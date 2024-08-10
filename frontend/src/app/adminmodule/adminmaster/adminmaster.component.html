@@ -1,8 +1,4 @@
-
-    
-
-
-    <div class="screen-overlay"></div>
+  <div class="screen-overlay"></div>
     <aside class="navbar-aside" id="offcanvas_aside">
         <div class="aside-top">
             <a href="index.html" class="brand-wrap">
@@ -15,32 +11,35 @@
         <nav>
             <ul class="menu-aside">
                 <li class="menu-item active">
-                    <a class="menu-link" href="index.html"> <i class="icon material-icons md-home"></i>
+                    <a class="menu-link" [routerLink]="['./adminhome']"> <i class="icon material-icons md-home"></i>
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-products-list.html"> <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">Products</span>
+                    <a class="menu-link" > <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Users</span>
                     </a>
                     <div class="submenu">
-                        <a href="page-products-list.html">Product List</a>
-                        <a href="page-products-grid.html">Product grid</a>
-                        <a href="page-products-grid-2.html">Product grid 2</a>
-                        <a href="page-categories.html">Categories</a>
+                        <a [routerLink]="['./userlist']">User List</a>
+                        <a [routerLink]="['./agentlist']">agent List</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Orders</span>
+                    <a class="menu-link"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">cards</span>
                     </a>
                     <div class="submenu">
-                        <a href="page-orders-1.html">Order list 1</a>
-                        <a href="page-orders-2.html">Order list 2</a>
-                        <a href="page-orders-detail.html">Order detail</a>
+                        <a [routerLink]="['./agentcard']">agent card</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
+                    <a class="menu-link" [routerLink]="['/auth']"> <i class="icon material-icons md-exit_to_app"></i>
+                        <span class="text">Logout</span>
+                    </a>
+                   
+                </li>
+                
+                <!-- <li class="menu-item has-submenu">
                     <a class="menu-link" href="page-sellers-cards.html"> <i class="icon material-icons md-store"></i>
                         <span class="text">Sellers</span>
                     </a>
@@ -49,8 +48,8 @@
                         <a href="page-sellers-list.html">Sellers list</a>
                         <a href="page-seller-detail.html">Seller profile</a>
                     </div>
-                </li>
-                <li class="menu-item has-submenu">
+                </li> -->
+                <!-- <li class="menu-item has-submenu">
                     <a class="menu-link" href="page-form-product-1.html"> <i class="icon material-icons md-add_box"></i>
                         <span class="text">Add product</span>
                     </a>
@@ -93,7 +92,7 @@
                     <a class="menu-link" disabled href="#"> <i class="icon material-icons md-pie_chart"></i>
                         <span class="text">Statistics</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
             <hr>
             <ul class="menu-aside">

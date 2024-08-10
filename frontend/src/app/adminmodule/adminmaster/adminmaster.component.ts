@@ -1,11 +1,11 @@
 
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-adminmaster',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,RouterLink],
   templateUrl: './adminmaster.component.html',
   styleUrls: ['./adminmaster.component.css','./../../../../public/assets/css/main.css'],
   encapsulation:ViewEncapsulation.Emulated
@@ -33,14 +33,14 @@ export class AdminmasterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (typeof document !== 'undefined') {
-      // this.addStyles(this.stylesheets);
-      // this.addScripts(this.scripts);
+      this.addStyles(this.stylesheets);
+      this.addScripts(this.scripts);
     }
   }
 
   ngOnDestroy() {
-    // this.removeStyles();
-    // this.removeScripts();
+    this.removeStyles();
+    this.removeScripts();
   }
 
   private addStyles(styles: string[]) {

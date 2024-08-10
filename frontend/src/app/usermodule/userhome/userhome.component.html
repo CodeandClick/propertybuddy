@@ -93,7 +93,7 @@
                                        </li>
                                       
                                        <li><a [routerLink]="['../usermaster/contact']">Contact</a></li>
-                                       <li class="premium"><a class="btn-premium" (click)="showOverlay()">
+                                       <li><a class="special-link" (click)="showOverlay()">
                                         <i class="fas fa-crown"></i>
                                         Premium
                                     </a></li>
@@ -1525,8 +1525,6 @@
        </div>
        <!-- preloader area end -->
    
-
-
        <!-- OVERLAY FOR CREATE ACCTOUNT START -->
 <div class="overlay" *ngIf="isOverlayVisible" (click)="hideOverlay($event)">
     <app-premium></app-premium>  
