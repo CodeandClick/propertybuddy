@@ -3,6 +3,7 @@ import otpDb from '../model/otpModel.js';
 import path from 'path';
 import { config } from 'dotenv';
 import { fileURLToPath } from 'url';
+import  argon2  from 'argon2';
 config()
 // Utility to get __dirname equivalent in ES6 modules
 const __filename = fileURLToPath(import.meta.url);
@@ -25,7 +26,7 @@ export const sendOPTVerificationEmail = async (email) => {
             to: email,
             subject: "Verify Your Email",
             html: `
-                <div style="background-color: #071c1f; padding: 20px; text-align: center; font-family: Arial, sans-serif; color: #222;">
+                <div style="background-color: #0b2c3d; padding: 20px; text-align: center; font-family: Arial, sans-serif; color: #222;">
                     <img src="cid:logo" alt="Your Logo" style="max-width: 150px; margin-bottom: 20px;">
                     <h1 style="color: #fff;">Email Verification</h1>
                     <p style="font-size: 16px; color: #fff;">Thank you for signing up! Please verify your email address by entering the OTP below:</p>
@@ -34,7 +35,7 @@ export const sendOPTVerificationEmail = async (email) => {
                             ${otp}
                         </span>
                     </div>
-                    <p style="font-size: 14px; color: #000;">If you did not request this, please ignore this email.</p>
+                    <p style="font-size: 14px; color: #fff;">If you did not request this, please ignore this email.</p>
                 </div>
             `,
             attachments: [
@@ -46,11 +47,16 @@ export const sendOPTVerificationEmail = async (email) => {
             ]
         };
 
+        const result = await otpDb.findOne({userEmail:email})
+
+        if(result){
+            await otpDb.deleteOne({userEmail:email})
+        }
+
+        const hashedOtp = await argon2.hash(otp)
         const newOptVerification = new otpDb({
             userEmail: email,
-            otp: otp,
-            createdAt: Date.now(),
-            expiresAt: Date.now() + 3600000   
+            otp: hashedOtp
         });
 
         await newOptVerification.save();
@@ -60,10 +66,7 @@ export const sendOPTVerificationEmail = async (email) => {
             error: false,
             status: "PENDING",
             message: "Verification OTP email sent",
-            data: {
-                userEmail: email,
-                email: email
-            }
+            email:email
         };
     } catch (error) {
         console.log(error);
