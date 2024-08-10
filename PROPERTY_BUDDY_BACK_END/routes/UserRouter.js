@@ -7,6 +7,7 @@ import auth from "../middlewares/auth.js"
 router.post('/register', userController.userRegister)
 router.post('/login',userController.login)
 router.post('/verifyMail',userController.verifyMail)
+router.post('/verifyOtp',userController.verifyOtp)
 
 
 

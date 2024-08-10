@@ -1,7 +1,9 @@
+import otpDb from "../model/otpModel.js";
 import userModel from "../model/userModel.js";
 import validator from "validator";
 const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
+
 
 export async function isEmailisExist( email , role ){
     try {
@@ -15,6 +17,19 @@ export async function isEmailisExist( email , role ){
     } catch (error) {
         console.log(error)
     }
+}
+export async function isverifyOtp(otp,email) {
+    try{
+        console.log(otp,email);
+        
+        const result=await otpDb.findOne({userEmail:email,otp:otp})
+        return result
+    }
+    catch{
+        console.log(error);
+        
+    }
+    
 }
 
 

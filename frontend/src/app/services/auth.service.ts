@@ -10,6 +10,24 @@ export class AuthService {
   private url="http://localhost:4000";
   constructor( private http : HttpClient) { }
 
+
+
+  sendOtp(email : string){
+    return this.http.post(this.url+'/user/verifyMail',{ email, role : 'user'});
+  }
+  validateOtp(otp : string , email : string){
+    console.log('services');
+    
+  this.http.post(this.url+'/user/verifyOtp',{ otp , email }).subscribe(res =>{
+    if(res){
+      console.log('res', res);
+     alert('sucesss')
+    }else{
+      alert('eror')
+    }
+  })
+  }
+
   pushUser( user:User){
     console.log(user)
     this.http.post(this.url+'/user/register/',user).subscribe(res =>{

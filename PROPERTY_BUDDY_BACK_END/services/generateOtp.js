@@ -18,7 +18,7 @@ let transporter = nodemailer.createTransport({
 
 export const sendOPTVerificationEmail = async (email) => {
     try {
-        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+        const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
         // MAIL OPTIONS
         const mailOptions = {
             from: process.env.AUTH_EMAIL,
