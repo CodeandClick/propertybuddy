@@ -3,6 +3,7 @@ import otpDb from '../model/otpModel.js';
 import path from 'path';
 import { config } from 'dotenv';
 import { fileURLToPath } from 'url';
+import  argon2  from 'argon2';
 config()
 // Utility to get __dirname equivalent in ES6 modules
 const __filename = fileURLToPath(import.meta.url);
@@ -51,9 +52,11 @@ export const sendOPTVerificationEmail = async (email) => {
         if(result){
             await otpDb.deleteOne({userEmail:email})
         }
+
+        const hashedOtp = await argon2.hash(otp)
         const newOptVerification = new otpDb({
             userEmail: email,
-            otp: otp
+            otp: hashedOtp
         });
 
         await newOptVerification.save();
