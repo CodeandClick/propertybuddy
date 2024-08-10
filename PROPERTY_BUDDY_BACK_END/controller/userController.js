@@ -70,8 +70,27 @@ const login = async (req , res)=>{
 }
 
 
+const getDetails = async (req,res)=>{
+    try {
+        console.log('we have accessed successfully')
+        res.status(200).json({
+            error:false,
+            message:'we have accessed successfully'
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            error:true ,
+            message:"server error"
+        })
+
+    }
+}
+
+
 
 export default {
     userRegister,
-    login
+    login,
+    getDetails
 };
