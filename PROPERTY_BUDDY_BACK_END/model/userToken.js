@@ -1,22 +1,21 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const userTokenSchema = new mongoose.Schema({
-    userId : {
-        type:Schema.Types.ObjectId,
-        required:true
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     },
-    token:{
-        type:String,
-        required :true 
+    token: {
+        type: String,
+        required: true 
     },
-    createdAt : {
-        type:Date,
-        default : Date.now,
-        expires : 30*86400
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        expires: 30 * 86400 // Expires after 30 days
     }
-
 });
 
-const TokenDb = mongoose.model("tokens",userTokenSchema)
+const TokenDb = mongoose.model("Token", userTokenSchema);
 
-export default TokenDb
+export default TokenDb;

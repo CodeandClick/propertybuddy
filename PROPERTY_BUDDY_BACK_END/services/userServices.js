@@ -21,13 +21,13 @@ export async function isEmailisExist( email , role ){
 
 
 export async function registerValidation(body,res){
-        
-        const { email, password, userName, confirmPassword } = body;
+    try {
+        const { email, password, userName,role, confirmPassword } = body;
         
         // Validation checks
         let errors = [];
         
-        if(!email || validator.isEmail(email)){
+        if(!email || !validator.isEmail(email)){
             errors.push('invalid email or email not found')
         }
 
@@ -43,9 +43,12 @@ export async function registerValidation(body,res){
             errors.push('Passwords do not match.');
         }
 
-        return errors
-
-   
+        if (errors.length > 0) {
+            return res.status(400).json({ errors });
+        }
+    } catch (error) {
+        
+    }
 }
 
 
