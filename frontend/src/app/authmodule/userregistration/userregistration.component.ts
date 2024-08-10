@@ -5,11 +5,12 @@ import { UserRegistration1Component } from "../user-registration-1/user-registra
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-action.component";
+import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
 
 @Component({
   selector: 'app-userregistration',
   standalone: true,
-  imports: [ReactiveFormsModule, UserRegistration1Component, CommonModule, RouterLink, CallToActionComponent],
+  imports: [ReactiveFormsModule, UserRegistration1Component, CommonModule, RouterLink, CallToActionComponent, OtpmodalComponent],
   templateUrl: './userregistration.component.html',
   styleUrl: './userregistration.component.css'
 })
@@ -17,12 +18,14 @@ export class UserregistrationComponent {
   page: boolean = true;
   formCheck = false;
   checkColor = "error-message";
+  emailStatus=false
   strongPasswordRegx: RegExp =
     /^(?=[^A-Z][A-Z])(?=[^a-z][a-z])(?=\D*\d).{8,}$/;
   emailDomain: RegExp = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
 
   userRegistrationForm !: FormGroup;
+
 
   constructor(private authService: AuthService, private router: Router) {
     this.userRegistrationForm = new FormGroup({
@@ -143,7 +146,17 @@ export class UserregistrationComponent {
 
   changeFormCheck() {
     this.formCheck = true;
-  } onSubmit() {
+  } 
+  emailClicked(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    if(inputValue == ''){
+      this.emailStatus=false;
+    }else{
+      this.emailStatus=true;
+    }
+    
+  }
+  onSubmit() {
     this.authService.pushUser(this.userRegistrationForm.value)
 
   }

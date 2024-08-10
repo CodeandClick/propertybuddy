@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-action.component";
+import { ForgotpasswordComponent } from "../forgotpassword/forgotpassword.component";
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,8 @@ import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-a
   imports: [
     CommonModule,
     RouterLink,
-    CallToActionComponent
+    CallToActionComponent,
+    ForgotpasswordComponent
 ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'

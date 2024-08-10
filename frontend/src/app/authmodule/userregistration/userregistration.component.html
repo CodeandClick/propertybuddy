@@ -49,9 +49,9 @@
     <span class="error" *ngIf="getControl('email')?.errors?.['required']">*Email is required</span>
     <span class="error" *ngIf="getControl('email')?.errors?.['email']">*Enter correct email</span>
   </div>
-  <input type="text" formControlName="email" placeholder="Email*" />
-
-  <button class="theme-btn-1 btn reverse-color btn-block verify-btn" (click)="onSubmit()">
+  <input type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)" />
+                          
+  <button class="theme-btn-1 btn reverse-color btn-block verify-btn"  data-bs-toggle="modal" data-bs-target="#ltn_forget_password_modal"  *ngIf="emailStatus" [disabled]="getControl('email')?.invalid" >
     Verify
   </button>
 
@@ -83,8 +83,8 @@
   </div>
 
   <div class="passwordShow">
-  <input [type]="passwordFieldType" formControlName="password" name="password" placeholder="Password*"  />
-    <i class="fas fa-eye-slash" (click)="togglePasswordVisibility()"></i>
+  <input [type]="passwordFieldType" formControlName="password" name="password" placeholder="Password*" (click)="changeFormCheck()"  />
+    <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'" (click)="togglePasswordVisibility()"></i>
   </div>
 
   <div class="form-message" *ngIf="userRegistrationForm.get('confirmPassword')?.invalid && userRegistrationForm.get('confirmPassword')?.touched">
@@ -93,7 +93,7 @@
   <input type="password" formControlName="confirmPassword" placeholder="Confirm Password*" />
 
   <label class="checkbox-inline">
-    <input type="checkbox" value="" />
+    <input type="checkbox" value="" />  
     I consent to Herboil processing my personal data in order to send personalized marketing material in accordance with the consent form and the privacy policy.
   </label>
   <label class="checkbox-inline">
@@ -105,7 +105,7 @@
       CREATE ACCOUNT
     </button>
   </div>
-</form>
+       </form>
 
           <div class="by-agree text-center">
             <p>By creating an account, you agree to our:</p>
@@ -127,3 +127,7 @@
 <!-- CALL TO ACTION START (call-to-action-6) -->
 <app-call-to-action></app-call-to-action>
 <!-- CALL TO ACTION END -->
+
+<!-- otp User Start -->
+ <app-otpmodal></app-otpmodal>
+ <!-- otp user end -->
