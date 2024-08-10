@@ -7,7 +7,7 @@ import { User } from '../interfaces/user';
   providedIn: 'root'
 })
 export class AuthService {
-  private url="http://localhost:3000";
+  private url="http://localhost:4000";
   constructor( private http : HttpClient) { }
 
   pushUser( user:User){
@@ -18,6 +18,6 @@ export class AuthService {
       }else{
         alert('failed')
       }
-    })
+    } )
   }
 }

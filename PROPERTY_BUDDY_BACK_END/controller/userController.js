@@ -7,10 +7,19 @@ const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
 
 const userRegister = async (req, res) => {
+    
     try {
-        const { email, password, userName,role, confirmPassword } = req.body;
+        
+        const { email, password, userName, confirmPassword } = req.body;
         //validate userbody
-        registerValidation(req.body,res)
+        const errors = registerValidation(req.body)
+
+        if (errors.length > 0) {
+            return res.status(409).json({errors})
+            
+        }
+
+
 
         const result = await isEmailisExist(email , 'user')
 
@@ -26,15 +35,12 @@ const userRegister = async (req, res) => {
         const newUser = new UserDb({
             email,
             password: hashedpassword, // Note: you should hash the password before saving it
-            userName,
-            role
+            userName
 
         });
 
-        console.log(newUser);
-        
-
         await newUser.save();
+        
         res.status(201).json({ message: 'User registered successfully.' });
 
     } catch (error) {
