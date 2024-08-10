@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ForgotpasswordComponent } from "../forgotpassword/forgotpassword.component";
+import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
 
 @Component({
   selector: 'app-master',
   standalone: true,
   imports: [RouterOutlet,
-    CommonModule, RouterLink, ForgotpasswordComponent],
+    CommonModule, RouterLink, ForgotpasswordComponent, OtpmodalComponent],
   templateUrl: './master.component.html',
   styleUrls: ['./master.component.css','./../../../../public/css/style.css'],
   encapsulation:ViewEncapsulation.Emulated

@@ -15,79 +15,139 @@ import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-a
 })
 export class UserregistrationComponent {
   page: boolean = true;
+  formCheck = false;
+  checkColor = "error-message";
+  strongPasswordRegx: RegExp =
+    /^(?=[^A-Z][A-Z])(?=[^a-z][a-z])(?=\D*\d).{8,}$/;
+  emailDomain: RegExp = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+
   userRegistrationForm !: FormGroup;
 
   constructor(private authService: AuthService, private router: Router) {
     this.userRegistrationForm = new FormGroup({
-      userName: new FormControl('',[Validators.required]),
+      userName: new FormControl('', [Validators.required]),
 
-      email: new FormControl('',[Validators.required,Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email]),
 
-      password: new FormControl('',[Validators.required]), 
-      confirmPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
-      role:new FormControl('user')
+      password: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      role: new FormControl('user')
     },
-    {
-      validators: this.passwordChecker()
-    });
+      {
+        validators: this.passwordChecker()
+      });
     this.userRegistrationForm.get('password')?.valueChanges.subscribe(value => {
       this.updatePasswordValidators(value);
     });
-} 
-
-
-updatePasswordValidators(password: string) {
-const passwordControl = this.userRegistrationForm.get('password');
-if (passwordControl) {
-  const validators = [Validators.required, Validators.minLength(8)];
-  if (password.length >= 8) {
-    validators.push(this.hasNumber, this.hasUpperCase, this.hasLowerCase, this.hasSpecialCharacter);
   }
-  passwordControl.setValidators(validators);
-  passwordControl.updateValueAndValidity();
-}
-}
-hasNumber(control: AbstractControl): ValidationErrors | null {
-const pattern = /\d/;
-return pattern.test(control.value) ? null : { hasNumber: true };
-}
-hasUpperCase(control: AbstractControl): ValidationErrors | null {
-const pattern = /[A-Z]/;
-return pattern.test(control.value) ? null : { hasUpperCase: true };
-}
 
-hasLowerCase(control: AbstractControl): ValidationErrors | null {
-const pattern = /[a-z]/;
-return pattern.test(control.value) ? null : { hasLowerCase: true };
-}
-
-hasSpecialCharacter(control: AbstractControl): ValidationErrors | null {
-const pattern = /[!@#$%^&*(),.?":{}|<>]/;
-return pattern.test(control.value) ? null : { hasSpecialCharacter: true };
-}
-
-passwordChecker(): ValidatorFn {
-return (control: AbstractControl): ValidationErrors | null => {
-  const password = control.get('password')?.value;
-  const confirmPassword = control.get('confirmPassword')?.value;
-  if (password === confirmPassword) {
-    if (password.length > 5) {
-      return null;
+  eightCharector() {
+    if (this.checkColor == "eight") {
+      return 'success'
     } else {
-      return { passwordLengthError: true };
+      return 'error-mesage'
     }
-  } else {
-    return { passwordMissMatch: true };
   }
-};
-}
+  upperCase() {
+    if (this.checkColor == "error-message") {
+      return 'success'
+    } else {
+      return 'error-mesage'
+    }
+  }
+  LowerCase() {
+    if (this.checkColor == "error-message") {
+      return 'success'
+    } else {
+      return 'error-mesage'
+    }
+  }
+  specialCharector() {
+    if (this.checkColor == "error-message") {
+      return 'success'
+    } else {
+      return 'error-mesage'
+    }
+  }
+  hasaNumber() {
+    if (this.checkColor == "error-message") {
+      return 'success'
+    } else {
+      return 'error-mesage'
+    }
+  }
+  passwordRequired() {
+    if (this.checkColor == "error-message") {
+      return 'error-message'
+    } else {
+      return 'success'
+    }
+  }
 
 
-  onSubmit() {
+  updatePasswordValidators(password: string) {
+    const passwordControl = this.userRegistrationForm.get('password');
+    if (passwordControl) {
+      const validators = [Validators.required, Validators.minLength(8)];
+      if (password.length >= 8) {
+        this.checkColor = "eight";
+        validators.push(this.hasNumber, this.hasUpperCase, this.hasLowerCase, this.hasSpecialCharacter);
+      } else {
+        this.checkColor = "error-message"
+      }
+      passwordControl.setValidators(validators);
+      passwordControl.updateValueAndValidity();
+    }
+  }
+  hasNumber(control: AbstractControl): ValidationErrors | null {
+    const pattern = /\d/;
+    return pattern.test(control.value) ? null : { hasNumber: true };
+  }
+  hasUpperCase(control: AbstractControl): ValidationErrors | null {
+    const pattern = /[A-Z]/;
+    return pattern.test(control.value) ? null : { hasUpperCase: true };
+  }
+
+  hasLowerCase(control: AbstractControl): ValidationErrors | null {
+    const pattern = /[a-z]/;
+    return pattern.test(control.value) ? null : { hasLowerCase: true };
+  }
+
+  hasSpecialCharacter(control: AbstractControl): ValidationErrors | null {
+    const pattern = /[!@#$%^&*(),.?":{}|<>]/;
+    return pattern.test(control.value) ? null : { hasSpecialCharacter: true };
+  }
+
+  passwordChecker(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.get('password')?.value;
+      const confirmPassword = control.get('confirmPassword')?.value;
+      if (password === confirmPassword) {
+        if (password.length > 5) {
+          return null;
+        } else {
+          return { passwordLengthError: true };
+        }
+      } else {
+        return { passwordMissMatch: true };
+      }
+    };
+  }
+
+
+  passwordFieldType: string = 'password';
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+
+  changeFormCheck() {
+    this.formCheck = true;
+  } onSubmit() {
     this.authService.pushUser(this.userRegistrationForm.value)
 
   }
-  getControl(controlName:string){
+  getControl(controlName: string) {
     return this.userRegistrationForm.get(controlName);
 
   }
