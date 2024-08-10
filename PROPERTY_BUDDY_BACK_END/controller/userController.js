@@ -17,7 +17,7 @@ const userRegister = async (req, res) => {
         const errors = await registerValidation(req.body)
         if ( errors.length > 0) {
             console.log('coming here')
-            return res.status(400).json({ error: errors });
+            return res.status(400).json({ error: true , message:errors[0] });
         }
 
 

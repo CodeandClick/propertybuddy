@@ -18,14 +18,14 @@ let transporter = nodemailer.createTransport({
 
 export const sendOPTVerificationEmail = async (email) => {
     try {
-        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+        const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
         // MAIL OPTIONS
         const mailOptions = {
             from: process.env.AUTH_EMAIL,
             to: email,
             subject: "Verify Your Email",
             html: `
-                <div style="background-color: #071c1f; padding: 20px; text-align: center; font-family: Arial, sans-serif; color: #222;">
+                <div style="background-color: #0b2c3d; padding: 20px; text-align: center; font-family: Arial, sans-serif; color: #222;">
                     <img src="cid:logo" alt="Your Logo" style="max-width: 150px; margin-bottom: 20px;">
                     <h1 style="color: #fff;">Email Verification</h1>
                     <p style="font-size: 16px; color: #fff;">Thank you for signing up! Please verify your email address by entering the OTP below:</p>
@@ -34,7 +34,7 @@ export const sendOPTVerificationEmail = async (email) => {
                             ${otp}
                         </span>
                     </div>
-                    <p style="font-size: 14px; color: #000;">If you did not request this, please ignore this email.</p>
+                    <p style="font-size: 14px; color: #fff;">If you did not request this, please ignore this email.</p>
                 </div>
             `,
             attachments: [
@@ -46,11 +46,14 @@ export const sendOPTVerificationEmail = async (email) => {
             ]
         };
 
+        const result = await otpDb.findOne({userEmail:email})
+
+        if(result){
+            await otpDb.deleteOne({userEmail:email})
+        }
         const newOptVerification = new otpDb({
             userEmail: email,
-            otp: otp,
-            createdAt: Date.now(),
-            expiresAt: Date.now() + 3600000   
+            otp: otp
         });
 
         await newOptVerification.save();
@@ -60,10 +63,7 @@ export const sendOPTVerificationEmail = async (email) => {
             error: false,
             status: "PENDING",
             message: "Verification OTP email sent",
-            data: {
-                userEmail: email,
-                email: email
-            }
+            email:email
         };
     } catch (error) {
         console.log(error);
