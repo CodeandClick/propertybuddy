@@ -3,6 +3,7 @@ import validator from 'validator';
 import { isEmailisExist ,registerValidation,isverifyOtp} from '../services/userServices.js';
 import argon2 from 'argon2'
 import generateToken from '../services/generateToken.js';
+import otpDb from '../model/otpModel.js'
 import { sendOPTVerificationEmail } from '../services/generateOtp.js';
 
 const UserDb = userModel.UserDb
@@ -17,7 +18,7 @@ const userRegister = async (req, res) => {
         const errors = await registerValidation(req.body)
         if ( errors.length > 0) {
             console.log('coming here')
-            return res.status(400).json({ error: errors });
+            return res.status(400).json({ error: true , message:errors[0] });
         }
 
 
@@ -115,14 +116,33 @@ const verifyOtp = async (req,res)=>{
     try {
         const {otp,email} = req.body
         console.log(otp,email)
-        const result =await isverifyOtp(otp,email)
-        console.log(result)
+        const result = await isverifyOtp(email)
         if(result){
-            res.status(200).json({result:"sucsess"})
+               const otpResult = await argon2.verify(result.otp,otp)
+               if(otpResult){
+                await otpDb.deleteOne({userEmail:email})
+                res.status(200).json({
+                    error:false,
+                    message:"otp successfully verified"
+                })
+               }else{
+                res.status(400).json({
+                    error:true,
+                    message:"Invalid Otp"
+                })
+               }
+        }else{
+            res.status(403).json({
+                error:true ,
+                message:"otp is expired please resent otp"
+            })
         }
         
     } catch (error) {
-        
+        res.status(500).json({
+            error:true ,
+            message:'Internal Server error'
+        })
     }
 }
 
