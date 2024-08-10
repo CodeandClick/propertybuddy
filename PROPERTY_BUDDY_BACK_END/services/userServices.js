@@ -18,11 +18,16 @@ export async function isEmailisExist( email , role ){
         console.log(error)
     }
 }
+
+
+
 export async function isverifyOtp(email) {
     try{
         console.log(otp,email);
         
+
         const result=await otpDb.findOne({userEmail:email})
+
         return result
     }
     catch{
