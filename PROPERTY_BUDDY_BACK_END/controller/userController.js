@@ -1,9 +1,10 @@
 import userModel from '../model/userModel.js';
 import validator from 'validator';
-import { isEmailisExist ,registerValidation,isverifyOtp} from '../services/userServices.js';
+import { isEmailisExist ,registerValidation,isverifyOtp, loginValidation} from '../services/userServices.js';
 import argon2 from 'argon2'
 import generateToken from '../services/generateToken.js';
 import { sendOPTVerificationEmail } from '../services/generateOtp.js';
+import otpDb from '../model/otpModel.js';
 
 const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
@@ -17,7 +18,7 @@ const userRegister = async (req, res) => {
         const errors = await registerValidation(req.body)
         if ( errors.length > 0) {
             console.log('coming here')
-            return res.status(400).json({ error: errors });
+            return res.status(400).json({ error: true , message:errors[0] });
         }
 
 
@@ -44,6 +45,7 @@ const userRegister = async (req, res) => {
         console.log(token)
         await newUser.save()
         res.status(201).json({
+             error:false,
              message: 'User registered successfully.',
              accessToken : token.accessToken,
              refreshToken : token.refreshToken
@@ -56,19 +58,67 @@ const userRegister = async (req, res) => {
 
 
 
+
+
+
 const login = async (req , res)=>{
      try {
         const {email , password} = req.body
-        
-        const errors = []
+        const mailValid = await loginValidation(email)
+        if(mailValid.error){
+           return res.status(400).json(mailValid)
+        }
 
-        if(!email || validator.isEmail(email)){
-            errors.push('invalid email')
+        //check is the email is user or agent
+        const agent = await AgentDb.findOne({email:email})
+        const user = await UserDb.findOne({email:email})
+
+        if(agent){
+           //verify the password
+           const result = await argon2.verify(agent.password,password)
+           if(result){
+            const token  = await generateToken(agent)
+            res.status(201).json({
+                error:false,
+                message: 'Agent logged in successfully.',
+                role:'agent',
+                accessToken : token.accessToken,
+                refreshToken : token.refreshToken
+            });
+           }else{
+            res.status(400).json({
+                error:true ,
+                message:"password incorroct"
+            })
+           }
+        }else if (user){
+            const result = await argon2.verify(user.password , password)
+            if(result){
+                const token = await generateToken(user)
+                res.status(201).json({
+                    error:false,
+                    message: 'User logged in successfully.',
+                    role:'user',
+                    accessToken : token.accessToken,
+                    refreshToken : token.refreshToken
+                });
+            }
+        }else{
+            res.status(400).json({
+                error:true ,
+                message:"password incorroct"
+            })
         }
      } catch (error) {
-        
+        res.status(400).json({
+            error:true ,
+            message:"internel server error"
+        })
      }
 }
+
+
+
 
 
 const getDetails = async (req,res)=>{
@@ -115,14 +165,34 @@ const verifyOtp = async (req,res)=>{
     try {
         const {otp,email} = req.body
         console.log(otp,email)
-        const result =await isverifyOtp(otp,email)
-        console.log(result)
+        const result = await isverifyOtp(email)
         if(result){
-            res.status(200).json({result:"sucsess"})
+               const otpResult = await argon2.verify(result.otp,otp)
+               if(otpResult){
+                await otpDb.deleteOne({userEmail:email})
+                res.status(200).json({
+                    error:false,
+                    message:"otp successfully verified"
+                })
+               }else{
+                res.status(400).json({
+                    error:true,
+                    message:"Invalid Otp"
+                })
+               }
+        }else{
+            res.status(403).json({
+                error:true ,
+                message:"otp is expired please resent otp"
+            })
         }
         
     } catch (error) {
-        
+        console.log(error)
+        res.status(500).json({
+            error:true ,
+            message:'Internal Server error'
+        })
     }
 }
 
