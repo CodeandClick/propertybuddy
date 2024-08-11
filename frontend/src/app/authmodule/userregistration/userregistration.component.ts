@@ -17,13 +17,13 @@ import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
 })
 export class UserregistrationComponent {
   @ViewChild('ltnForgetPasswordModal') ltnForgetPasswordModal!: ElementRef;
-  verificationStatus='inherit'
+  emailStatusColor='inherit'
   showModal : boolean =false
-  page: boolean = true;
+  verificationStatus: boolean = true;
   formCheck = false;
   disableEmail=false;
   checkColor = "error-message";
-  emailStatus=false
+  emailStatus=false;
   strongPasswordRegx: RegExp =
     /^(?=[^A-Z][A-Z])(?=[^a-z][a-z])(?=\D*\d).{8,}$/;
   emailDomain: RegExp = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
@@ -163,15 +163,11 @@ export class UserregistrationComponent {
     
   }
   onSubmit() {
-    this.authService.pushUser(this.userRegistrationForm.value).subscribe(res => {
-      if(res){
-        alert('Succes');
-        this.router.navigate(['/master/userlocationregistration']);
-      }else{
-        alert('error')
-      }
-    })
-
+    if(this.userRegistrationForm.invalid || this.verificationStatus){
+      this.userRegistrationForm.markAllAsTouched();
+    }else{
+      this.authService.pushUser(this.userRegistrationForm.value);
+    }
   }
   getControl(controlName: string) {
     return this.userRegistrationForm.get(controlName);
@@ -199,14 +195,16 @@ export class UserregistrationComponent {
     this.authService.validateOtp( $event , this.emailForOtp).subscribe((res : any) =>{
     if(res){
      this.disableEmail=true;
-     this.verificationStatus='green'
-     this.emailStatus=false
+     this.verificationStatus=false
+     this.emailStatusColor='green';
+     this.emailStatus=false;
      this.showModal=false;
+     localStorage.setItem('email',this.getControl('email')?.value)
      console.log('Success',res);
     }else{
       alert('Error');
-      console.log('error',res.error);
-      this.verificationStatus='red',
+      console.log('error',res.error.message);
+      this.emailStatusColor='red';
       this.showModal=false;
     }
     })

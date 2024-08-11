@@ -38,78 +38,87 @@
     <div class="row">
       <div class="col-lg-6 offset-lg-3">
         <div class="account-login-inner">
-        <form class="ltn__form-box contact-form-box" [formGroup]="userRegistrationForm">
-  <div class="form-messege" *ngIf="getControl('userName')?.dirty && getControl('userName')?.touched">
-    <span class="error" *ngIf="getControl('userName')?.errors?.['required']">*Username is required</span>
-    <span class="error" *ngIf="getControl('userName')?.errors?.['pattern']">*Invalid username format</span>
-  </div>
-  <input type="text" formControlName="userName" placeholder="User Name*" />
+          <form class="ltn__form-box contact-form-box" [formGroup]="userRegistrationForm">
+            <div class="form-messege" *ngIf="getControl('userName')?.dirty || getControl('userName')?.touched">
+              <span class="error" *ngIf="getControl('userName')?.errors?.['required']">*Username is required</span>
+              <span class="error" *ngIf="getControl('userName')?.errors?.['pattern']">*Invalid username format</span>
+            </div>
+            <input type="text" formControlName="userName" placeholder="User Name*" />
 
-  <div class="form-messege" *ngIf="getControl('email')?.dirty && getControl('email')?.touched">
-    <span class="error" *ngIf="getControl('email')?.errors?.['required']">*Email is required</span>
-    <span class="error" *ngIf="getControl('email')?.errors?.['email']">*Enter correct email</span>
-  </div>
-  <div class="passwordShow">
-  <input type="text"  formControlName="email" placeholder="Email*" (input)="emailClicked($event)"  [(ngModel)]="emailForOtp"  [disabled]="true"/>
-  <i class="fas fa-circle-check" [style]="{color : verificationStatus}"  *ngIf=" verificationStatus == 'green' " ></i>
-  </div>        
+            <div class="form-messege" *ngIf="getControl('email')?.dirty || getControl('email')?.touched">
+              <span class="error" *ngIf="getControl('email')?.errors?.['required']">*Email is required</span>
+              <span class="error" *ngIf="getControl('email')?.errors?.['email']">*Enter correct email</span>
+              <span class="error" *ngIf="verificationStatus"> *VerifyEmail </span>
+            </div>
+            <div class="passwordShow">
+              <input type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)"
+                [(ngModel)]="emailForOtp" [disabled]="true" />
+              <i class="fas fa-circle-check" [style]="{color : emailStatusColor}"
+                *ngIf=" emailStatusColor == 'green' "></i>
+            </div>
 
-  <button  class="theme-btn-1 btn reverse-color btn-block verify-btn"    *ngIf="emailStatus"  [disabled]="getControl('email')?.invalid" (click)="sendOtp()" >
-    Verify
-  </button>
+            <button class="theme-btn-1 btn reverse-color btn-block verify-btn" *ngIf="emailStatus"
+              [disabled]="getControl('email')?.invalid" (click)="sendOtp()">
+              Verify
+            </button>
 
 
-  <div class="form-message" *ngIf="userRegistrationForm.get('password')?.touched || formCheck">
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="passwordRequired()"></span>
-      <span class="tooltip">Password is required.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="eightCharector()"></span>
-      <span class="tooltip">Password must be at least 8 characters long.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="hasaNumber()"></span>
-      <span class="tooltip">Password must contain at least one number.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="upperCase()"></span>
-      <span class="tooltip">Password must contain at least one uppercase letter.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="LowerCase()"></span>
-      <span class="tooltip">Password must contain at least one lowercase letter.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="specialCharector()"></span>
-      <span class="tooltip">Password must contain at least one special character.</span>
-    </span>
-  </div>
+            <div class="form-message" *ngIf="userRegistrationForm.get('password')?.touched || formCheck">
+              <span class="tooltip-container">
+                <span class="dot" [ngClass]="passwordRequired()"></span>
+                <span class="tooltip">Password is required.</span>
+              </span>
+              <span class="tooltip-container">
+                <span class="dot" [ngClass]="eightCharector()"></span>
+                <span class="tooltip">Password must be at least 8 characters long.</span>
+              </span>
+              <span class="tooltip-container">
+                <span class="dot" [ngClass]="hasaNumber()"></span>
+                <span class="tooltip">Password must contain at least one number.</span>
+              </span>
+              <span class="tooltip-container">
+                <span class="dot" [ngClass]="upperCase()"></span>
+                <span class="tooltip">Password must contain at least one uppercase letter.</span>
+              </span>
+              <span class="tooltip-container">
+                <span class="dot" [ngClass]="LowerCase()"></span>
+                <span class="tooltip">Password must contain at least one lowercase letter.</span>
+              </span>
+              <span class="tooltip-container">
+                <span class="dot" [ngClass]="specialCharector()"></span>
+                <span class="tooltip">Password must contain at least one special character.</span>
+              </span>
+            </div>
 
-  <div class="passwordShow">
-    <input [type]="passwordFieldType" formControlName="password" name="password" placeholder="Password*" (click)="changeFormCheck()"  />
-    <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'" (click)="togglePasswordVisibility()"></i>
-  </div>
+            <div class="passwordShow">
+              <input [type]="passwordFieldType" formControlName="password" name="password" placeholder="Password*"
+                (click)="changeFormCheck()" />
+              <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'"
+                (click)="togglePasswordVisibility()"></i>
+            </div>
 
-  <div class="form-message" *ngIf="userRegistrationForm.get('confirmPassword')?.invalid && userRegistrationForm.get('confirmPassword')?.touched">
-    <span class="error" *ngIf="userRegistrationForm.errors?.['passwordMissMatch']">Both passwords should be the same</span>
-  </div>
-  <input type="password" formControlName="confirmPassword" placeholder="Confirm Password*" />
+            <div class="form-message"
+              *ngIf="userRegistrationForm.get('confirmPassword')?.invalid && userRegistrationForm.get('confirmPassword')?.touched">
+              <span class="error" *ngIf="userRegistrationForm.errors?.['passwordMissMatch']">Both passwords should be
+                the same</span>
+            </div>
+            <input type="password" formControlName="confirmPassword" placeholder="Confirm Password*" />
 
-  <label class="checkbox-inline">
-    <input type="checkbox" value="" />  
-    I consent to Herboil processing my personal data in order to send personalized marketing material in accordance with the consent form and the privacy policy.
-  </label>
-  <label class="checkbox-inline">
-    <input type="checkbox" value="" />
-    By clicking "create account", I consent to the privacy policy.
-  </label>
-  <div class="btn-wrapper">
-    <button class="theme-btn-1 btn reverse-color btn-block" (click)="onSubmit()">
-      CREATE ACCOUNT
-    </button>
-  </div>
-       </form>
+            <label class="checkbox-inline">
+              <input type="checkbox" value="" />
+              I consent to Herboil processing my personal data in order to send personalized marketing material in
+              accordance with the consent form and the privacy policy.
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" value="" />
+              By clicking "create account", I consent to the privacy policy.
+            </label>
+            <div class="btn-wrapper">
+              <button class="theme-btn-1 btn reverse-color btn-block" (click)="onSubmit()">
+                CREATE ACCOUNT
+              </button>
+            </div>
+          </form>
 
           <div class="by-agree text-center">
             <p>By creating an account, you agree to our:</p>
@@ -133,11 +142,8 @@
 <!-- CALL TO ACTION END -->
 
 <!-- otp User Start -->
- @if(showModal){
-  <app-otpmodal (otpSendEvent)="verifyOtp($event)"  (closeModalEvent)="closeModal($event)" ></app-otpmodal>
- }
- 
- <!-- otp user end -->
+@if(showModal){
+<app-otpmodal (otpSendEvent)="verifyOtp($event)" (closeModalEvent)="closeModal($event)"></app-otpmodal>
+}
 
-
-
+<!-- otp user end -->

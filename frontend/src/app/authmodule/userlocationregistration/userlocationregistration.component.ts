@@ -20,7 +20,7 @@ export class UserlocationregistrationComponent {
       location:new FormControl(''),
       phoneNo: new FormControl(''),   //[Validators.required, Validators.minLength(6)]
       email: new FormControl(''),
-      pincode:new FormControl('')
+      pinCode:new FormControl('')
 
     });
   }

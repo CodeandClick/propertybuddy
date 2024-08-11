@@ -104,3 +104,7 @@
     .otp-success{
       color: rgb(10, 196, 10);
     }
+
+    .error{
+      font-size: 13px;
+    }
