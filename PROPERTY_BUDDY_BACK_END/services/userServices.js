@@ -36,8 +36,8 @@ export async function isverifyOtp(email) {
 
 
 
-export async function registerValidation(body){
-
+export async function registerValidation(body,res){
+    try {
         const { email, password, userName,role, confirmPassword } = body;
         
         // Validation checks
@@ -59,8 +59,12 @@ export async function registerValidation(body){
             errors.push('Passwords do not match.');
         }
 
-        return errors
-
+        if (errors.length > 0) {
+            return res.status(400).json({ errors });
+        }
+    } catch (error) {
+        
+    }
 }
 
 

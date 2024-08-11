@@ -12,8 +12,7 @@ const AgentDb = userModel.AgentDb
 const userRegister = async (req, res) => {
     console.log(process.env.ACCESS_TOKEN_PRIVAT_KEY)
     try {
-        console.log(req.body)
-        const { email, password, userName, confirmPassword } = req.body;
+        const { email, password, userName,role, confirmPassword } = req.body;
         //validate userbody
         const errors = await registerValidation(req.body)
         if ( errors.length > 0) {
@@ -21,9 +20,8 @@ const userRegister = async (req, res) => {
             return res.status(400).json({ error: true , message:errors[0] });
         }
 
-
+        //checking is email is already exists
         const result = await isEmailisExist(email , 'user')
-
 
 
         if(result){
@@ -38,12 +36,15 @@ const userRegister = async (req, res) => {
             email,
             password: hashedpassword, // Note: you should hash the password before saving it
             userName,
+            role
+
         });
 
         console.log(newUser);
         const token  = await generateToken(newUser)
         console.log(token)
         await newUser.save()
+        req.session.Useremail = email
         res.status(201).json({
              error:false,
              message: 'User registered successfully.',
@@ -52,12 +53,45 @@ const userRegister = async (req, res) => {
          });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Server error' ,error:error });
+        res.status(500).json({ message: 'Server error' , error : error });
     }
 };
 
 
 
+const userAddressRegister = async (req, res) => {
+    try {
+        const sessionEmail = req.session.Useremail;
+        const { state, district, pinCode, location ,email , mobile} = req.body;
+
+        // if(!email || !validator.isEmail(email) || sessionEmail != email){
+        //     return res.status(400).json({error:true , message:"invalid email or email is incorrect"})
+        // }
+
+        if (!state || !validator.isAlpha(state.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
+            return res.status(400).json({error:true , message: 'Invalid state' });
+        }
+        if (!district || !validator.isAlpha(district.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
+            return res.status(400).json({error:true , message: 'Invalid district' });
+        }
+
+        if (!pinCode || !validator.isNumeric(pinCode.toString()) || pinCode.toString().length !== 6) {
+            return res.status(400).json({error:true , message: 'Invalid pin code' });
+        }
+
+        if (!location || !validator.isAlpha(location.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
+            return res.status(400).json({error:true , message: 'Invalid location' });
+        }
+
+        res.status(200).json({error :false , message: 'Address is valid' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error : true , message: 'Server error' });
+    }
+};
+
+ 
 
 
 
@@ -161,6 +195,10 @@ const verifyMail = async (req,res)=>{
         
     }
 }
+
+
+
+
 const verifyOtp = async (req,res)=>{
     try {
         const {otp,email} = req.body
@@ -203,5 +241,6 @@ export default {
     login,
     getDetails,
     verifyMail,
-    verifyOtp
+    verifyOtp,
+    userAddressRegister
 };
