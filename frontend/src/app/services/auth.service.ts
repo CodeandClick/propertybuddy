@@ -18,10 +18,18 @@ export class AuthService {
   }
   validateOtp(otp : string , email : string){  
   return this.http.post(this.url+'/user/verifyOtp',{ otp , email })
- }
+  }
 
   pushUser( user:User){
-    return this.http.post(this.url+'/user/register/',user)
+    return this.http.post(this.url+'/user/register/',user).subscribe((res : any ) => {
+      if(res){
+        localStorage.setItem("access-token",res.accessToken)
+        localStorage.setItem("refresh-token",res.refreshToken)
+        this.router.navigate(['/master/userlocationregistration']);
+      }else{
+        alert('error')
+      }
+    })
   }
 }
 
