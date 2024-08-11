@@ -62,11 +62,11 @@ const userRegister = async (req, res) => {
 const userAddressRegister = async (req, res) => {
     try {
         const sessionEmail = req.session.Useremail;
-        const { state, district, pinCode, location ,email , mobile} = req.body;
+        const { state, district, pinCode, place ,email , phoneNumber} = req.body;
 
-        // if(!email || !validator.isEmail(email) || sessionEmail != email){
-        //     return res.status(400).json({error:true , message:"invalid email or email is incorrect"})
-        // }
+        if(!email || !validator.isEmail(email) || sessionEmail != email){
+            return res.status(400).json({error:true , message:"invalid email or email is incorrect"})
+        }
 
         if (!state || !validator.isAlpha(state.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
             return res.status(400).json({error:true , message: 'Invalid state' });
@@ -79,9 +79,11 @@ const userAddressRegister = async (req, res) => {
             return res.status(400).json({error:true , message: 'Invalid pin code' });
         }
 
-        if (!location || !validator.isAlpha(location.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
+        if (!place || !validator.isAlpha(place.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
             return res.status(400).json({error:true , message: 'Invalid location' });
         }
+
+        console.log('address is valid')
 
         res.status(200).json({error :false , message: 'Address is valid' });
 

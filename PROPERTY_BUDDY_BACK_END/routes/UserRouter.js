@@ -8,7 +8,7 @@ router.post('/register', userController.userRegister)
 router.post('/login',userController.login)
 router.post('/verifyMail',userController.verifyMail)
 router.post('/verifyOtp',userController.verifyOtp)
-router.put('/userAddressRegister',userController.userAddressRegister)
+router.put('/userAddressRegister',auth,userController.userAddressRegister)
 
 
 

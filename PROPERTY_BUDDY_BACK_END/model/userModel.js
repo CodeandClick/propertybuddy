@@ -11,6 +11,10 @@ import mongoose from 'mongoose';
             type:String ,
             required:true
         },
+        location: String,
+        pinCode:Number,
+        state:String ,
+        district:String,
         active : {
             type : Boolean
         }

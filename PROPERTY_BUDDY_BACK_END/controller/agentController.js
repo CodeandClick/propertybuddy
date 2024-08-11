@@ -1,4 +1,5 @@
 import userModel from '../model/userModel.js';
+import { isEmailisExist, registerValidation } from '../services/userServices.js';
 
 
 const AgentDb = userModel.AgentDb
@@ -29,7 +30,7 @@ const register = async (req, res) => {
     
         // If validation passes, proceed with user registration
         // Example: saving user to database
-        const newUser = new UserDb({
+        const newUser = new AgentDb({
             email,
             password: hashedpassword, // Note: you should hash the password before saving it
             userName,
