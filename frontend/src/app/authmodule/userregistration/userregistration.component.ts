@@ -1,4 +1,4 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, ElementRef, Input, output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { UserRegistration1Component } from "../user-registration-1/user-registration-1.component";
@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-action.component";
 import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
+
 
 
 @Component({
@@ -16,10 +17,12 @@ import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
   styleUrl: './userregistration.component.css'
 })
 export class UserregistrationComponent {
-  
-  getOtp = output({alias: 'otp'});
+  @ViewChild('ltnForgetPasswordModal') ltnForgetPasswordModal!: ElementRef;
+  verificationStatus='inherit'
+  showModal : boolean =false
   page: boolean = true;
   formCheck = false;
+  disableEmail=false;
   checkColor = "error-message";
   emailStatus=false
   strongPasswordRegx: RegExp =
@@ -28,6 +31,7 @@ export class UserregistrationComponent {
   emailForOtp!:string;
 
   userRegistrationForm !: FormGroup;
+
 
 
   constructor(private authService: AuthService, private router: Router) {
@@ -167,6 +171,10 @@ export class UserregistrationComponent {
     return this.userRegistrationForm.get(controlName);
   }
 
+
+
+
+
   sendOtp(){
     this.authService.sendOtp(this.emailForOtp).subscribe( (res : any) =>{
       console.log('response:',res)
@@ -174,9 +182,34 @@ export class UserregistrationComponent {
       alert("Error")
       console.log("error",res.error)
      }else{
-      alert('success');
-      localStorage.setItem('Email',this.emailForOtp);
+      this.showModal=true;
+      alert("success")
+      
      }
     })
   }
+
+
+  verifyOtp($event : any){
+    console.log('parent');
+    this.authService.validateOtp( $event , this.emailForOtp).subscribe(res =>{
+    if(res){
+     this.disableEmail=true;
+     this.verificationStatus='green'
+     this.emailStatus=false
+     this.showModal=false;
+    }else{
+      alert('Error');
+      console.log('error',res);
+      this.verificationStatus='red'
+    }
+    })
+  }
+
+  closeModal(event : boolean){
+     this.showModal=event;
+  }
+
+
+
 }

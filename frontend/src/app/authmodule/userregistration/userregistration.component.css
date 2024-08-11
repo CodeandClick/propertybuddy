@@ -101,3 +101,6 @@
       color: #000; /* Change the color when hovering over the icon */
     }
     
+    .otp-success{
+      color: rgb(10, 196, 10);
+    }
