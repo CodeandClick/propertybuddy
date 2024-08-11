@@ -23,16 +23,12 @@ export async function isEmailisExist( email , role ){
 
 export async function isverifyOtp(email) {
     try{
-        console.log(otp,email);
-        
-
+        console.log(email);
         const result=await otpDb.findOne({userEmail:email})
-
         return result
     }
-    catch{
+    catch(error){
         console.log(error);
-        
     }
     
 }
@@ -65,6 +61,20 @@ export async function registerValidation(body){
 
         return errors
 
+}
+
+
+export async function loginValidation(email){
+     if(!email ||! validator.isEmail(email)){
+        return {
+            error:true ,
+            message:"invalid email"
+        }
+     }
+     return {
+        error : false,
+        message:'valid email'
+     }
 }
 
 

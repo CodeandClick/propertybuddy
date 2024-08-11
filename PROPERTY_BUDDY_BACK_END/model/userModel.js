@@ -10,6 +10,9 @@ import mongoose from 'mongoose';
         password:{
             type:String ,
             required:true
+        },
+        active : {
+            type : Boolean
         }
     });
 
