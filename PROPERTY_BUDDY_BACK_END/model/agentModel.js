@@ -22,7 +22,7 @@ import mongoose from 'mongoose';
         place:String
         
     });
-const AgentDb = mongoose.model('Agent', userSchema);
+const AgentDb = mongoose.model('Agent', agentSchema);
 
 export default {
     AgentDb
