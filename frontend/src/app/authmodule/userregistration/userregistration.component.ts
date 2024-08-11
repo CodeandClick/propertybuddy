@@ -163,14 +163,12 @@ export class UserregistrationComponent {
     
   }
   onSubmit() {
-    this.authService.pushUser(this.userRegistrationForm.value).subscribe(res => {
-      if(res){
-        alert('Succes');
-        this.router.navigate(['/master/userlocationregistration']);
-      }else{
-        alert('error')
-      }
-    })
+    const user = this.userRegistrationForm.value
+    if( this.userRegistrationForm.invalid ){
+      return console.log('user name is required')
+    }
+  
+    this.authService.pushUser(this.userRegistrationForm.value)
 
   }
   getControl(controlName: string) {

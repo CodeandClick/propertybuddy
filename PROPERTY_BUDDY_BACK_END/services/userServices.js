@@ -59,11 +59,10 @@ export async function registerValidation(body,res){
             errors.push('Passwords do not match.');
         }
 
-        if (errors.length > 0) {
-            return res.status(400).json({ errors });
-        }
+        return errors
+
     } catch (error) {
-        
+        console.log(error)
     }
 }
 
@@ -79,6 +78,37 @@ export async function loginValidation(email){
         error : false,
         message:'valid email'
      }
+}
+
+
+
+export async function addressRegisterValidation(details ,res){
+    const { state, district, pinCode, place ,email , phoneNumber} = details
+
+    // if(!email || !validator.isEmail(email) || sessionEmail != email){
+    //     return res.status(400).json({error:true , message:"invalid email or email is incorrect"})
+    // }
+
+    if (!state || !validator.isAlpha(state.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
+        return res.status(400).json({error:true , message: 'Invalid state' });
+    }
+    if (!district || !validator.isAlpha(district.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
+        return res.status(400).json({error:true , message: 'Invalid district' });
+    }
+
+    if (!pinCode || !validator.isNumeric(pinCode.toString()) || pinCode.toString().length !== 6) {
+        return res.status(400).json({error:true , message: 'Invalid pin code' });
+    }
+
+    if (!place || !validator.isAlpha(place.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
+        return res.status(400).json({error:true , message: 'Invalid place' });
+    }
+    console.log('address is valid')
+
+    return false
+
+
+    
 }
 
 

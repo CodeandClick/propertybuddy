@@ -17,7 +17,7 @@ export class UserlocationregistrationComponent {
     this.userDetailsRegistrationForm = new FormGroup({
       state: new FormControl(''),
       district: new FormControl(''),
-      location:new FormControl(''),
+      place:new FormControl(''),
       phoneNo: new FormControl(''),   //[Validators.required, Validators.minLength(6)]
       email: new FormControl(''),
       pincode:new FormControl('')
@@ -27,7 +27,11 @@ export class UserlocationregistrationComponent {
 
   
   onSubmit(){
-    alert('hi')
-console.log('helo0',this.userDetailsRegistrationForm.value)
+    this.authService.userAddressUpdate(this.userDetailsRegistrationForm.value).subscribe(res =>{
+      if(res){
+        console.log(res)
+        
+      }
+    })
   }
 }

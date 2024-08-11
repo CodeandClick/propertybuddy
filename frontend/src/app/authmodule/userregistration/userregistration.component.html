@@ -39,7 +39,7 @@
       <div class="col-lg-6 offset-lg-3">
         <div class="account-login-inner">
         <form class="ltn__form-box contact-form-box" [formGroup]="userRegistrationForm">
-  <div class="form-messege" *ngIf="getControl('userName')?.dirty && getControl('userName')?.touched">
+  <div class="form-messege" *ngIf="getControl('userName')?.dirty || getControl('userName')?.touched">
     <span class="error" *ngIf="getControl('userName')?.errors?.['required']">*Username is required</span>
     <span class="error" *ngIf="getControl('userName')?.errors?.['pattern']">*Invalid username format</span>
   </div>
@@ -59,7 +59,7 @@
   </button>
 
 
-  <div class="form-message" *ngIf="userRegistrationForm.get('password')?.touched || formCheck">
+  <!-- <div class="form-message" *ngIf="userRegistrationForm.get('password')?.touched || formCheck">
     <span class="tooltip-container">
       <span class="dot" [ngClass]="passwordRequired()"></span>
       <span class="tooltip">Password is required.</span>
@@ -84,12 +84,19 @@
       <span class="dot" [ngClass]="specialCharector()"></span>
       <span class="tooltip">Password must contain at least one special character.</span>
     </span>
-  </div>
+  </div> -->
+
+  <!-- <div class="password-error">
+   
+  </div> -->
 
   <div class="passwordShow">
+    <span style="color: red; position: absolute;">password is incorrect</span>
     <input [type]="passwordFieldType" formControlName="password" name="password" placeholder="Password*" (click)="changeFormCheck()"  />
     <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'" (click)="togglePasswordVisibility()"></i>
   </div>
+
+
 
   <div class="form-message" *ngIf="userRegistrationForm.get('confirmPassword')?.invalid && userRegistrationForm.get('confirmPassword')?.touched">
     <span class="error" *ngIf="userRegistrationForm.errors?.['passwordMissMatch']">Both passwords should be the same</span>

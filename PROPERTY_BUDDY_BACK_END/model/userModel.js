@@ -18,7 +18,7 @@ import mongoose from 'mongoose';
         active : {
             type : Boolean
         },
-        phoneNumber:Number,
+        phoneNumber:String,
         district:String,
         state: String,
         pincode: Number,
@@ -27,6 +27,4 @@ import mongoose from 'mongoose';
 
 const UserDb = mongoose.model('User', userSchema);
 
-export default {
-    UserDb
-};
+export default UserDb
