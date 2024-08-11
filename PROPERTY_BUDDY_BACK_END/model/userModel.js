@@ -11,7 +11,7 @@ import mongoose from 'mongoose';
             type:String ,
             required:true
         },
-        location: String,
+        place: String,
         pinCode:Number,
         state:String ,
         district:String,
