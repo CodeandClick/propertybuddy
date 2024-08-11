@@ -33,13 +33,15 @@ export class UsermasterComponent {
   private addedStyles: HTMLLinkElement[] = [];
 
  
-  constructor() {}
-
-  ngOnInit(): void {
+  constructor() {
     if (typeof document !== 'undefined') {
       // this.addStyles(this.stylesheets);
       this.loadScriptsSequentially(this.scripts);
     }
+  }
+
+  ngOnInit(): void {
+   
   }
 
   ngOnDestroy(): void {

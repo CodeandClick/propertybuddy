@@ -1,10 +1,10 @@
 import userModel from '../model/userModel.js';
 import validator from 'validator';
-import { isEmailisExist ,registerValidation,isverifyOtp} from '../services/userServices.js';
+import { isEmailisExist ,registerValidation,isverifyOtp, loginValidation} from '../services/userServices.js';
 import argon2 from 'argon2'
 import generateToken from '../services/generateToken.js';
-import otpDb from '../model/otpModel.js'
 import { sendOPTVerificationEmail } from '../services/generateOtp.js';
+import otpDb from '../model/otpModel.js';
 
 const UserDb = userModel.UserDb
 const AgentDb = userModel.AgentDb
@@ -42,11 +42,15 @@ const userRegister = async (req, res) => {
         });
 
         console.log(newUser);
-        
-
-        await newUser.save();
-        res.status(201).json({ message: 'User registered successfully.' });
-
+        const token  = await generateToken(newUser)
+        console.log(token)
+        await newUser.save()
+        res.status(201).json({
+             error:false,
+             message: 'User registered successfully.',
+             accessToken : token.accessToken,
+             refreshToken : token.refreshToken
+         });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' ,error:error });
@@ -55,19 +59,67 @@ const userRegister = async (req, res) => {
 
 
 
+
+
+
 const login = async (req , res)=>{
      try {
         const {email , password} = req.body
-        
-        const errors = []
+        const mailValid = await loginValidation(email)
+        if(mailValid.error){
+           return res.status(400).json(mailValid)
+        }
 
-        if(!email || validator.isEmail(email)){
-            errors.push('invalid email')
+        //check is the email is user or agent
+        const agent = await AgentDb.findOne({email:email})
+        const user = await UserDb.findOne({email:email})
+
+        if(agent){
+           //verify the password
+           const result = await argon2.verify(agent.password,password)
+           if(result){
+            const token  = await generateToken(agent)
+            res.status(201).json({
+                error:false,
+                message: 'Agent logged in successfully.',
+                role:'agent',
+                accessToken : token.accessToken,
+                refreshToken : token.refreshToken
+            });
+           }else{
+            res.status(400).json({
+                error:true ,
+                message:"password incorroct"
+            })
+           }
+        }else if (user){
+            const result = await argon2.verify(user.password , password)
+            if(result){
+                const token = await generateToken(user)
+                res.status(201).json({
+                    error:false,
+                    message: 'User logged in successfully.',
+                    role:'user',
+                    accessToken : token.accessToken,
+                    refreshToken : token.refreshToken
+                });
+            }
+        }else{
+            res.status(400).json({
+                error:true ,
+                message:"password incorroct"
+            })
         }
      } catch (error) {
-        
+        res.status(400).json({
+            error:true ,
+            message:"internel server error"
+        })
      }
 }
+
+
+
 
 
 const getDetails = async (req,res)=>{
@@ -137,6 +189,7 @@ const verifyOtp = async (req,res)=>{
         }
         
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             error:true ,
             message:'Internal Server error'
