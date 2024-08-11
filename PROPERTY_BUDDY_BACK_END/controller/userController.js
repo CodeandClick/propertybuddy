@@ -178,7 +178,7 @@ const verifyMail = async (req,res)=>{
         const result =await isEmailisExist(email,role)
         console.log(result)
         if(result){
-           return res.status(403).json({
+           return res.status(400).json({
                 error:true ,
                 message:'Email is already exists'
             })

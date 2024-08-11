@@ -1,8 +1,8 @@
 import otpDb from "../model/otpModel.js";
 import userModel from "../model/userModel.js";
 import validator from "validator";
-const UserDb = userModel.UserDb
-const AgentDb = userModel.AgentDb
+import AgentDb from "../model/agentModel.js";
+import UserDb from "../model/userModel.js";
 
 
 export async function isEmailisExist( email , role ){

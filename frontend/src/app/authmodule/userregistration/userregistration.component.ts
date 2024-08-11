@@ -17,18 +17,19 @@ import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
 })
 export class UserregistrationComponent {
   @ViewChild('ltnForgetPasswordModal') ltnForgetPasswordModal!: ElementRef;
-  verificationStatus='inherit'
+  emailStatusColor='inherit'
   showModal : boolean =false
-  page: boolean = true;
+  verificationStatus: boolean = true;
   formCheck = false;
   disableEmail=false;
   checkColor = "error-message";
-  emailStatus=false
+  emailStatus=false;
   strongPasswordRegx: RegExp =
     /^(?=[^A-Z][A-Z])(?=[^a-z][a-z])(?=\D*\d).{8,}$/;
   emailDomain: RegExp = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
   emailForOtp!:string;
-
+  emailExist:boolean = false
+  
   userRegistrationForm !: FormGroup;
 
 
@@ -133,11 +134,7 @@ export class UserregistrationComponent {
       const password = control.get('password')?.value;
       const confirmPassword = control.get('confirmPassword')?.value;
       if (password === confirmPassword) {
-        if (password.length > 5) {
           return null;
-        } else {
-          return { passwordLengthError: true };
-        }
       } else {
         return { passwordMissMatch: true };
       }
@@ -163,13 +160,11 @@ export class UserregistrationComponent {
     
   }
   onSubmit() {
-    const user = this.userRegistrationForm.value
-    if( this.userRegistrationForm.invalid ){
-      return console.log('user name is required')
+    if(this.userRegistrationForm.invalid || this.verificationStatus){
+      this.userRegistrationForm.markAllAsTouched();
+    }else{
+      this.authService.pushUser(this.userRegistrationForm.value);
     }
-  
-    this.authService.pushUser(this.userRegistrationForm.value)
-
   }
   getControl(controlName: string) {
     return this.userRegistrationForm.get(controlName);
@@ -180,16 +175,22 @@ export class UserregistrationComponent {
 
 
   sendOtp(){
-    this.authService.sendOtp(this.emailForOtp).subscribe( (res : any) =>{
-      console.log('response:',res)
-     if(res?.error){
-      alert("Error")
-      console.log("error",res.error)
-     }else{
-      this.showModal=true;
-     }
-    })
+
+    this.emailStatus = false
+    this.authService.sendOtp(this.emailForOtp).subscribe( 
+      (res)=>{
+        this.verificationStatus= false
+        this.emailExist = false
+        this.showModal=true;
+      },
+      (error)=>{
+        this.emailStatus = true
+        this.emailExist = true
+      }
+    )
   }
+
+
 
 
   verifyOtp($event : any){
@@ -197,14 +198,16 @@ export class UserregistrationComponent {
     this.authService.validateOtp( $event , this.emailForOtp).subscribe((res : any) =>{
     if(res){
      this.disableEmail=true;
-     this.verificationStatus='green'
-     this.emailStatus=false
+     this.verificationStatus=false
+     this.emailStatusColor='green';
+     this.emailStatus=false;
      this.showModal=false;
+     localStorage.setItem('email',this.getControl('email')?.value)
      console.log('Success',res);
     }else{
       alert('Error');
-      console.log('error',res.error);
-      this.verificationStatus='red',
+      console.log('error',res.error.message);
+      this.emailStatusColor='red';
       this.showModal=false;
     }
     })

@@ -20,18 +20,13 @@ export class UserlocationregistrationComponent {
       place:new FormControl(''),
       phoneNo: new FormControl(''),   //[Validators.required, Validators.minLength(6)]
       email: new FormControl(''),
-      pincode:new FormControl('')
+      pinCode:new FormControl('')
 
     });
   }
 
   
   onSubmit(){
-    this.authService.userAddressUpdate(this.userDetailsRegistrationForm.value).subscribe(res =>{
-      if(res){
-        console.log(res)
-        
-      }
-    })
+
   }
 }

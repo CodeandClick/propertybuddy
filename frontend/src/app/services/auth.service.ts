@@ -18,23 +18,18 @@ export class AuthService {
   }
   validateOtp(otp : string , email : string){  
   return this.http.post(this.url+'/user/verifyOtp',{ otp , email })
- }
+  }
 
   pushUser( user:User){
-     this.http.post(this.url+'/user/register/',user).subscribe((res:any) => {
+    return this.http.post(this.url+'/user/register/',user).subscribe((res : any ) => {
       if(res){
-        localStorage.setItem('access-token',res.accessToken)
-        localStorage.setItem('refresh-token',res.refreshToken)
-        console.log(res)
+        localStorage.setItem("access-token",res.accessToken)
+        localStorage.setItem("refresh-token",res.refreshToken)
         this.router.navigate(['/master/userlocationregistration']);
       }else{
         alert('error')
       }
     })
-  }
-
-  userAddressUpdate(details : any){
-    return this.http.put(this.url+'/user/userAddressRegister',details)
   }
 }
 

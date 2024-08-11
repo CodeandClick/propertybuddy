@@ -85,6 +85,13 @@
       width: 100%;
     }
     
+    .error-input {
+      border: solid 1px red;
+    }
+
+    .success-input {
+      border:solid 1px green;
+    }
    
     
     .passwordShow i {
@@ -103,4 +110,8 @@
     
     .otp-success{
       color: rgb(10, 196, 10);
+    }
+
+    .error{
+      font-size: 13px;
     }
