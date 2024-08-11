@@ -17,7 +17,7 @@ export class AuthService {
   }
   validateOtp(otp : string , email : string){  
   return this.http.post(this.url+'/user/verifyOtp',{ otp , email })
- }z
+ }
 
   pushUser( user:User){
     console.log(user)

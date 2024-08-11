@@ -82,11 +82,10 @@
     .passwordShow {
       position: relative;
       display: inline-block;
+      width: 100%;
     }
     
-    .passwordShow input[type="password"],input[type="text"] {
-      padding-right: 265px; /* Adjust the padding to make space for the icon */
-    }
+   
     
     .passwordShow i {
       position: absolute;
@@ -95,6 +94,7 @@
       transform: translateY(-50%);
       cursor: pointer;
       color: #aaa; /* Adjust the color of the icon */
+      
     }
     
     .passwordShow i:hover {

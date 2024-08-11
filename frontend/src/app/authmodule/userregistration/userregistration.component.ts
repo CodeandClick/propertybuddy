@@ -198,10 +198,12 @@ export class UserregistrationComponent {
      this.verificationStatus='green'
      this.emailStatus=false
      this.showModal=false;
+     console.log('Success',res);
     }else{
       alert('Error');
       console.log('error',res);
       this.verificationStatus='red'
+      
     }
     })
   }
