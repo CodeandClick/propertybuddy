@@ -14,39 +14,34 @@
         <div class="row"> 
         <div class="col-lg-6 offset-lg-3">
                 <div class="account-login-inner">
-                    <form id="contact-form" >
+                    <form id="contact-form" [formGroup]="userDetailsRegistrationForm"  (ngSubmit)="onSubmit()">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-item input-item-name ltn__custom-icon">
-                                    <input type="text" name="name" placeholder="Enter your name">
+                                    <input type="text" formControlName="state" name="state" placeholder="Enter your State">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-item input-item-email ltn__custom-icon">
-                                    <input type="email" name="email" placeholder="Enter email address">
+                                    <input type="text" formControlName="district" name="district" placeholder="Enter your District">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="input-item">
-                                    <select class="nice-select">
-                                        <option>Select Service Type</option>
-                                        <option>Property Management </option>
-                                        <option>Mortgage Service </option>
-                                        <option>Consulting Service</option>
-                                        <option>Home Buying</option>
-                                        <option>Home Selling</option>
-                                        <option>Escrow Services</option>
-                                    </select>
+                                <div class="input-item input-item-email ltn__custom-icon">
+                                    <input type="text" formControlName="location" name="location" placeholder="Enter your Location">
                                 </div>
                             </div>
+                           
                             <div class="col-md-6">
                                 <div class="input-item input-item-phone ltn__custom-icon">
-                                    <input type="text" name="phone" placeholder="Enter phone number">
+                                    <input type="text" formControlName="pincode" name="pincode" placeholder="Enter your Pincode">
                                 </div>
                             </div>
-                        </div>
-                        <div class="input-item input-item-textarea ltn__custom-icon">
-                            <textarea name="message" placeholder="Enter message"></textarea>
+                            <div class="col-md-12">
+                                <div class="input-item input-item-phone ltn__custom-icon">
+                                    <input type="text" formControlName="phoneNo" name="phone" placeholder="Enter your Phone no">
+                                </div>
+                            </div>
                         </div>
                         <p><label class="input-info-save mb-0"><input type="checkbox" name="agree"> Save my name, email, and website in this browser for the next time I comment.</label></p>
                         <div class="btn-wrapper mt-0">
@@ -66,3 +61,23 @@
         </div>
     </div>
 </div>
+
+
+
+
+ <!-- select control -->
+
+ <!-- <div class="col-md-6">
+    <div class="input-item">
+        <select class="nice-select">
+            <option>Select Service Type</option>
+            <option>Property Management </option>
+            <option>Mortgage Service </option>
+            <option>Consulting Service</option>
+            <option>Home Buying</option>
+            <option>Home Selling</option>
+            <option>Escrow Services</option>
+        </select>
+    </div>
+</div> -->
+

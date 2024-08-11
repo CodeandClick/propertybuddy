@@ -1,7 +1,6 @@
 import { Component, ElementRef, Input, output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { UserRegistration1Component } from "../user-registration-1/user-registration-1.component";
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-action.component";
@@ -12,7 +11,7 @@ import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
 @Component({
   selector: 'app-userregistration',
   standalone: true,
-  imports: [ReactiveFormsModule, UserRegistration1Component, CommonModule, RouterLink, CallToActionComponent, OtpmodalComponent,FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, CallToActionComponent, OtpmodalComponent,FormsModule],
   templateUrl: './userregistration.component.html',
   styleUrl: './userregistration.component.css'
 })
@@ -164,7 +163,14 @@ export class UserregistrationComponent {
     
   }
   onSubmit() {
-    this.authService.pushUser(this.userRegistrationForm.value)
+    this.authService.pushUser(this.userRegistrationForm.value).subscribe(res => {
+      if(res){
+        alert('Succes');
+        this.router.navigate(['/master/userlocationregistration']);
+      }else{
+        alert('error')
+      }
+    })
 
   }
   getControl(controlName: string) {
@@ -183,8 +189,6 @@ export class UserregistrationComponent {
       console.log("error",res.error)
      }else{
       this.showModal=true;
-      alert("success")
-      
      }
     })
   }
@@ -192,7 +196,7 @@ export class UserregistrationComponent {
 
   verifyOtp($event : any){
     console.log('parent');
-    this.authService.validateOtp( $event , this.emailForOtp).subscribe(res =>{
+    this.authService.validateOtp( $event , this.emailForOtp).subscribe((res : any) =>{
     if(res){
      this.disableEmail=true;
      this.verificationStatus='green'
@@ -201,9 +205,9 @@ export class UserregistrationComponent {
      console.log('Success',res);
     }else{
       alert('Error');
-      console.log('error',res);
-      this.verificationStatus='red'
-      
+      console.log('error',res.error);
+      this.verificationStatus='red',
+      this.showModal=false;
     }
     })
   }
