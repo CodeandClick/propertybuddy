@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-    const userSchema = new mongoose.Schema({
+    const agentSchema = new mongoose.Schema({
         userName:String,
         email:{
             type:String,
@@ -11,22 +11,19 @@ import mongoose from 'mongoose';
             type:String ,
             required:true
         },
-        place: String,
-        pinCode:Number,
-        state:String ,
-        district:String,
         active : {
             type : Boolean
         },
         phoneNumber:Number,
+        companyName:String,
         district:String,
         state: String,
         pincode: Number,
         place:String
+        
     });
-
-const UserDb = mongoose.model('User', userSchema);
+const AgentDb = mongoose.model('Agent', userSchema);
 
 export default {
-    UserDb
+    AgentDb
 };
