@@ -14,7 +14,7 @@ import mongoose from 'mongoose';
         active : {
             type : Boolean
         },
-        phoneNumber:Number,
+        phoneNumber:String,
         district:String,
         state: String,
         pincode: Number,
