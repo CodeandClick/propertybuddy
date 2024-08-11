@@ -9,9 +9,9 @@ import { CallToActionComponent } from "../call-to-action/call-to-action.componen
   standalone: true,
   imports: [RouterLink, PremiumComponent, CommonModule, CallToActionComponent],
   templateUrl: './userhome.component.html',
-  styleUrl:'./userhome.component.css' 
+  styleUrl: './userhome.component.css'
 })
-export class UserhomeComponent implements OnInit , OnDestroy{
+export class UserhomeComponent implements OnInit, OnDestroy {
 
   private stylesheets: string[] = [
     'css/font-icons.css',
@@ -28,13 +28,14 @@ export class UserhomeComponent implements OnInit , OnDestroy{
   private addedScripts: HTMLScriptElement[] = [];
   private addedStyles: HTMLLinkElement[] = [];
 
-  constructor() {}
-
-  ngOnInit(): void {
+  constructor() {
     if (typeof document !== 'undefined') {
       // this.addStyles(this.stylesheets);
       this.loadScriptsSequentially(this.scripts);
     }
+  }
+
+  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
@@ -84,7 +85,6 @@ export class UserhomeComponent implements OnInit , OnDestroy{
         resolve();
         return;
       }
-
       const scriptElement = document.createElement('script');
       scriptElement.src = src;
       scriptElement.onload = () => resolve();
@@ -102,11 +102,11 @@ export class UserhomeComponent implements OnInit , OnDestroy{
     });
     this.addedScripts = [];
   }
-  
-  isOverlayVisible : boolean = false;   
 
-  showOverlay(){
-    this.isOverlayVisible=true;
+  isOverlayVisible: boolean = false;
+
+  showOverlay() {
+    this.isOverlayVisible = true;
   }
 
   hideOverlay(event: Event) {

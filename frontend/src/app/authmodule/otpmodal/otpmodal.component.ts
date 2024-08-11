@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChildren, ElementRef, EventEmitter, output } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { interval } from 'rxjs/internal/observable/interval';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -13,8 +13,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './otpmodal.component.css'
 })
 export class OtpmodalComponent {
+  @Output() closeModalEvent = new EventEmitter<boolean>();
+  @Output() otpSendEvent = new EventEmitter<number>();
 
-  onOtpEvent = output<string>() 
   email !: string
 
   form: FormGroup;
@@ -78,16 +79,15 @@ export class OtpmodalComponent {
     });
   }
 
+
+
+  closeModal(){
+   this.closeModalEvent.emit(false)
+  }
+
   onSubmit() {
   const otp = this.form.value.input1 +this.form.value.input2 + this.form.value.input3 + this.form.value.input4 + this.form.value.input5 + this.form.value.input6
-  const email = localStorage.getItem('Email');
-
-  if (email === null || email === undefined) {
-    console.error("No email found in localStorage.");
-  } else {
-    this.auth.validateOtp(otp, email);
+  this.otpSendEvent.emit(otp);  
   }
-  
-  }
-  }
+}
 
