@@ -85,6 +85,13 @@
       width: 100%;
     }
     
+    .error-input {
+      border: solid 1px red;
+    }
+
+    .success-input {
+      border:solid 1px green;
+    }
    
     
     .passwordShow i {

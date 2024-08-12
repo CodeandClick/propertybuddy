@@ -11,6 +11,10 @@ import mongoose from 'mongoose';
             type:String ,
             required:true
         },
+        place: String,
+        pinCode:Number,
+        state:String ,
+        district:String,
         active : {
             type : Boolean
         },
@@ -23,6 +27,4 @@ import mongoose from 'mongoose';
 
 const UserDb = mongoose.model('User', userSchema);
 
-export default {
-    UserDb
-};
+export default UserDb
