@@ -1,13 +1,12 @@
-import userModel from '../model/userModel.js';
-import validator from 'validator';
-import { isEmailisExist ,registerValidation,isverifyOtp, loginValidation} from '../services/userServices.js';
+import UserDb from '../model/userModel.js';
+import AgentDb from '../model/agentModel.js';
+import { isEmailisExist ,registerValidation,isverifyOtp, loginValidation, addressRegisterValidation} from '../services/userServices.js';
 import argon2 from 'argon2'
 import generateToken from '../services/generateToken.js';
 import { sendOPTVerificationEmail } from '../services/generateOtp.js';
 import otpDb from '../model/otpModel.js';
 
-const UserDb = userModel.UserDb
-const AgentDb = userModel.AgentDb
+
 
 const userRegister = async (req, res) => {
     console.log(process.env.ACCESS_TOKEN_PRIVAT_KEY)
@@ -61,29 +60,28 @@ const userRegister = async (req, res) => {
 
 const userAddressRegister = async (req, res) => {
     try {
-        const sessionEmail = req.session.Useremail;
-        const { state, district, pinCode, location ,email , mobile} = req.body;
-
-        // if(!email || !validator.isEmail(email) || sessionEmail != email){
-        //     return res.status(400).json({error:true , message:"invalid email or email is incorrect"})
-        // }
-
-        if (!state || !validator.isAlpha(state.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
-            return res.status(400).json({error:true , message: 'Invalid state' });
-        }
-        if (!district || !validator.isAlpha(district.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
-            return res.status(400).json({error:true , message: 'Invalid district' });
+        // const sessionEmail = req.session.Useremail;
+        const { state, district, pinCode, place ,email , phoneNumber} = req.body;
+        const result = await addressRegisterValidation(req.body , res)
+        if(result != false){
+            return 
         }
 
-        if (!pinCode || !validator.isNumeric(pinCode.toString()) || pinCode.toString().length !== 6) {
-            return res.status(400).json({error:true , message: 'Invalid pin code' });
+        const updateData = {
+            state,
+            district,
+            place,
+            pinCode,
+            phoneNumber
         }
 
-        if (!location || !validator.isAlpha(location.replace(/\s+/g, ''), 'en-IN', { ignore: ' ' })) {
-            return res.status(400).json({error:true , message: 'Invalid location' });
-        }
-
-        res.status(200).json({error :false , message: 'Address is valid' });
+        const data = await UserDb.updateOne({email:email},{$set:updateData})
+        console.log(data)
+        res.status(200).json({
+            error:false,
+            message:"success"
+        })
+        // res.status(200).json({error :false , message: 'Address is valid' });
 
     } catch (error) {
         console.error(error);
@@ -180,7 +178,7 @@ const verifyMail = async (req,res)=>{
         const result =await isEmailisExist(email,role)
         console.log(result)
         if(result){
-           return res.status(403).json({
+           return res.status(400).json({
                 error:true ,
                 message:'Email is already exists'
             })

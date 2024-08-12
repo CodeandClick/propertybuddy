@@ -18,12 +18,10 @@ import mongoose from 'mongoose';
         companyName:String,
         district:String,
         state: String,
-        pincode: Number,
+        pinCode: Number,    
         place:String
         
     });
 const AgentDb = mongoose.model('Agent', agentSchema);
 
-export default {
-    AgentDb
-};
+export default AgentDb
