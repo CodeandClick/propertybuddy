@@ -16,6 +16,4 @@ export class LoaderComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
   }
-
-  
 }
