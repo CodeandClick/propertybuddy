@@ -20,6 +20,7 @@
     "@angular/router": "^18.0.0",
     "@types/jquery": "^3.5.30",
     "jquery": "^3.7.1",
+    "ngx-spinner": "^17.0.0",
     "rxjs": "~7.8.0",
     "slick-carousel": "^1.8.1",
     "tslib": "^2.3.0",

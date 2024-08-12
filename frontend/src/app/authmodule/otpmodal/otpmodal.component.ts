@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChildren, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, EventEmitter, Output, ViewChild, Input } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { interval } from 'rxjs/internal/observable/interval';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -15,6 +15,9 @@ import { AuthService } from '../../services/auth.service';
 export class OtpmodalComponent {
   @Output() closeModalEvent = new EventEmitter<boolean>();
   @Output() otpSendEvent = new EventEmitter<number>();
+  @Input() isValidOtp!:boolean
+ 
+  reSendOtp : boolean= false;
 
   email !: string
 
@@ -37,7 +40,7 @@ export class OtpmodalComponent {
     }
   }
 
-  constructor( private auth : AuthService) {
+  constructor( private authService : AuthService) {
     this.form = this.toFormGroup(this.formInput);
   
   }
@@ -65,6 +68,7 @@ export class OtpmodalComponent {
   }
 
   startTimer() {
+    this.reSendOtp=false;
     const totalSeconds = this.minutes * 60 + this.seconds;
 
     this.timerSubscription = interval(1000).subscribe((elapsedSeconds) => {
@@ -74,11 +78,22 @@ export class OtpmodalComponent {
       this.seconds = remainingTime % 60;
 
       if (remainingTime <= 0) {
+      
         this.timerSubscription.unsubscribe(); // Stop the timer when time runs out
       }
     });
   }
 
+  sendOtp(){
+    const email= localStorage.getItem('email');
+    if(email){    
+      this.authService.sendOtp(email);
+      this.startTimer();
+    }else{
+      alert('session Expires')
+    }
+
+  }
 
 
   closeModal(){
@@ -86,8 +101,12 @@ export class OtpmodalComponent {
   }
 
   onSubmit() {
+    if(this.form.invalid){
+      this.form.markAllAsTouched();
+    }else{
   const otp = this.form.value.input1 +this.form.value.input2 + this.form.value.input3 + this.form.value.input4 + this.form.value.input5 + this.form.value.input6
-  this.otpSendEvent.emit(otp);  
+  this.otpSendEvent.emit(otp);
+}
   }
 }
 

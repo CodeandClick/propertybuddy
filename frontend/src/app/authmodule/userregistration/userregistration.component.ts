@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, NO_ERRORS_SCHEMA, output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -13,15 +13,16 @@ import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, RouterLink, CallToActionComponent, OtpmodalComponent,FormsModule],
   templateUrl: './userregistration.component.html',
-  styleUrl: './userregistration.component.css'
+  styleUrl: './userregistration.component.css',
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class UserregistrationComponent {
-  @ViewChild('ltnForgetPasswordModal') ltnForgetPasswordModal!: ElementRef;
+  inValidOtp :boolean =false;
   emailStatusColor='inherit'
   showModal : boolean =false
   verificationStatus: boolean = true;
-  formCheck = false;
-  disableEmail=false;
+  formCheck :boolean= false;
+  disableEmail: boolean = false;
   checkColor = "error-message";
   emailStatus=false;
   strongPasswordRegx: RegExp =
@@ -31,6 +32,7 @@ export class UserregistrationComponent {
   emailExist:boolean = false
   
   userRegistrationForm !: FormGroup;
+
 
 
 
@@ -49,51 +51,11 @@ export class UserregistrationComponent {
       });
     this.userRegistrationForm.get('password')?.valueChanges.subscribe(value => {
       this.updatePasswordValidators(value);
+
     });
   }
 
-  eightCharector() {
-    if (this.checkColor == "eight") {
-      return 'success'
-    } else {
-      return 'error-mesage'
-    }
-  }
-  upperCase() {
-    if (this.checkColor == "error-message") {
-      return 'success'
-    } else {
-      return 'error-mesage'
-    }
-  }
-  LowerCase() {
-    if (this.checkColor == "error-message") {
-      return 'success'
-    } else {
-      return 'error-mesage'
-    }
-  }
-  specialCharector() {
-    if (this.checkColor == "error-message") {
-      return 'success'
-    } else {
-      return 'error-mesage'
-    }
-  }
-  hasaNumber() {
-    if (this.checkColor == "error-message") {
-      return 'success'
-    } else {
-      return 'error-mesage'
-    }
-  }
-  passwordRequired() {
-    if (this.checkColor == "error-message") {
-      return 'error-message'
-    } else {
-      return 'success'
-    }
-  }
+
 
 
   updatePasswordValidators(password: string) {
@@ -101,10 +63,7 @@ export class UserregistrationComponent {
     if (passwordControl) {
       const validators = [Validators.required, Validators.minLength(8)];
       if (password.length >= 8) {
-        this.checkColor = "eight";
         validators.push(this.hasNumber, this.hasUpperCase, this.hasLowerCase, this.hasSpecialCharacter);
-      } else {
-        this.checkColor = "error-message"
       }
       passwordControl.setValidators(validators);
       passwordControl.updateValueAndValidity();
@@ -170,14 +129,10 @@ export class UserregistrationComponent {
     return this.userRegistrationForm.get(controlName);
   }
 
-
-
-
-
   sendOtp(){
-
+    localStorage.setItem('email',this.getControl('email')?.value);
     this.emailStatus = false
-    this.authService.sendOtp(this.emailForOtp).subscribe( 
+    this.authService.sendOtp(this.getControl('email')?.value).subscribe( 
       (res)=>{
         this.verificationStatus= false
         this.emailExist = false
@@ -192,25 +147,26 @@ export class UserregistrationComponent {
 
 
 
-
   verifyOtp($event : any){
-    console.log('parent');
-    this.authService.validateOtp( $event , this.emailForOtp).subscribe((res : any) =>{
+   
+    this.authService.validateOtp( $event ,this.getControl('email')?.value).subscribe((res : any) =>{
     if(res){
      this.disableEmail=true;
      this.verificationStatus=false
      this.emailStatusColor='green';
      this.emailStatus=false;
      this.showModal=false;
-     localStorage.setItem('email',this.getControl('email')?.value)
      console.log('Success',res);
     }else{
-      alert('Error');
       console.log('error',res.error.message);
       this.emailStatusColor='red';
       this.showModal=false;
+      this.inValidOtp=true;
     }
-    })
+    },
+  (error)=>{
+    this.inValidOtp=true;
+  })
   }
 
   closeModal(event : boolean){
