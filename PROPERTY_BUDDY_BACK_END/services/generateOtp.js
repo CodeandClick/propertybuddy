@@ -67,7 +67,8 @@ export const sendOPTVerificationEmail = async (email) => {
             error: false,
             status: "PENDING",
             message: "Verification OTP email sent",
-            email:email
+            email:email,
+            otp:otp
         };
     } catch (error) {
         console.log(error);

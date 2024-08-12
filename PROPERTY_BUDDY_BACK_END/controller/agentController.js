@@ -94,6 +94,7 @@ const agentAddressRegister = async (req, res) => {
 
 
 export default {
+    agentAddressRegister,
     register
 }
 
