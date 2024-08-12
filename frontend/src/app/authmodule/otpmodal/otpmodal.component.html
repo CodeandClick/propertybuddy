@@ -24,22 +24,24 @@
                                         <form (ngSubmit)="onSubmit()" [formGroup]="form" class="ltn__form-box">
                                             <div class="row">
                                                 <div class="form-group col-sm-2" *ngFor="let input of formInput; index as i">
-                                                    <input #formRow type="text" formControlName="{{input}}" class="form-control" maxlength="1" (keyup)="keyUpEvent($event, i)">
+                                                    <input #formRow type="text" pattern="[0-9]*" formControlName="{{input}}" class="form-control" maxlength="1" (keyup)="keyUpEvent($event, i)">
                                                 </div>
                                             </div>
-
                                             @if( form.invalid && form.touched){
                                                 <span class="error">Enter the otp</span>
+                                            }@else if(isValidOtp){
+                                                <span class="error">Invalid otp or Expired otp</span>
                                             }
                                             
                                             <div class="btn-wrapper mt-0">
                                                 <button class="theme-btn-1 btn btn-full-width-2" type="submit">Submit</button>
                                             </div>
                                             <div>
-                                                @if (reSendOtp) {
-                                                    <label>Otp expires in :</label>{{ minutes }}:{{ seconds | number:'2.0' }}
+                                                @if ( reSendOtp ) {
+                                                    <a (click)="sendOtp()" >Resend Otp</a>
                                                 }@else {
-                                                    <a (click)="sendOtp()">Resend Otp</a>
+                                                    
+                                                    <label>Otp expires in :</label>{{ minutes }}:{{ seconds | number:'2.0' }}
                                                 }
                                             </div>
                                         </form>

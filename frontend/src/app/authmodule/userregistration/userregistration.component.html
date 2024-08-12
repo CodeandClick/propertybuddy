@@ -59,7 +59,7 @@
             <div class="passwordShow">
 
               <input class="" class="" [class.error-input]="getControl('email')?.invalid && getControl('email')?.touched" [class.success-input]="getControl('email')?.valid && getControl('email')?.touched" type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)"
-                [(ngModel)]="emailForOtp" [disabled]="true" />
+                [disabled]="true" />
 
               <i class="fas fa-circle-check" [style]="{color : emailStatusColor}"
                 *ngIf=" emailStatusColor == 'green' "></i>
@@ -71,36 +71,6 @@
             </button>
 
 
-  <!-- <div class="form-message" *ngIf="userRegistrationForm.get('password')?.touched || formCheck">
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="passwordRequired()"></span>
-      <span class="tooltip">Password is required.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="eightCharector()"></span>
-      <span class="tooltip">Password must be at least 8 characters long.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="hasaNumber()"></span>
-      <span class="tooltip">Password must contain at least one number.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="upperCase()"></span>
-      <span class="tooltip">Password must contain at least one uppercase letter.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="LowerCase()"></span>
-      <span class="tooltip">Password must contain at least one lowercase letter.</span>
-    </span>
-    <span class="tooltip-container">
-      <span class="dot" [ngClass]="specialCharector()"></span>
-      <span class="tooltip">Password must contain at least one special character.</span>
-    </span>
-  </div> -->
-
-  <!-- <div class="password-error">
-   
-  </div> -->
   <span style="color: red;" *ngIf=" getControl('password')?.invalid &&getControl('password')?.touched">
     @if (userRegistrationForm.get('password')?.errors?.['required']) {
       <span class="error">Password is required.<br></span>
@@ -170,7 +140,7 @@
 
 <!-- otp User Start -->
 @if(showModal){
-<app-otpmodal (otpSendEvent)="verifyOtp($event)" (closeModalEvent)="closeModal($event)"></app-otpmodal>
+<app-otpmodal  [isValidOtp]="inValidOtp" (otpSendEvent)="verifyOtp($event)"  (closeModalEvent)="closeModal($event)"  ></app-otpmodal>
 }
 
 <!-- otp user end -->
