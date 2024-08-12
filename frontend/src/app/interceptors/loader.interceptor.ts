@@ -7,13 +7,13 @@ import { LoaderService } from '../services/loader.service';
 
 export const loaderInterceptor: HttpInterceptorFn = (req, next) => {
   const loaderService = inject(LoaderService)
-  return next(req).pipe(tap(event => {
+  return next(req).pipe(tap((event: any) => {
     loaderService.show();
     if (event.type === HttpEventType.Response) {
       loaderService.hide()
     }
   },
-  (error)=>{
+  error=>{
   loaderService.hide()
   }));
   }

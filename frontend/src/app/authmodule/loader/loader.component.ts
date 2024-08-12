@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+
+// Import library module
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-loader',
   standalone: true,
-  imports: [],
+  imports: [NgxSpinnerModule],
   templateUrl: './loader.component.html',
   styleUrl: './loader.component.css'
 })
-export class LoaderComponent {
-
+export class LoaderComponent implements OnInit {
+  constructor(private spinner: NgxSpinnerService) {}
+  ngOnInit(): void {
+    this.spinner.show();
+  }
 }
