@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChildren, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, EventEmitter, Output, ViewChild, Input } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { interval } from 'rxjs/internal/observable/interval';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -15,6 +15,8 @@ import { AuthService } from '../../services/auth.service';
 export class OtpmodalComponent {
   @Output() closeModalEvent = new EventEmitter<boolean>();
   @Output() otpSendEvent = new EventEmitter<number>();
+  @Input() isValidOtp!:boolean
+ 
   reSendOtp : boolean= false;
 
   email !: string
@@ -76,7 +78,7 @@ export class OtpmodalComponent {
       this.seconds = remainingTime % 60;
 
       if (remainingTime <= 0) {
-        this.reSendOtp=true;
+      
         this.timerSubscription.unsubscribe(); // Stop the timer when time runs out
       }
     });
