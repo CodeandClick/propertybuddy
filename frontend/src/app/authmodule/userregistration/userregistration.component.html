@@ -38,20 +38,26 @@
     <div class="row">
       <div class="col-lg-6 offset-lg-3">
         <div class="account-login-inner">
-          <form class="ltn__form-box contact-form-box" [formGroup]="userRegistrationForm">
-            <div class="form-messege" *ngIf="getControl('userName')?.dirty || getControl('userName')?.touched">
-              <span class="error" *ngIf="getControl('userName')?.errors?.['required']">*Username is required</span>
-              <span class="error" *ngIf="getControl('userName')?.errors?.['pattern']">*Invalid username format</span>
-            </div>
-            <input type="text" formControlName="userName" placeholder="User Name*" />
+        <form class="ltn__form-box contact-form-box" [formGroup]="userRegistrationForm">
+  <div class="form-messege" *ngIf="getControl('userName')?.dirty || getControl('userName')?.touched">
+    <span class="error" *ngIf="getControl('userName')?.errors?.['required']">*Username is required</span>
+    <span class="error" *ngIf="getControl('userName')?.errors?.['pattern']">*Invalid username format</span>
+  </div>
+  <input class="" [class.error-input]="getControl('userName')?.invalid && getControl('userName')?.touched" type="text"[class.success-input]="getControl('userName')?.valid && getControl('userName')?.touched" formControlName="userName" placeholder="User Name*" />
 
             <div class="form-messege" *ngIf="getControl('email')?.dirty || getControl('email')?.touched">
-              <span class="error" *ngIf="getControl('email')?.errors?.['required']">*Email is required</span>
-              <span class="error" *ngIf="getControl('email')?.errors?.['email']">*Enter correct email</span>
-              <span class="error" *ngIf="verificationStatus"> *VerifyEmail </span>
+              @if (getControl('email')?.errors?.['required']) {
+                <span class="error">*Email is required</span>
+              }@else if (getControl('email')?.errors?.['email']) {
+                <span class="error">*Enter correct email</span>
+              }@else if (emailExist) {
+                <span class="error"> *Email is Already Exist </span>
+              }@else if (verificationStatus) {
+                <span class="error"> *Verify Email </span>
+              }
             </div>
             <div class="passwordShow">
-              <input type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)"
+              <input class="" class="" [class.error-input]="getControl('email')?.invalid && getControl('email')?.touched" [class.success-input]="getControl('email')?.valid && getControl('email')?.touched" type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)"
                 [(ngModel)]="emailForOtp" [disabled]="true" />
               <i class="fas fa-circle-check" [style]="{color : emailStatusColor}"
                 *ngIf=" emailStatusColor == 'green' "></i>
@@ -63,46 +69,65 @@
             </button>
 
 
-            <div class="form-message" *ngIf="userRegistrationForm.get('password')?.touched || formCheck">
-              <span class="tooltip-container">
-                <span class="dot" [ngClass]="passwordRequired()"></span>
-                <span class="tooltip">Password is required.</span>
-              </span>
-              <span class="tooltip-container">
-                <span class="dot" [ngClass]="eightCharector()"></span>
-                <span class="tooltip">Password must be at least 8 characters long.</span>
-              </span>
-              <span class="tooltip-container">
-                <span class="dot" [ngClass]="hasaNumber()"></span>
-                <span class="tooltip">Password must contain at least one number.</span>
-              </span>
-              <span class="tooltip-container">
-                <span class="dot" [ngClass]="upperCase()"></span>
-                <span class="tooltip">Password must contain at least one uppercase letter.</span>
-              </span>
-              <span class="tooltip-container">
-                <span class="dot" [ngClass]="LowerCase()"></span>
-                <span class="tooltip">Password must contain at least one lowercase letter.</span>
-              </span>
-              <span class="tooltip-container">
-                <span class="dot" [ngClass]="specialCharector()"></span>
-                <span class="tooltip">Password must contain at least one special character.</span>
-              </span>
-            </div>
+  <!-- <div class="form-message" *ngIf="userRegistrationForm.get('password')?.touched || formCheck">
+    <span class="tooltip-container">
+      <span class="dot" [ngClass]="passwordRequired()"></span>
+      <span class="tooltip">Password is required.</span>
+    </span>
+    <span class="tooltip-container">
+      <span class="dot" [ngClass]="eightCharector()"></span>
+      <span class="tooltip">Password must be at least 8 characters long.</span>
+    </span>
+    <span class="tooltip-container">
+      <span class="dot" [ngClass]="hasaNumber()"></span>
+      <span class="tooltip">Password must contain at least one number.</span>
+    </span>
+    <span class="tooltip-container">
+      <span class="dot" [ngClass]="upperCase()"></span>
+      <span class="tooltip">Password must contain at least one uppercase letter.</span>
+    </span>
+    <span class="tooltip-container">
+      <span class="dot" [ngClass]="LowerCase()"></span>
+      <span class="tooltip">Password must contain at least one lowercase letter.</span>
+    </span>
+    <span class="tooltip-container">
+      <span class="dot" [ngClass]="specialCharector()"></span>
+      <span class="tooltip">Password must contain at least one special character.</span>
+    </span>
+  </div> -->
 
-            <div class="passwordShow">
-              <input [type]="passwordFieldType" formControlName="password" name="password" placeholder="Password*"
-                (click)="changeFormCheck()" />
-              <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'"
-                (click)="togglePasswordVisibility()"></i>
-            </div>
+  <!-- <div class="password-error">
+   
+  </div> -->
+  <span style="color: red;" *ngIf=" getControl('password')?.invalid &&getControl('password')?.touched">
+    @if (userRegistrationForm.get('password')?.errors?.['required']) {
+      <span class="error">Password is required.<br></span>
+    }@else if (userRegistrationForm.get('password')?.errors?.['hasUpperCase']) {
+      <span class="error">Password must contain at least one uppercase letter.<br></span>
+    }@else if (userRegistrationForm.get('password')?.errors?.['hasNumber']) {
+      <span class="error">Password must contain at least one number.<br></span>
+    }@else if (userRegistrationForm.get('password')?.errors?.['hasLowerCase']) {
+      <span class="error">Password must contain at least one lowercase letter.<br></span>
+    }@else if (userRegistrationForm.get('password')?.errors?.['hasSpecialCharacter']) {
+      <span class="error">Password must contain at least one special character.</span>
+    }@else if (userRegistrationForm.get('password')?.errors?.['minlength']) {
+      <span class="error" >Password must be at least 8 characters long.<br></span>
+    }
+</span>
+
+  <div class="passwordShow">
+    <input [type]="passwordFieldType"  class="" [class.error-input]="getControl('password')?.invalid && getControl('password')?.touched" [class.success-input]="getControl('password')?.valid && getControl('password')?.touched" formControlName="password" name="password" placeholder="Password*" (click)="changeFormCheck()"  />
+    <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'" (click)="togglePasswordVisibility()"></i>
+  </div>
+
+
 
             <div class="form-message"
               *ngIf="userRegistrationForm.get('confirmPassword')?.invalid && userRegistrationForm.get('confirmPassword')?.touched">
               <span class="error" *ngIf="userRegistrationForm.errors?.['passwordMissMatch']">Both passwords should be
                 the same</span>
             </div>
-            <input type="password" formControlName="confirmPassword" placeholder="Confirm Password*" />
+            <input type="password" [class.success-input]="getControl('confirmPassword')?.valid && getControl('confirmPassword')?.touched" class="" [class.error-input]="getControl('confirmPassword')?.invalid && getControl('confirmPassword')?.touched" formControlName="confirmPassword" placeholder="Confirm Password*" />
 
             <label class="checkbox-inline">
               <input type="checkbox" value="" />
@@ -114,7 +139,7 @@
               By clicking "create account", I consent to the privacy policy.
             </label>
             <div class="btn-wrapper">
-              <button class="theme-btn-1 btn reverse-color btn-block" (click)="onSubmit()">
+              <button [disabled]="verificationStatus" class="theme-btn-1 btn reverse-color btn-block" (click)="onSubmit()">
                 CREATE ACCOUNT
               </button>
             </div>

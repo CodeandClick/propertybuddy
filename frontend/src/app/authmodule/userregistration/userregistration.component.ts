@@ -28,7 +28,8 @@ export class UserregistrationComponent {
     /^(?=[^A-Z][A-Z])(?=[^a-z][a-z])(?=\D*\d).{8,}$/;
   emailDomain: RegExp = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
   emailForOtp!:string;
-
+  emailExist:boolean = false
+  
   userRegistrationForm !: FormGroup;
 
 
@@ -133,11 +134,7 @@ export class UserregistrationComponent {
       const password = control.get('password')?.value;
       const confirmPassword = control.get('confirmPassword')?.value;
       if (password === confirmPassword) {
-        if (password.length > 5) {
           return null;
-        } else {
-          return { passwordLengthError: true };
-        }
       } else {
         return { passwordMissMatch: true };
       }
@@ -178,16 +175,22 @@ export class UserregistrationComponent {
 
 
   sendOtp(){
-    this.authService.sendOtp(this.emailForOtp).subscribe( (res : any) =>{
-      console.log('response:',res)
-     if(res?.error){
-      alert("Error")
-      console.log("error",res.error)
-     }else{
-      this.showModal=true;
-     }
-    })
+
+    this.emailStatus = false
+    this.authService.sendOtp(this.emailForOtp).subscribe( 
+      (res)=>{
+        this.verificationStatus= false
+        this.emailExist = false
+        this.showModal=true;
+      },
+      (error)=>{
+        this.emailStatus = true
+        this.emailExist = true
+      }
+    )
   }
+
+
 
 
   verifyOtp($event : any){

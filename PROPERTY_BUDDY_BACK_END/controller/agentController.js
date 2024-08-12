@@ -1,7 +1,9 @@
-import userModel from '../model/userModel.js';
+import AgentDb from '../model/agentModel.js';
+import { agentAddressValidation } from '../services/agentServices.js';
+import { isEmailisExist, registerValidation } from '../services/userServices.js';
 
 
-const AgentDb = userModel.AgentDb
+
 
 
 
@@ -29,7 +31,7 @@ const register = async (req, res) => {
     
         // If validation passes, proceed with user registration
         // Example: saving user to database
-        const newUser = new UserDb({
+        const newUser = new AgentDb({
             email,
             password: hashedpassword, // Note: you should hash the password before saving it
             userName,
@@ -54,8 +56,41 @@ const register = async (req, res) => {
 
 
 
+const agentAddressRegister = async (req, res) => {
+    try {
+        // const sessionEmail = req.session.Useremail;
+        const { state, district, pinCode, place ,email , phoneNumber , companyName} = req.body;
+        const result = await agentAddressValidation(req.body , res)
+        if(result != false){
+            return 
+        }
+
+        const updateData = {
+            state,
+            district,
+            place,
+            pinCode,
+            phoneNumber
+        }
+
+        const data = await UserDb.updateOne({email:email},{$set:updateData})
+        console.log(data)
+        res.status(200).json({
+            error:false,
+            message:"success"
+        })
+        // res.status(200).json({error :false , message: 'Address is valid' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error : true , message: 'Server error' });
+    }
+};
 
 
+
+
+    
 
 
 export default {
