@@ -3,18 +3,25 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ForgotpasswordComponent } from "../forgotpassword/forgotpassword.component";
 import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
+import { LoaderComponent } from "../loader/loader.component";
+import { Observable, Subject } from 'rxjs';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-master',
   standalone: true,
   imports: [RouterOutlet,
-    CommonModule, RouterLink, ForgotpasswordComponent, OtpmodalComponent],
+    CommonModule, RouterLink, ForgotpasswordComponent, OtpmodalComponent, LoaderComponent],
   templateUrl: './master.component.html',
   styleUrls: ['./master.component.css','./../../../../public/css/style.css'],
   encapsulation:ViewEncapsulation.Emulated
   
 })
 export class MasterComponent   implements OnInit , OnDestroy{
+ 
+ 
+  isLoading: Observable<boolean> = this.loaderService.isLoading;  
+
 
   private stylesheets: string[] = [
     'css/font-icons.css',
@@ -32,7 +39,9 @@ export class MasterComponent   implements OnInit , OnDestroy{
   private addedScripts: HTMLScriptElement[] = [];
   private addedStyles: HTMLLinkElement[] = [];
 
-  constructor() {}
+  constructor( private loaderService : LoaderService) {}
+  
+
 
   ngOnInit(): void {
     if (typeof document !== 'undefined') {

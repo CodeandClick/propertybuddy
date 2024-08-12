@@ -49,6 +49,7 @@ export class UserregistrationComponent {
       });
     this.userRegistrationForm.get('password')?.valueChanges.subscribe(value => {
       this.updatePasswordValidators(value);
+
     });
   }
 
@@ -170,14 +171,10 @@ export class UserregistrationComponent {
     return this.userRegistrationForm.get(controlName);
   }
 
-
-
-
-
   sendOtp(){
-
+    localStorage.setItem('email',this.getControl('email')?.value);
     this.emailStatus = false
-    this.authService.sendOtp(this.emailForOtp).subscribe( 
+    this.authService.sendOtp(this.getControl('email')?.value).subscribe( 
       (res)=>{
         this.verificationStatus= false
         this.emailExist = false
@@ -192,7 +189,6 @@ export class UserregistrationComponent {
 
 
 
-
   verifyOtp($event : any){
     console.log('parent');
     this.authService.validateOtp( $event , this.emailForOtp).subscribe((res : any) =>{
@@ -202,7 +198,6 @@ export class UserregistrationComponent {
      this.emailStatusColor='green';
      this.emailStatus=false;
      this.showModal=false;
-     localStorage.setItem('email',this.getControl('email')?.value)
      console.log('Success',res);
     }else{
       alert('Error');

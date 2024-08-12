@@ -57,8 +57,10 @@
               }
             </div>
             <div class="passwordShow">
+
               <input class="" class="" [class.error-input]="getControl('email')?.invalid && getControl('email')?.touched" [class.success-input]="getControl('email')?.valid && getControl('email')?.touched" type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)"
                 [(ngModel)]="emailForOtp" [disabled]="true" />
+
               <i class="fas fa-circle-check" [style]="{color : emailStatusColor}"
                 *ngIf=" emailStatusColor == 'green' "></i>
             </div>
