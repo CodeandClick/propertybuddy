@@ -51,8 +51,7 @@
               <span class="error" *ngIf="verificationStatus"> *VerifyEmail </span>
             </div>
             <div class="passwordShow">
-              <input type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)"
-                [(ngModel)]="emailForOtp" [disabled]="true" />
+              <input type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)"  [disabled]="true" />
               <i class="fas fa-circle-check" [style]="{color : emailStatusColor}"
                 *ngIf=" emailStatusColor == 'green' "></i>
             </div>
