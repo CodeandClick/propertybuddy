@@ -35,8 +35,8 @@ export class AuthService {
   pushUser( user:User){
    this.http.post(this.url+'/user/register/',user).subscribe((res : any ) => {
       if(res){
-        localStorage.setItem("access-token",res.accessToken)
-        localStorage.setItem("refresh-token",res.refreshToken)
+        localStorage.setItem("accessToken",res.accessToken)
+        localStorage.setItem("refreshToken",res.refreshToken)
         this.router.navigate(['auth/master/userlocationregistration'])
       }else{
         alert('error')
