@@ -11,19 +11,8 @@ import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-a
 @Component({
   selector: 'app-master',
   standalone: true,
-<<<<<<< HEAD
-  imports: [
-    RouterOutlet,
-    CommonModule,
-    RouterLink,
-    ForgotpasswordComponent,
-    OtpmodalComponent,
-    LoaderComponent,
-  ],
-=======
   imports: [RouterOutlet,
     CommonModule, RouterLink, ForgotpasswordComponent, OtpmodalComponent, LoaderComponent, CallToActionComponent],
->>>>>>> c0c4a011f8f0777ec105414ca7d429606ef16cb1
   templateUrl: './master.component.html',
   styleUrls: ['./master.component.css', './../../../../public/css/style.css'],
   encapsulation: ViewEncapsulation.Emulated,
