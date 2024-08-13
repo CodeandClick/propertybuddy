@@ -1,9 +1,11 @@
 import validator from "validator";
+import { config } from "dotenv";
+config()
 
 
 
-export async function agentAddressValidation(){
-    const { state, district, pinCode, place, email, phoneNumber, companyName } = req.body;
+export async function agentAddressValidation(details,res){
+    const { state, district, pinCode, place, email, phoneNumber, companyName } = details
     
     // Initialize an array to collect validation error messages
     const errors = [];
@@ -15,7 +17,8 @@ export async function agentAddressValidation(){
     
     // 2. Validate Phone Number
     // Specify the locale as per your requirement (e.g., 'en-IN' for India)
-    if (!phoneNumber || !validator.isMobilePhone(phoneNumber, 'any', { strictMode: true })) {
+    console.log(typeof phoneNumber)
+    if (!phoneNumber || !validator.isMobilePhone(phoneNumber, 'any')) {
       errors.push('Invalid or missing phone number.');
     }
     
@@ -48,7 +51,7 @@ export async function agentAddressValidation(){
     // Check if there are any validation errors
     if (errors.length > 0) {
       // Return the errors as a response (adjust the status code and response structure as needed)
-      return res.status(400).json({ errors });
+      return res.status(400).json({ error:true , message:errors[0]  , errors:errors});
     }
     
     // If all validations pass, proceed with further processing
