@@ -13,4 +13,4 @@ router.post('/verifyOtp',userController.verifyOtp)
 
 router.put('/agentAddressRegister', agentController.agentAddressRegister)
 
-export default router;
+export default router
