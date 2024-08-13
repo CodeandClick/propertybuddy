@@ -41,4 +41,12 @@ input.form-control {
     color: red;
 }
 
+.resend-otp{
+    cursor: pointer;
+    color:#007bff;
+ }
+
+ .custom-modal{
+    margin-top: 30px;
+ }
 

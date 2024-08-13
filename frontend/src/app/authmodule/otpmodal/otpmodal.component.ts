@@ -15,9 +15,9 @@ import { AuthService } from '../../services/auth.service';
 export class OtpmodalComponent {
   @Output() closeModalEvent = new EventEmitter<boolean>();
   @Output() otpSendEvent = new EventEmitter<number>();
-  @Input() isValidOtp!:boolean
- 
-  reSendOtp : boolean= false;
+  @Input() isValidOtp!: boolean
+
+  reSendOtp: boolean = false;
 
   email !: string
 
@@ -40,9 +40,9 @@ export class OtpmodalComponent {
     }
   }
 
-  constructor( private authService : AuthService) {
+  constructor(private authService: AuthService) {
     this.form = this.toFormGroup(this.formInput);
-  
+
   }
 
   toFormGroup(elements: any[]) {
@@ -57,18 +57,18 @@ export class OtpmodalComponent {
   keyUpEvent(event: { keyCode: number; which: number; }, index: number) {
     let pos = index;
     if (event.keyCode === 8 && event.which === 8) {
-      pos = index - 1 ;
+      pos = index - 1;
     } else {
-      pos = index + 1 ;
+      pos = index + 1;
     }
-    if (pos > -1 && pos < this.formInput.length ) {
+    if (pos > -1 && pos < this.formInput.length) {
       this.rows._results[pos].nativeElement.focus();
     }
 
   }
 
   startTimer() {
-    this.reSendOtp=false;
+    this.reSendOtp = false;
     const totalSeconds = this.minutes * 60 + this.seconds;
 
     this.timerSubscription = interval(1000).subscribe((elapsedSeconds) => {
@@ -78,35 +78,35 @@ export class OtpmodalComponent {
       this.seconds = remainingTime % 60;
 
       if (remainingTime <= 0) {
-      
+        this.reSendOtp = true
         this.timerSubscription.unsubscribe(); // Stop the timer when time runs out
       }
     });
   }
 
-  sendOtp(){
-    const email= localStorage.getItem('email');
-    if(email){    
+  sendOtp() {
+    const email = localStorage.getItem('email');
+    if (email) {
       this.authService.sendOtp(email);
+      this.minutes = 2;
+      this.seconds = 0;
       this.startTimer();
-    }else{
-      alert('session Expires')
+    } else {
+      alert('session Expires');
     }
-
   }
 
-
-  closeModal(){
-   this.closeModalEvent.emit(false)
+  closeModal() {
+    this.closeModalEvent.emit(false)
   }
 
   onSubmit() {
-    if(this.form.invalid){
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
-    }else{
-  const otp = this.form.value.input1 +this.form.value.input2 + this.form.value.input3 + this.form.value.input4 + this.form.value.input5 + this.form.value.input6
-  this.otpSendEvent.emit(otp);
-}
+    } else {
+      const otp = this.form.value.input1 + this.form.value.input2 + this.form.value.input3 + this.form.value.input4 + this.form.value.input5 + this.form.value.input6
+      this.otpSendEvent.emit(otp);
+    }
   }
 }
 

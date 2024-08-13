@@ -1,8 +1,8 @@
-import { Component, ElementRef, Input, NO_ERRORS_SCHEMA, output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, NO_ERRORS_SCHEMA, OnInit, output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-action.component";
 import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
 
@@ -11,12 +11,12 @@ import { OtpmodalComponent } from "../otpmodal/otpmodal.component";
 @Component({
   selector: 'app-userregistration',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, CallToActionComponent, OtpmodalComponent,FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, CallToActionComponent, OtpmodalComponent,FormsModule,RouterModule],
   templateUrl: './userregistration.component.html',
   styleUrl: './userregistration.component.css',
   schemas: [NO_ERRORS_SCHEMA]
 })
-export class UserregistrationComponent {
+export class UserregistrationComponent  implements OnInit{
   inValidOtp :boolean =false;
   emailStatusColor='inherit'
   showModal : boolean =false
@@ -27,37 +27,36 @@ export class UserregistrationComponent {
   emailStatus=false;
   strongPasswordRegx: RegExp =
     /^(?=[^A-Z][A-Z])(?=[^a-z][a-z])(?=\D*\d).{8,}$/;
-  emailDomain: RegExp = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+  emailDomain: RegExp = /^[a-zA-Z0-9._%+-]+@\.com$/;
   emailForOtp!:string;
   emailExist:boolean = false
   
   userRegistrationForm !: FormGroup;
 
-
-
-
-  constructor(private authService: AuthService, private router: Router) {
-    this.userRegistrationForm = new FormGroup({
-      userName: new FormControl('', [Validators.required]),
-
-      email: new FormControl('', [Validators.required, Validators.email]),
-
-      password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      role: new FormControl('user')
-    },
-      {
-        validators: this.passwordChecker()
-      });
-    this.userRegistrationForm.get('password')?.valueChanges.subscribe(value => {
-      this.updatePasswordValidators(value);
-
-    });
+  constructor( private authService: AuthService, private router: Router) {
+  
   }
 
+ ngOnInit(): void {
+     {
+      this.userRegistrationForm = new FormGroup({
+        userName: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', [Validators.required]),
+        confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+        role: new FormControl('user')
+      },
+        {
+          validators: this.passwordChecker()
+        });
+        this.userRegistrationForm.get('password')?.valueChanges.subscribe(value => {
+        this.updatePasswordValidators(value);
+      });
+     }
+ }
 
 
-
+ 
   updatePasswordValidators(password: string) {
     const passwordControl = this.userRegistrationForm.get('password');
     if (passwordControl) {
@@ -109,15 +108,16 @@ export class UserregistrationComponent {
   changeFormCheck() {
     this.formCheck = true;
   } 
+
   emailClicked(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
     if(inputValue == ''){
       this.emailStatus=false;
     }else{
       this.emailStatus=true;
-    }
-    
+    } 
   }
+
   onSubmit() {
     if(this.userRegistrationForm.invalid || this.verificationStatus){
       this.userRegistrationForm.markAllAsTouched();
@@ -125,6 +125,7 @@ export class UserregistrationComponent {
       this.authService.pushUser(this.userRegistrationForm.value);
     }
   }
+
   getControl(controlName: string) {
     return this.userRegistrationForm.get(controlName);
   }
@@ -145,10 +146,7 @@ export class UserregistrationComponent {
     )
   }
 
-
-
   verifyOtp($event : any){
-   
     this.authService.validateOtp( $event ,this.getControl('email')?.value).subscribe((res : any) =>{
     if(res){
      this.disableEmail=true;
@@ -156,12 +154,14 @@ export class UserregistrationComponent {
      this.emailStatusColor='green';
      this.emailStatus=false;
      this.showModal=false;
-     console.log('Success',res);
+     alert('hi')
+     
     }else{
       console.log('error',res.error.message);
       this.emailStatusColor='red';
       this.showModal=false;
       this.inValidOtp=true;
+      this.router.navigate(['master/userlocationregister'])
     }
     },
   (error)=>{
@@ -171,8 +171,7 @@ export class UserregistrationComponent {
 
   closeModal(event : boolean){
      this.showModal=event;
+     this.verificationStatus=true;
+     this.emailStatus=true;
   }
-
-
-
 }

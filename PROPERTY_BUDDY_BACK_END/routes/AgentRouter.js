@@ -5,3 +5,8 @@ import auth from "../middlewares/auth.js"
 
 
 router.post("/register",agentController.register)
+
+
+
+
+export default router;

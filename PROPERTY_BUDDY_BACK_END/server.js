@@ -6,6 +6,7 @@ import "dotenv/config"
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import tokenRouter from './routes/tokenRouter.js';
+import AgentRouter from './routes/AgentRouter.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -44,6 +45,7 @@ app.use(express.json());
 //user router
 app.use('/user', UserRouter);
 app.use('/', tokenRouter);
+app.use('/agent',AgentRouter);
 
 // Start Server
 app.listen(port, () => {
