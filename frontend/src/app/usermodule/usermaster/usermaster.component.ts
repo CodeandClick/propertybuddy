@@ -34,10 +34,10 @@ export class UsermasterComponent {
 
  
   constructor() {
-    if (typeof document !== 'undefined') {
-      // this.addStyles(this.stylesheets);
-      this.loadScriptsSequentially(this.scripts);
-    }
+    // if (typeof document !== 'undefined') {
+    //   this.addStyles(this.stylesheets);
+    //   this.loadScriptsSequentially(this.scripts);
+    // }
   }
 
   ngOnInit(): void {

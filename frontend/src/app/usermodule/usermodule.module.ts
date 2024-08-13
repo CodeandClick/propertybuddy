@@ -8,7 +8,8 @@ import { UsermoduleRoutingModule } from './usermodule-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    UsermoduleRoutingModule
+    UsermoduleRoutingModule,
+    CommonModule
   ]
 })
 export class UsermoduleModule { }

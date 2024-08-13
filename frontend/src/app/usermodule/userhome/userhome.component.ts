@@ -3,39 +3,43 @@ import { RouterLink } from '@angular/router';
 import { PremiumComponent } from "../premium/premium.component";
 import { CommonModule } from '@angular/common';
 import { CallToActionComponent } from "../call-to-action/call-to-action.component";
+import { HeaderComponent } from '../components/header/header.component';
 
 @Component({
   selector: 'app-userhome',
   standalone: true,
-  imports: [RouterLink, PremiumComponent, CommonModule, CallToActionComponent],
+  imports: [
+    RouterLink,
+    PremiumComponent,
+    CommonModule,
+    CallToActionComponent,
+    HeaderComponent,
+  ],
   templateUrl: './userhome.component.html',
-  styleUrl: './userhome.component.css'
+  styleUrl: './userhome.component.css',
 })
 export class UserhomeComponent implements OnInit, OnDestroy {
-
   private stylesheets: string[] = [
     'css/font-icons.css',
     'css/plugins.css',
     'css/style.css',
-    'css/responsive.css'
+    'css/responsive.css',
   ];
 
-  private scripts: string[] = [
-    'js/plugins.js',
-    'js/main.js'
-  ];
+  private scripts: string[] = ['js/plugins.js', 'js/main.js'];
 
   private addedScripts: HTMLScriptElement[] = [];
   private addedStyles: HTMLLinkElement[] = [];
 
   constructor() {
-    if (typeof document !== 'undefined') {
-      // this.addStyles(this.stylesheets);
-      this.loadScriptsSequentially(this.scripts);
-    }
+    
   }
 
   ngOnInit(): void {
+    // if (typeof document !== 'undefined') {
+    //   this.addStyles(this.stylesheets);
+    //   this.loadScriptsSequentially(this.scripts);
+    // }
   }
 
   ngOnDestroy(): void {
@@ -44,7 +48,7 @@ export class UserhomeComponent implements OnInit, OnDestroy {
   }
 
   private addStyles(styles: string[]): void {
-    styles.forEach(href => {
+    styles.forEach((href) => {
       const linkElement = this.addStyle(href);
       if (linkElement) {
         this.addedStyles.push(linkElement);
@@ -65,7 +69,7 @@ export class UserhomeComponent implements OnInit, OnDestroy {
   }
 
   private removeStyles(): void {
-    this.addedStyles.forEach(link => {
+    this.addedStyles.forEach((link) => {
       if (link.parentNode) {
         link.parentNode.removeChild(link);
       }
@@ -88,14 +92,15 @@ export class UserhomeComponent implements OnInit, OnDestroy {
       const scriptElement = document.createElement('script');
       scriptElement.src = src;
       scriptElement.onload = () => resolve();
-      scriptElement.onerror = () => reject(new Error(`Failed to load script ${src}`));
+      scriptElement.onerror = () =>
+        reject(new Error(`Failed to load script ${src}`));
       document.body.appendChild(scriptElement);
       this.addedScripts.push(scriptElement);
     });
   }
 
   private removeScripts(): void {
-    this.addedScripts.forEach(script => {
+    this.addedScripts.forEach((script) => {
       if (script.parentNode) {
         script.parentNode.removeChild(script);
       }
