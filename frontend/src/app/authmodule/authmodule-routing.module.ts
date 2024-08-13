@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MasterComponent } from './master/master.component';
-import { RegistrationComponent } from './registration/registration.component';
 import { UserregistrationComponent } from './userregistration/userregistration.component';
 import { AgentregistrationComponent } from './agentregistration/agentregistration.component';
-
 import { UserlocationregistrationComponent } from './userlocationregistration/userlocationregistration.component';
 
 

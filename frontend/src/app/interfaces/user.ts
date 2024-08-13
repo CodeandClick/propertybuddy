@@ -4,8 +4,9 @@ export interface User {
     password:string,
     confirmPassword:string,
     role:string,
-    location?:string,
+    place?:string,
     pinCode?:string,
     district?:string,
-    state?:string
+    state?:string,
+    phoneNumber?:string
 }

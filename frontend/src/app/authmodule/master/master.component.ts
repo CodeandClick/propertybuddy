@@ -6,10 +6,12 @@ import { OtpmodalComponent } from '../otpmodal/otpmodal.component';
 import { LoaderComponent } from '../loader/loader.component';
 import { Observable, Subject } from 'rxjs';
 import { LoaderService } from '../../services/loader.service';
+import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-action.component";
 
 @Component({
   selector: 'app-master',
   standalone: true,
+<<<<<<< HEAD
   imports: [
     RouterOutlet,
     CommonModule,
@@ -18,6 +20,10 @@ import { LoaderService } from '../../services/loader.service';
     OtpmodalComponent,
     LoaderComponent,
   ],
+=======
+  imports: [RouterOutlet,
+    CommonModule, RouterLink, ForgotpasswordComponent, OtpmodalComponent, LoaderComponent, CallToActionComponent],
+>>>>>>> c0c4a011f8f0777ec105414ca7d429606ef16cb1
   templateUrl: './master.component.html',
   styleUrls: ['./master.component.css', './../../../../public/css/style.css'],
   encapsulation: ViewEncapsulation.Emulated,
