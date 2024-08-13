@@ -19,6 +19,10 @@ export class AuthService {
   }
 
 
+
+
+  
+
   validateOtp(otp : string , email : string){  
   return this.http.post(this.url+'/user/verifyOtp',{ otp , email })
   }
@@ -58,18 +62,22 @@ export class AuthService {
 
 
   // Agent Fn
-  pushAgent( agent:Agent){
-   this.http.post(this.url+'/agent/register/',agent).subscribe((res : any ) => {
-      if(res){
-        localStorage.setItem("access-token",res.accessToken)
-        localStorage.setItem("refresh-token",res.refreshToken)
+pushAgent(agent: Agent) {
+  this.http.post(this.url + '/agent/register/', agent).subscribe(
+    (res: any) => {
+      if (res) {
+        localStorage.setItem("access-token", res.accessToken);
+        localStorage.setItem("refresh-token", res.refreshToken);
         this.router.navigate(['/master/userlocationregistration']);
-      }else{
-        alert('error')
+      } else {
+        alert('error');
       }
-    })
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
 
-
-  }
 }
 

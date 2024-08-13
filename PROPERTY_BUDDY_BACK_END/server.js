@@ -6,7 +6,10 @@ import "dotenv/config"
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import tokenRouter from './routes/tokenRouter.js';
-import AgentRouter from './routes/AgentRouter.js';
+
+import AgentRouter from './routes/AgentRouter.js'
+import AdminRouter from './routes/AdminRouter.js'
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -14,14 +17,13 @@ const port = process.env.PORT || 5000;
 // Middleware
 app.use(cookieParser());
 app.use(session({
-  secret: 'your_secret',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: true, // use true if using HTTPS
-    httpOnly: true,
-    sameSite: 'Strict'
-  }
+    secret: 'your_secret_key', // Replace with your own secret key
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: false, // Set to false in development
+        sameSite: 'Strict',
+    }
 }));
 
 // Add the URL-encoded middleware
@@ -44,6 +46,8 @@ app.use(express.json());
 
 //user router
 app.use('/user', UserRouter);
+app.use('/agent',AgentRouter)
+app.use('/admin',AdminRouter)
 app.use('/', tokenRouter);
 app.use('/agent',AgentRouter);
 

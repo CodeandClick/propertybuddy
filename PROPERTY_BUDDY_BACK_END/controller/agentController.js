@@ -1,10 +1,12 @@
+import  argon2  from 'argon2';
 import AgentDb from '../model/agentModel.js';
 import { agentAddressValidation } from '../services/agentServices.js';
 import generateToken from '../services/generateToken.js';
 import { isEmailisExist, registerValidation } from '../services/userServices.js';
-import  argon2  from 'argon2';
 import { sendOPTVerificationEmail } from '../services/generateOtp.js';
 import otpDb from '../model/otpModel.js';
+import UserDb from '../model/userModel.js';
+
 
 
 
@@ -25,8 +27,7 @@ const register = async (req, res) => {
 
         //checking is email is already exists
         const result = await isEmailisExist(email , 'agent')
-
-
+        
         if(result){
            return res.status(409).json({ error: 'User already exists' });
         }
@@ -65,7 +66,7 @@ const agentAddressRegister = async (req, res) => {
         // const sessionEmail = req.session.Useremail;
         const { state, district, pinCode, place ,email , phoneNumber , companyName} = req.body;
         const result = await agentAddressValidation(req.body , res)
-        if(result != false){
+        if(result){
             return 
         }
 
@@ -77,13 +78,16 @@ const agentAddressRegister = async (req, res) => {
             phoneNumber
         }
 
-        const data = await UserDb.updateOne({email:email},{$set:updateData})
+        const data = await AgentDb.updateOne({email:email},{$set:updateData})
+        if(data.modifiedCount > 0){
+            return res.status(200).json({
+                error:false,
+                message:"Agent Details Added Successfully"
+            })
+        }
         console.log(data)
-        res.status(200).json({
-            error:false,
-            message:"success"
-        })
-        // res.status(200).json({error :false , message: 'Address is valid' });
+    
+        res.status(400).json({error :true , message: 'provided email is not exist'});
 
     } catch (error) {
         console.error(error);
@@ -98,6 +102,7 @@ const agentAddressRegister = async (req, res) => {
 
 
 export default {
+    agentAddressRegister,
     register
 }
 

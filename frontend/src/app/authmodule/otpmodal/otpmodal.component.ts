@@ -25,7 +25,7 @@ export class OtpmodalComponent {
 
   formInput = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
   @ViewChildren('formRow') rows: any;
-
+  
   minutes: number = 2; // Set the initial minutes here
   seconds: number = 0; // Set the initial seconds here
   private timerSubscription!: Subscription;
