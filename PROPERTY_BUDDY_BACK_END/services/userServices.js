@@ -106,9 +106,6 @@ export async function addressRegisterValidation(details ,res){
     console.log('address is valid')
 
     return false
-
-
-    
 }
 
 

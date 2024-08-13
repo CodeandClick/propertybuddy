@@ -16,6 +16,8 @@ export class AuthService {
   sendOtp(email : string){
     return this.http.post(this.url+'/user/verifyMail',{ email, role : 'user'});
   }
+
+  
   validateOtp(otp : string , email : string){  
   return this.http.post(this.url+'/user/verifyOtp',{ otp , email })
   }
@@ -29,7 +31,11 @@ export class AuthService {
       }else{
         alert('error')
       }
-    })
+    },
+    (error)=>{
+      console.log(error)
+    }
+  )
   }
 }
 
