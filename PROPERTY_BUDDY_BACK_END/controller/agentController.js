@@ -1,9 +1,12 @@
 import  argon2  from 'argon2';
 import AgentDb from '../model/agentModel.js';
 import { agentAddressValidation } from '../services/agentServices.js';
-import { isEmailisExist, registerValidation } from '../services/userServices.js';
 import generateToken from '../services/generateToken.js';
+import { isEmailisExist, registerValidation } from '../services/userServices.js';
+import { sendOPTVerificationEmail } from '../services/generateOtp.js';
+import otpDb from '../model/otpModel.js';
 import UserDb from '../model/userModel.js';
+
 
 
 

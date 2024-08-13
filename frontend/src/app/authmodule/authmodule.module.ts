@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthmoduleRoutingModule } from './authmodule-routing.module';
 import { LoginComponent } from './login/login.component';
 import { MasterComponent } from './master/master.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { MasterComponent } from './master/master.component';
     CommonModule,
     AuthmoduleRoutingModule,
     LoginComponent,
-    MasterComponent
+    MasterComponent,
+    RouterModule
   ]
 })
 export class AuthmoduleModule { 

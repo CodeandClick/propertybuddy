@@ -58,8 +58,11 @@
             </div>
             <div class="passwordShow">
 
-              <input class="" class="" [class.error-input]="getControl('email')?.invalid && getControl('email')?.touched" [class.success-input]="getControl('email')?.valid && getControl('email')?.touched" type="text" formControlName="email" placeholder="Email*" (input)="emailClicked($event)"
-                [disabled]="true" />
+              <input class="" class="" 
+              [class.error-input]="getControl('email')?.invalid && getControl('email')?.touched" 
+              [class.success-input]="getControl('email')?.valid && getControl('email')?.touched" type="text"
+               formControlName="email" placeholder="Email*" (input)="emailClicked($event)" 
+               />
 
               <i class="fas fa-circle-check" [style]="{color : emailStatusColor}"
                 *ngIf=" emailStatusColor == 'green' "></i>
@@ -71,7 +74,8 @@
             </button>
 
 
-  <span style="color: red;" *ngIf=" getControl('password')?.invalid &&getControl('password')?.touched">
+  <span style="color: red;" *ngIf=" getControl('password')?.dirty && getControl('password')?.touched">
+
     @if (userRegistrationForm.get('password')?.errors?.['required']) {
       <span class="error">Password is required.<br></span>
     }@else if (userRegistrationForm.get('password')?.errors?.['hasUpperCase']) {
@@ -83,8 +87,9 @@
     }@else if (userRegistrationForm.get('password')?.errors?.['hasSpecialCharacter']) {
       <span class="error">Password must contain at least one special character.</span>
     }@else if (userRegistrationForm.get('password')?.errors?.['minlength']) {
-      <span class="error" >Password must be at least 8 characters long.<br></span>
+      <span class="error">Password must be at least 8 characters long.<br></span>
     }
+
 </span>
 
   <div class="passwordShow">
@@ -124,7 +129,7 @@
                 POLICY</a>
             </p>
             <div class="go-to-btn mt-50">
-              <a href="login.html">ALREADY HAVE AN ACCOUNT ?</a>
+              <a [routerLink]="['../login']">ALREADY HAVE AN ACCOUNT ?</a>
             </div>
           </div>
         </div>
@@ -142,5 +147,6 @@
 @if(showModal){
 <app-otpmodal  [isValidOtp]="inValidOtp" (otpSendEvent)="verifyOtp($event)"  (closeModalEvent)="closeModal($event)"  ></app-otpmodal>
 }
-
 <!-- otp user end -->
+
+
