@@ -79,7 +79,7 @@ const userAddressRegister = async (req, res) => {
     console.log(data);
     res.status(200).json({
       error: false,
-      message: "success",
+      message: "success"
     });
     // res.status(200).json({error :false , message: 'Address is valid' });
   } catch (error) {

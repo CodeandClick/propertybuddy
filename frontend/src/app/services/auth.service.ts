@@ -48,7 +48,8 @@ export class AuthService {
       (res) => {
         if (res) {
           alert('sucess');
-          this.router.navigate(['auth/master/login']);
+          localStorage.setItem("role",user.role)
+          this.router.navigate(['user']);
         }
       },
       (error) => {
@@ -65,7 +66,7 @@ export class AuthService {
           localStorage.setItem('access-token', res.accessToken);
           localStorage.setItem('refresh-token', res.refreshToken);
           alert('success');
-          this.router.navigate(['auth/master/agentlocationregistration']);
+          this.router.navigate(['agent']);
         } else {
           alert('error');
         }
