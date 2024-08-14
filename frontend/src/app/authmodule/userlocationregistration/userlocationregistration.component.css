@@ -1,0 +1,11 @@
+.error{
+  font-size: 13px;
+}
+
+.error-input {
+  border: solid 1px red;
+}
+
+.success-input {
+  border:solid 1px green;
+}

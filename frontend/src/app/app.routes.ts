@@ -11,10 +11,6 @@ export const routes: Routes = [
         loadChildren:()=> import("./authmodule/authmodule.module").then(m => m.AuthmoduleModule)
     },
     {
-        path:'admin',
-        loadChildren:()=> import("./adminmodule/adminmodule.module").then(m => m.AdminmoduleModule)
-    },
-    {
         path:'user',
         loadChildren:()=> import("./usermodule/usermodule.module").then(m => m.UsermoduleModule)
     }

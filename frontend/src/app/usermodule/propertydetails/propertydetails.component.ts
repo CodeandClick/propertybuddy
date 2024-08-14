@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { Imageslider3Component } from "../imageslider-3/imageslider-3.component";
+import { Imageslider3Component } from "../components/imageslider-3/imageslider-3.component";
 import { CallToActionComponent } from "../call-to-action/call-to-action.component";
 
 @Component({

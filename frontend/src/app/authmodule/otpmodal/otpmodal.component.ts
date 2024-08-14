@@ -1,6 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChildren, ElementRef, EventEmitter, Output, ViewChild, Input } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ViewChildren,
+  ElementRef,
+  EventEmitter,
+  Output,
+  ViewChild,
+  Input,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { interval } from 'rxjs/internal/observable/interval';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { AuthService } from '../../services/auth.service';
@@ -10,22 +25,21 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './otpmodal.component.html',
-  styleUrl: './otpmodal.component.css'
+  styleUrl: './otpmodal.component.css',
 })
 export class OtpmodalComponent {
   @Output() closeModalEvent = new EventEmitter<boolean>();
   @Output() otpSendEvent = new EventEmitter<number>();
-  @Input() isValidOtp!: boolean
+  @Input() isValidOtp!: boolean;
 
   reSendOtp: boolean = false;
-
-  email !: string
-
+  email!: string;
   form: FormGroup;
+  isSubmit: boolean = false;
 
   formInput = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
   @ViewChildren('formRow') rows: any;
-  
+
   minutes: number = 2; // Set the initial minutes here
   seconds: number = 0; // Set the initial seconds here
   private timerSubscription!: Subscription;
@@ -42,7 +56,6 @@ export class OtpmodalComponent {
 
   constructor(private authService: AuthService) {
     this.form = this.toFormGroup(this.formInput);
-
   }
 
   toFormGroup(elements: any[]) {
@@ -54,7 +67,7 @@ export class OtpmodalComponent {
     return new FormGroup(group);
   }
 
-  keyUpEvent(event: { keyCode: number; which: number; }, index: number) {
+  keyUpEvent(event: { keyCode: number; which: number }, index: number) {
     let pos = index;
     if (event.keyCode === 8 && event.which === 8) {
       pos = index - 1;
@@ -64,7 +77,6 @@ export class OtpmodalComponent {
     if (pos > -1 && pos < this.formInput.length) {
       this.rows._results[pos].nativeElement.focus();
     }
-
   }
 
   startTimer() {
@@ -78,7 +90,7 @@ export class OtpmodalComponent {
       this.seconds = remainingTime % 60;
 
       if (remainingTime <= 0) {
-        this.reSendOtp = true
+        this.reSendOtp = true;
         this.timerSubscription.unsubscribe(); // Stop the timer when time runs out
       }
     });
@@ -97,16 +109,22 @@ export class OtpmodalComponent {
   }
 
   closeModal() {
-    this.closeModalEvent.emit(false)
+    this.closeModalEvent.emit(false);
   }
 
   onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
     } else {
-      const otp = this.form.value.input1 + this.form.value.input2 + this.form.value.input3 + this.form.value.input4 + this.form.value.input5 + this.form.value.input6
+      const otp =
+        this.form.value.input1 +
+        this.form.value.input2 +
+        this.form.value.input3 +
+        this.form.value.input4 +
+        this.form.value.input5 +
+        this.form.value.input6;
       this.otpSendEvent.emit(otp);
     }
+    this.isSubmit = true;
   }
 }
-

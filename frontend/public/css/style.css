@@ -959,8 +959,11 @@ button:focus {
 .input-item-email.ltn__custom-icon::before {
   content: "\f0e0"; }
 
-.input-item-phone.ltn__custom-icon::before {
+  .input-item-phone.ltn__custom-icon::before {
   content: "\f095"; }
+
+.input-item-location.ltn__custom-icon::before {
+  content: "\f3c5"; }
 
 .input-item-subject.ltn__custom-icon::before {
   content: "\f06e"; }

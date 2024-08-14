@@ -6,23 +6,17 @@ import 'slick-carousel'; // Ensure Slick Carousel is imported
   selector: 'app-imageslider-3',
   standalone: true,
   templateUrl: './imageslider-3.component.html',
-  styleUrls: ['./imageslider-3.component.css']
+  styleUrls: ['./imageslider-3.component.css'],
 })
-export class Imageslider3Component  {
-
-
-
+export class Imageslider3Component {
   private stylesheets: string[] = [
     'css/font-icons.css',
     'css/plugins.css',
     'css/style.css',
-    'css/responsive.css'
+    'css/responsive.css',
   ];
 
-  private scripts: string[] = [
-    'js/plugins.js',
-    'js/main.js'
-  ];
+  private scripts: string[] = ['js/plugins.js', 'js/main.js'];
 
   private addedScripts: HTMLScriptElement[] = [];
   private addedStyles: HTMLLinkElement[] = [];
@@ -34,9 +28,7 @@ export class Imageslider3Component  {
     }
   }
 
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     // this.removeStyles();
@@ -44,7 +36,7 @@ export class Imageslider3Component  {
   }
 
   private addStyles(styles: string[]): void {
-    styles.forEach(href => {
+    styles.forEach((href) => {
       const linkElement = this.addStyle(href);
       if (linkElement) {
         this.addedStyles.push(linkElement);
@@ -65,7 +57,7 @@ export class Imageslider3Component  {
   }
 
   private removeStyles(): void {
-    this.addedStyles.forEach(link => {
+    this.addedStyles.forEach((link) => {
       if (link.parentNode) {
         link.parentNode.removeChild(link);
       }
@@ -89,14 +81,15 @@ export class Imageslider3Component  {
       const scriptElement = document.createElement('script');
       scriptElement.src = src;
       scriptElement.onload = () => resolve();
-      scriptElement.onerror = () => reject(new Error(`Failed to load script ${src}`));
+      scriptElement.onerror = () =>
+        reject(new Error(`Failed to load script ${src}`));
       document.body.appendChild(scriptElement);
       this.addedScripts.push(scriptElement);
     });
   }
 
   private removeScripts(): void {
-    this.addedScripts.forEach(script => {
+    this.addedScripts.forEach((script) => {
       if (script.parentNode) {
         script.parentNode.removeChild(script);
       }

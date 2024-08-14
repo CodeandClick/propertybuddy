@@ -1,151 +1,140 @@
 <!-- BREADCRUMB AREA START -->
 <div class="ltn__breadcrumb-area text-left bg-overlay-white-30 bg-image" data-bs-bg="img/bg/14.jpg">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="ltn__breadcrumb-inner">
-            <h1 class="page-title">Account</h1>
-            <div class="ltn__breadcrumb-list">
-              <ul>
-                <li>
-                  <a href="index.html"><span class="ltn__secondary-color"><i class="fas fa-home"></i></span>
-                    Home</a>
-                </li>
-                <li>Register</li>
-              </ul>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="ltn__breadcrumb-inner">
+          <h1 class="page-title">Account</h1>
+          <div class="ltn__breadcrumb-list">
+            <ul>
+              <li>
+                <a href="index.html"><span class="ltn__secondary-color"><i class="fas fa-home"></i></span>
+                  Home</a>
+              </li>
+              <li>Register</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- BREADCRUMB AREA END -->
-  
-  <!-- LOGIN AREA START (Register) -->
-  <div class="ltn__login-area pb-110">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="section-title-area text-center">
-            <h1 class="section-title">Register <br />Your Agent Account</h1>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br />
-              Sit aliquid, Non distinctio vel iste.
-            </p>
-          </div>
+</div>
+<!-- BREADCRUMB AREA END -->
+
+<!-- LOGIN AREA START (Register) -->
+<div class="ltn__login-area pb-110 mt-50">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-title-area text-center">
+          <h1 class="section-title">Register <br />Your Agent Account</h1>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-6 offset-lg-3">
-          <div class="account-login-inner">
+    </div>
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="account-login-inner">
           <form class="ltn__form-box contact-form-box" [formGroup]="agentRegistrationForm">
-    <div class="form-messege" *ngIf="getControl('userName')?.dirty || getControl('userName')?.touched">
-      <span class="error" *ngIf="getControl('userName')?.errors?.['required']">*Username is required</span>
-      <span class="error" *ngIf="getControl('userName')?.errors?.['pattern']">*Invalid username format</span>
-    </div>
-    <input class="" [class.error-input]="getControl('userName')?.invalid && getControl('userName')?.touched" type="text"[class.success-input]="getControl('userName')?.valid && getControl('userName')?.touched" formControlName="userName" placeholder="User Name*" />
-  
-              <div class="form-messege" *ngIf="getControl('email')?.dirty || getControl('email')?.touched">
-                @if (getControl('email')?.errors?.['required']) {
-                  <span class="error">*Email is required</span>
-                }@else if (getControl('email')?.errors?.['email']) {
-                  <span class="error">*Enter correct email</span>
-                }@else if (emailExist) {
-                  <span class="error"> *Email is Already Exist </span>
-                }@else if (verificationStatus) {
-                  <span class="error"> *Verify Email </span>
-                }
-              </div>
-              <div class="passwordShow">
-  
-                <input class="" class="" 
-                [class.error-input]="getControl('email')?.invalid && getControl('email')?.touched" 
+            <div class="form-messege" *ngIf="getControl('userName')?.dirty || getControl('userName')?.touched">
+              <span class="error" *ngIf="getControl('userName')?.errors?.['required']">*Username is required</span>
+              <span class="error" *ngIf="getControl('userName')?.errors?.['pattern']">*Invalid username format</span>
+            </div>
+            <input [class.error-input]="getControl('userName')?.invalid && getControl('userName')?.touched" type="text"
+              [class.success-input]="getControl('userName')?.valid && getControl('userName')?.touched"
+              formControlName="userName" placeholder="User Name*" />
+
+            <div class="form-messege" *ngIf="getControl('email')?.dirty || getControl('email')?.touched">
+              @if (getControl('email')?.errors?.['required']) {
+              <span class="error">*Email is required</span>
+              }@else if (getControl('email')?.errors?.['pattern']) {
+              <span class="error">*Enter a valid email</span>
+              }@else if (emailExist) {
+              <span class="error"> *Email is Already Exist </span>
+              }@else if (!verificationStatus) {
+              <span class="error"> *Verify Email </span>
+              }
+            </div>
+            <div class="passwordShow">
+
+              <input [class.error-input]="getControl('email')?.invalid && getControl('email')?.touched"
                 [class.success-input]="getControl('email')?.valid && getControl('email')?.touched" type="text"
-                 formControlName="email" placeholder="Email*" (input)="emailClicked($event)"
-                 />
-  
-                <i class="fas fa-circle-check" [style]="{color : emailStatusColor}"
-                  *ngIf=" emailStatusColor == 'green' "></i>
-              </div>
-  
-              <button class="theme-btn-1 btn reverse-color btn-block verify-btn" *ngIf="emailStatus"
-                [disabled]="getControl('email')?.invalid" (click)="sendOtp()">
-                Verify
+                [class.disabled-input]="verificationStatus" formControlName="email" placeholder="Email*"
+                (input)="emailClicked($event)" />
+
+              <i class="fas fa-circle-check" [style]="{color : emailStatusColor}"
+                *ngIf=" emailStatusColor == 'green' "></i>
+            </div>
+
+            <button class="theme-btn-1 btn reverse-color btn-block verify-btn" *ngIf="emailStatus"
+              [disabled]="getControl('email')?.invalid" (click)="sendOtp()">
+              Verify
+            </button>
+
+
+            <span style="color: red;" *ngIf=" getControl('password')?.invalid &&getControl('password')?.touched">
+              @if (agentRegistrationForm.get('password')?.errors?.['required']) {
+              <span class="error">Password is required.<br></span>
+              }@else if (agentRegistrationForm.get('password')?.errors?.['hasUpperCase']) {
+              <span class="error">Password must contain at least one uppercase letter.<br></span>
+              }@else if (agentRegistrationForm.get('password')?.errors?.['hasNumber']) {
+              <span class="error">Password must contain at least one number.<br></span>
+              }@else if (agentRegistrationForm.get('password')?.errors?.['hasLowerCase']) {
+              <span class="error">Password must contain at least one lowercase letter.<br></span>
+              }@else if (agentRegistrationForm.get('password')?.errors?.['hasSpecialCharacter']) {
+              <span class="error">Password must contain at least one special character.</span>
+              }@else if (agentRegistrationForm.get('password')?.errors?.['minlength']) {
+              <span class="error">Password must be at least 8 characters long.<br></span>
+              }
+            </span>
+
+            <div class="passwordShow">
+              <input [type]="passwordFieldType" class=""
+                [class.error-input]="getControl('password')?.invalid && getControl('password')?.touched"
+                [class.success-input]="getControl('password')?.valid && getControl('password')?.touched"
+                formControlName="password" name="password" placeholder="Password*" (click)="changeFormCheck()" />
+              <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'"
+                (click)="togglePasswordVisibility()"></i>
+            </div>
+
+            <div class="form-message"
+              *ngIf="agentRegistrationForm.get('confirmPassword')?.invalid && agentRegistrationForm.get('confirmPassword')?.touched">
+              <span class="error" *ngIf="agentRegistrationForm.errors?.['passwordMissMatch']">Both passwords should be
+                the same</span>
+            </div>
+            <input type="password"
+              [class.success-input]="getControl('confirmPassword')?.valid && getControl('confirmPassword')?.touched"
+              class=""
+              [class.error-input]="getControl('confirmPassword')?.invalid && getControl('confirmPassword')?.touched"
+              formControlName="confirmPassword" placeholder="Confirm Password*" />
+
+            <div class="btn-wrapper">
+              <button [disabled]="verificationStatus" class="theme-btn-1 btn reverse-color btn-block"
+                (click)="onSubmit()">
+                CREATE ACCOUNT
               </button>
-  
-  
-    <span style="color: red;" *ngIf=" getControl('password')?.invalid &&getControl('password')?.touched">
-      @if (agentRegistrationForm.get('password')?.errors?.['required']) {
-        <span class="error">Password is required.<br></span>
-      }@else if (agentRegistrationForm.get('password')?.errors?.['hasUpperCase']) {
-        <span class="error">Password must contain at least one uppercase letter.<br></span>
-      }@else if (agentRegistrationForm.get('password')?.errors?.['hasNumber']) {
-        <span class="error">Password must contain at least one number.<br></span>
-      }@else if (agentRegistrationForm.get('password')?.errors?.['hasLowerCase']) {
-        <span class="error">Password must contain at least one lowercase letter.<br></span>
-      }@else if (agentRegistrationForm.get('password')?.errors?.['hasSpecialCharacter']) {
-        <span class="error">Password must contain at least one special character.</span>
-      }@else if (agentRegistrationForm.get('password')?.errors?.['minlength']) {
-        <span class="error" >Password must be at least 8 characters long.<br></span>
-      }
-  </span>
-  
-    <div class="passwordShow">
-      <input [type]="passwordFieldType"  class="" [class.error-input]="getControl('password')?.invalid && getControl('password')?.touched" [class.success-input]="getControl('password')?.valid && getControl('password')?.touched" formControlName="password" name="password" placeholder="Password*" (click)="changeFormCheck()"  />
-      <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'" (click)="togglePasswordVisibility()"></i>
-    </div>
-  
-  
-  
-              <div class="form-message"
-                *ngIf="agentRegistrationForm.get('confirmPassword')?.invalid && agentRegistrationForm.get('confirmPassword')?.touched">
-                <span class="error" *ngIf="agentRegistrationForm.errors?.['passwordMissMatch']">Both passwords should be
-                  the same</span>
-              </div>
-              <input type="password" [class.success-input]="getControl('confirmPassword')?.valid && getControl('confirmPassword')?.touched" class="" [class.error-input]="getControl('confirmPassword')?.invalid && getControl('confirmPassword')?.touched" formControlName="confirmPassword" placeholder="Confirm Password*" />
-  
-              <label class="checkbox-inline">
-                <input type="checkbox" value="" />
-                I consent to Herboil processing my personal data in order to send personalized marketing material in
-                accordance with the consent form and the privacy policy.
-              </label>
-              <label class="checkbox-inline">
-                <input type="checkbox" value="" />
-                By clicking "create account", I consent to the privacy policy.
-              </label>
-              <div class="btn-wrapper">
-                <button [disabled]="verificationStatus" class="theme-btn-1 btn reverse-color btn-block" (click)="onSubmit()">
-                  CREATE ACCOUNT
-                </button>
-              </div>
-            </form>
-  
-            <div class="by-agree text-center">
-              <p>By creating an account, you agree to our:</p>
-              <p>
-                <a>TERMS OF CONDITIONS &nbsp; &nbsp; | &nbsp; &nbsp; PRIVACY
-                  POLICY</a>
-              </p>
-              <div class="go-to-btn mt-50">
-                <a [routerLink]="['../login']">ALREADY HAVE AN ACCOUNT ?</a>
-              </div>
+            </div>
+          </form>
+
+          <div class="by-agree text-center">
+            <p>By creating an account, you agree to our:</p>
+            <p>
+              <a>TERMS OF CONDITIONS &nbsp; &nbsp; | &nbsp; &nbsp; PRIVACY
+                POLICY</a>
+            </p>
+            <div class="go-to-btn mt-50">
+              <a [routerLink]="['../login']">ALREADY HAVE AN ACCOUNT ?</a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- LOGIN AREA END -->
-  
-  <!-- CALL TO ACTION START (call-to-action-6) -->
-  <app-call-to-action></app-call-to-action>
-  <!-- CALL TO ACTION END -->
-  
-  <!-- otp User Start -->
-  @if(showModal){
-  <app-otpmodal  [isValidOtp]="inValidOtp" (otpSendEvent)="verifyOtp($event)"  (closeModalEvent)="closeModal($event)"  ></app-otpmodal>
-  }
-  <!-- otp user end -->
-  
-  
-  
+</div>
+<!-- LOGIN AREA END -->
+
+<!-- otp User Start -->
+@if(showModal){
+<app-otpmodal [isValidOtp]="inValidOtp" (otpSendEvent)="verifyOtp($event)"
+  (closeModalEvent)="closeModal($event)"></app-otpmodal>
+}
+<!-- otp user end -->
