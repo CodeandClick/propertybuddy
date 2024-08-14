@@ -5,8 +5,6 @@ const router = express()
 
 
 router.post('/login',adminController.login)
-
-
 router.get('/getUsers',adminAuth, adminController.getUsers)
 router.get('/getAgents',adminAuth,adminController.getAgents)
 
