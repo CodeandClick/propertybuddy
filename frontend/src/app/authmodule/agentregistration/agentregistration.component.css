@@ -104,6 +104,14 @@ input[type='email'] :focus{
   
 }
 
+.disabled-input {
+    pointer-events: none;  /* Prevents clicking or interacting with the input */
+    opacity: 1;          /* Makes the input look disabled */
+    background-color: #f5f5f5; /* Light grey background to indicate it's disabled */
+    color: #999;           /* Grey text color */
+    border: 1px solid #ccc; /* Light grey border */
+}
+
 .passwordShow i:hover {
   color: #000; /* Change the color when hovering over the icon */
 }

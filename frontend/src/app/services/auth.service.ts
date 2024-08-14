@@ -48,6 +48,7 @@ export class AuthService {
       (res) => {
         if (res) {
           alert('sucess');
+          this.router.navigate(['auth/master/login']);
         }
       },
       (error) => {
@@ -63,13 +64,29 @@ export class AuthService {
         if (res) {
           localStorage.setItem('access-token', res.accessToken);
           localStorage.setItem('refresh-token', res.refreshToken);
-          this.router.navigate(['/master/userlocationregistration']);
+          alert('success');
+          this.router.navigate(['auth/master/agentlocationregistration']);
         } else {
           alert('error');
         }
       },
       (error) => {
         console.log(error);
+      }
+    );
+  }
+
+  pushAgentAdrress(agent: any) {
+    console.log('user', agent);
+    this.http.put(this.url + '/agent/agentAddressRegister/', agent).subscribe(
+      (res) => {
+        if (res) {
+          alert('sucess');
+          this.router.navigate(['auth/master/login']);
+        }
+      },
+      (error) => {
+        console.log('404', error);
       }
     );
   }

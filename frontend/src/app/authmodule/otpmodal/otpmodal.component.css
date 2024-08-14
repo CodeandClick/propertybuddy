@@ -1,52 +1,50 @@
 /* Ensure the input field is visible and has a clear border */
 input.form-control {
-    color: #000; /* Set text color to black or any other visible color */
-    background-color: #fff; /* Set background color to white or another contrasting color */
-    border: 1px solid #ccc; /* Add a border to the input field */
-    padding: 10px; /* Add some padding for better appearance */
-    font-size: 16px; /* Adjust font size for better readability */
-    text-align: center; /* Center the text in the input field */
+  color: #000; /* Set text color to black or any other visible color */
+  background-color: #fff; /* Set background color to white or another contrasting color */
+  border: 1px solid #ccc; /* Add a border to the input field */
+  padding: 10px; /* Add some padding for better appearance */
+  font-size: 16px; /* Adjust font size for better readability */
+  text-align: center; /* Center the text in the input field */
 }
 
 /* Remove any box-shadow or outline for a cleaner look */
 input.form-control:focus {
-    outline: none; /* Remove the default outline */
-    box-shadow: none; /* Remove any box-shadow */
-    border-color: #007bff; /* Change border color on focus */
+  outline: none; /* Remove the default outline */
+  box-shadow: none; /* Remove any box-shadow */
+  border-color: #007bff; /* Change border color on focus */
 }
 
 /* Make sure the input field is not hidden */
 input.form-control {
-    visibility: visible; /* Ensure the input is visible */
-    display: block; /* Ensure the input is displayed */
+  visibility: visible; /* Ensure the input is visible */
+  display: block; /* Ensure the input is displayed */
 }
 
 /* Additional styling for the form group */
 .form-group {
-    margin-bottom: 15px; /* Space out the form fields */
+  margin-bottom: 15px; /* Space out the form fields */
 }
 
 /* Styling for the modal body to ensure it's displayed properly */
 .modal-body {
-    padding: 20px; /* Add padding inside the modal */
+  padding: 20px; /* Add padding inside the modal */
 }
-
 
 .modal-product-info {
-    padding-left: 0px;
+  padding-left: 0px;
 }
 
-
-.error{
-    color: red;
+.error {
+  color: red;
+  margin-bottom: 20px;
 }
 
-.resend-otp{
-    cursor: pointer;
-    color:#007bff;
- }
+.resend-otp {
+  cursor: pointer;
+  color: #007bff;
+}
 
- .custom-modal{
-    margin-top: 30px;
- }
-
+.custom-modal {
+  margin-top: 30px;
+}
