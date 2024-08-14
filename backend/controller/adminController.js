@@ -5,26 +5,29 @@ import AgentDb from "../model/agentModel.js";
 
 
 
-const login = async (req,res)=>{
+const login = async (req, res) => {
     try {
-    const {email , password } = req.body    
-    const isEmail = process.env.ADMIN_EMAIL
-    const isPassword = process.env.ADMIN_PASSWORD
-    const result = await adminLoginValidation(req.body)
-    if(result != false){
-        return
-    }
-
-    if(email != isEmail) return res.status(400).json({error:true , message:'email is incorect'})
-    if(password != isPassword) return res.status(400).json({error:true , message:"password is incorrect"})    
-     req.session.isAdmin = true
-     res.status(200).json({error:false, message:"admin logged in completed"})
-
+      const { email, password } = req.body;
+      console.log(email, password);   
+      const isEmail = process.env.ADMIN_EMAIL;
+      const isPassword = process.env.ADMIN_PASSWORD;
+  
+      if (email !== isEmail) { 
+        return res.status(400).json({ error: true, message: 'email is incorrect' });
+      } 
+       
+      if (password !== isPassword) {
+        return res.status(400).json({ error: true, message: 'password is incorrect' });
+      }
+       
+      req.session.isAdmin = true;
+      res.status(200).json({ error: false, message: 'admin logged in successfully' });
+       
     } catch (error) {
-        console.log(error)
-        res.status(500).json({error:true , message:"internel Server Error"})
+      console.log(error);
+      res.status(500).json({ error: true, message: 'internal Server Error' });
     }
-}
+  };
 
 
 const getUsers = async (req,res)=>{

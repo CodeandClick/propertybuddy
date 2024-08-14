@@ -33,8 +33,8 @@ app.use(express.urlencoded({ extended: true }));
 connectDb()
 
 const corsOptions = {
-  origin: 'http://localhost:4200', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  origin: ['http://localhost:4200', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
