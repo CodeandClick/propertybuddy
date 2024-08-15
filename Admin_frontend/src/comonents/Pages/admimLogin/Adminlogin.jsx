@@ -7,10 +7,6 @@ import checkadmin from '../../../services/api';
 
 
 function Adminlogin() {
-    const admin = {
-        email: 'admin@gmail.com',
-        password: '1234',
-      };
     
       const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
@@ -31,7 +27,45 @@ function Adminlogin() {
       const handlePasswordChange = (e) => setPassword(e.target.value);
     
       const handleSubmit = (e) => {
-        checkadmin(email,password)
+        checkadmin(email,password).then((data)=>{
+          
+        if (data.error===false){
+          navigate('/admin/home')
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Signed in successfully"
+              });
+        }
+        }).catch((error)=>{
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Invalid credentials"
+          });
+        })
+        
+        
         e.preventDefault();
     
         const emailValidation = validateEmail(email);
@@ -53,41 +87,6 @@ function Adminlogin() {
                 title: "Invalid Email Format"
               });
           return;
-        }
-    
-        if (password === admin.password&&email===admin.email) {
-            navigate('/admin/home')
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.onmouseenter = Swal.stopTimer;
-                  toast.onmouseleave = Swal.resumeTimer;
-                }
-              });
-              Toast.fire({
-                icon: "success",
-                title: "Signed in successfully"
-              });
-        } else {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.onmouseenter = Swal.stopTimer;
-                  toast.onmouseleave = Swal.resumeTimer;
-                }
-              });
-              Toast.fire({
-                icon: "error",
-                title: "Invalid credentials"
-              });
         }
       };
     return (

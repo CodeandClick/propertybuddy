@@ -23,6 +23,7 @@ app.use(session({
     cookie: {
         secure: false, // Set to false in development
         sameSite: 'Strict',
+        maxAge:  1 * 60 * 60 * 1000 
     }
 }));
 
@@ -35,7 +36,8 @@ connectDb()
 const corsOptions = {
   origin: ['http://localhost:4200', 'http://localhost:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
 
 // Use the CORS middleware with options
@@ -50,6 +52,37 @@ app.use('/agent',AgentRouter)
 app.use('/admin',AdminRouter)
 app.use('/', tokenRouter);
 app.use('/agent',AgentRouter);
+
+app.use((req, res) => {
+  res.status(404).json({ error: "Not Found" });
+});
+
+const errorHandler = (err, req, res, next) => {
+  console.log("err", err);
+  if (err instanceof AppError) {
+    const { statusCode, message } = err;
+    return res.status(statusCode).json({
+      status: false,
+      statusCode: statusCode,
+      error: { message: err.message, stack: err.stack },
+    });
+  }
+  if (err instanceof ReferenceError || err instanceof TypeError) {
+    return res.status(400).json({
+      status: false,
+      statusCode: 400,
+      error: { message: err.message, stack: err.stack },
+    });
+  }
+  // For internal errors
+  res.status(500).json({
+    status: false,
+    statusCode: 500,
+    error: { message: "Internal Server Error" },
+  });
+};
+
+app.use(errorHandler);
 
 // Start Server
 app.listen(port, () => {
