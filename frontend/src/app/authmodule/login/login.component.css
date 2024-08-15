@@ -23,3 +23,28 @@
   padding-top: 30px;
   padding-bottom: 30px;
 }
+
+
+.passwordShow {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+input i{
+  overflow-y: scroll;
+  
+}
+.passwordShow i:hover {
+  color: #000; /* Change the color when hovering over the icon */
+}
+
+.passwordShow i {
+  position: absolute;
+  top: 36%;
+  right: 10px; /* Adjust the position of the icon */
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #aaa; /* Adjust the color of the icon */
+  
+}
+

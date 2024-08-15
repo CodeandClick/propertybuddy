@@ -25,44 +25,6 @@ select{
   background-color: red;
 }
 
-
-.tooltip-container {
-  display: inline-block;
-  position: relative;
-}
-
-.dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-.tooltip {
-  visibility: hidden;
-  width: 200px; /* Adjust width as needed */
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 10px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%; /* Position above the dot */
-  left: 50%;
-  margin-left: -100px; /* Center the tooltip */
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.tooltip-container:hover .tooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
-
 .verify-btn{
   margin-bottom: 20px;
   margin-top: -25px;
@@ -116,10 +78,65 @@ input[type='email'] :focus{
   color: #000; /* Change the color when hovering over the icon */
 }
 
+
 .otp-success{
   color: rgb(10, 196, 10);
 }
 
 .error{
   font-size: 13px;
+  color: red;
+}
+
+
+
+
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.hint-icon {
+  margin-left: 10px;
+  position: relative;
+  cursor: pointer;
+  justify-content: end;
+}
+
+.hint-icon i {
+  color: #007bff;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position the tooltip above the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip when hovering over the hint-icon */
+.hint-icon:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hint-icon .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
 }
