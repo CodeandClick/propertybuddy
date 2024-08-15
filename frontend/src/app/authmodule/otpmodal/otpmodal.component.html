@@ -1,8 +1,11 @@
 <div class="ltn__modal-area ltn__add-to-cart-modal-area----">
-    <div class="modal fade custom-modal" id="ltn_forget_password_modal" tabindex="-1"
-        style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);">
+    <div class="modal fade custom-modal" id="ltn_forget_password_modal" tabindex="-1" style="
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
+    ">
         <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content">
+            <div class="modal-content p-2">
                 <div class="modal-header">
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
                         (click)="closeModal()">
@@ -16,14 +19,16 @@
                                 <div class="col-12">
                                     <div class="modal-product-info text-center">
                                         <h4>Enter OTP</h4>
-                                        <p class="added-cart">Enter OTP sent to the registered email.</p>
+                                        <p class="added-cart">
+                                            Enter OTP sent to the registered email.
+                                        </p>
                                         <form (ngSubmit)="onSubmit()" [formGroup]="form" class="ltn__form-box">
                                             <div class="row">
                                                 <div class="form-group mb-0 col-sm-2"
                                                     *ngFor="let input of formInput; index as i">
                                                     <input #formRow type="text" pattern="[0-9]*"
-                                                        formControlName="{{input}}" class="form-control" maxlength="1"
-                                                        (keyup)="keyUpEvent($event, i)">
+                                                        formControlName="{{ input }}" class="form-control" maxlength="1"
+                                                        (keyup)="keyUpEvent($event, i)" />
                                                 </div>
                                             </div>
                                             @if(form.invalid && isSubmit){
@@ -32,28 +37,29 @@
                                             <span class="error mb-1">Invalid OTP or Expired OTP</span>
                                             }
 
-                                            <div class="btn-wrapper mt-4">
-                                                <button class="theme-btn-1 btn btn-full-width-2"
-                                                    type="submit">Submit</button>
+                                            <div class="btn-wrapper my-4">
+                                                <button class="theme-btn-1 btn btn-full-width-2" type="submit">
+                                                    Submit
+                                                </button>
                                             </div>
                                             <div>
                                                 @if (reSendOtp) {
                                                 <a class="resend-otp" (click)="sendOtp()">Resend OTP</a>
                                                 }@else if (!reSendOtp) {
-                                                <label class="mt-3">Resend OTP after - </label>{{ minutes }}:{{ seconds |
-                                                number:'2.0'
-                                                }}
-
+                                                <label class="mt-3">Resend OTP after - </label>{{ minutes }}:{{ seconds
+                                                | number : "2.0" }}
                                                 }
                                             </div>
                                         </form>
                                     </div>
                                     <!-- additional-info -->
                                     <div class="additional-info d-none">
-                                        <p>We want to give you <b>10% discount</b> for your first order,<br>Use discount
-                                            code at checkout</p>
+                                        <p>
+                                            We want to give you <b>10% discount</b> for your first
+                                            order,<br />Use discount code at checkout
+                                        </p>
                                         <div class="payment-method">
-                                            <img src="img/icons/payment.png" alt="#">
+                                            <img src="img/icons/payment.png" alt="#" />
                                         </div>
                                     </div>
                                 </div>

@@ -20,7 +20,7 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { CallToActionComponent } from '../../usermodule/call-to-action/call-to-action.component';
+import { CallToActionComponent } from '../../usermodule/components/call-to-action/call-to-action.component';
 import { OtpmodalComponent } from '../otpmodal/otpmodal.component';
 
 @Component({
@@ -42,7 +42,7 @@ import { OtpmodalComponent } from '../otpmodal/otpmodal.component';
 export class AgentregistrationComponent {
   inValidOtp: boolean = false;
   emailStatusColor = 'inherit';
-  showModal: boolean = false;
+  showModal: boolean = true;
   verificationStatus: boolean = false;
   formCheck: boolean = false;
   disableEmail: boolean = false;
@@ -150,7 +150,7 @@ export class AgentregistrationComponent {
   }
 
   onSubmit() {
-    if (this.agentRegistrationForm.invalid || this.verificationStatus) {
+    if (this.agentRegistrationForm.invalid || !this.verificationStatus) {
       this.agentRegistrationForm.markAllAsTouched();
     } else {
       this.authService.pushAgent(this.agentRegistrationForm.value);

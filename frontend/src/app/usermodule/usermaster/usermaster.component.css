@@ -1,33 +1,27 @@
-
-
 .btn-premium {
-    background-color: #e9a517;
-    color: #fff;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 50px;
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-premium i {
-    margin-right: 8px;
-    font-size: 20px;
-  }
-  
-  .btn-premium:hover {
-    background-color: #d19416;
-    color: black;
-  }
+  background-color: #e9a517;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+.btn-premium i {
+  margin-right: 8px;
+  font-size: 20px;
+}
 
-
-
+.btn-premium:hover {
+  background-color: #d19416;
+  color: black;
+}
 
 /* Styles for the overlay */
 .overlay {
@@ -73,7 +67,6 @@
   font-size: 30px;
   color: #333; /* Match the color with the icons */
   text-align: center;
-
 }
 
 /* Optional: Icon hover effects */

@@ -122,4 +122,5 @@ input[type='email'] :focus{
 
 .error{
   font-size: 13px;
+  color: red;
 }

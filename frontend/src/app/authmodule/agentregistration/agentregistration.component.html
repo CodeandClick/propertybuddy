@@ -71,7 +71,7 @@
             </button>
 
 
-            <span style="color: red;" *ngIf=" getControl('password')?.invalid &&getControl('password')?.touched">
+            <span *ngIf=" getControl('password')?.invalid &&getControl('password')?.touched">
               @if (agentRegistrationForm.get('password')?.errors?.['required']) {
               <span class="error">Password is required.<br></span>
               }@else if (agentRegistrationForm.get('password')?.errors?.['hasUpperCase']) {
@@ -108,7 +108,7 @@
               formControlName="confirmPassword" placeholder="Confirm Password*" />
 
             <div class="btn-wrapper">
-              <button [disabled]="verificationStatus" class="theme-btn-1 btn reverse-color btn-block"
+              <button [disabled]="!verificationStatus" class="theme-btn-1 btn reverse-color btn-block"
                 (click)="onSubmit()">
                 CREATE ACCOUNT
               </button>

@@ -6,7 +6,7 @@ import { OtpmodalComponent } from '../otpmodal/otpmodal.component';
 import { LoaderComponent } from '../loader/loader.component';
 import { Observable, Subject } from 'rxjs';
 import { LoaderService } from '../../services/loader.service';
-import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-action.component";
+import { CallToActionComponent } from "../../usermodule/components/call-to-action/call-to-action.component";
 
 @Component({
   selector: 'app-master',
