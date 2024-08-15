@@ -5,6 +5,7 @@ import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-a
 import { ForgotpasswordComponent } from "../forgotpassword/forgotpassword.component";
 import { RoleSelectComponent } from "../components/role-select/role-select.component";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,22 +26,29 @@ export class LoginComponent {
 
   isOverlayVisible : boolean = false;
 
+  passwordFieldType: string = 'password';
+
   loginForm !: FormGroup;
-  constructor(){
+  constructor( private authService : AuthService){
     this.loginForm= new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
-  }   
+  }
+  
+
+  
+  togglePasswordVisibility() {
+    this.passwordFieldType =
+      this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
   
   showOverlay(){
     this.isOverlayVisible=true;
   }
 
-  hideOverlay(event: Event) {
-    if (event.target === event.currentTarget) {
-      this.isOverlayVisible = false;
-    }
+  closeOverlay(event: boolean) {
+      this.isOverlayVisible = event;
   }
 
   getControl( controlName : string){
@@ -49,7 +57,8 @@ export class LoginComponent {
 
   onSubmit(){
     if(this.loginForm.valid){
-      console.log(this.loginForm.value)
+      console.log(this.loginForm.value);
+      this.authService.login(this.loginForm.value);
     }
   }
 }

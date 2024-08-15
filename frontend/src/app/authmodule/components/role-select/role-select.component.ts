@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
@@ -10,5 +10,11 @@ import { RouterLink, RouterModule } from '@angular/router';
   styleUrl: './role-select.component.css'
 })
 export class RoleSelectComponent {
+@Output() closeOverlayEvent = new EventEmitter<boolean>()
 
+constructor(){}
+
+closeOverlay(){
+  this.closeOverlayEvent.emit(false)
+}
 }

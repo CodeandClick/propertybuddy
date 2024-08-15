@@ -12,13 +12,22 @@ export class AuthService {
   private url = 'http://localhost:4000';
   constructor(private http: HttpClient, private router: Router) {}
 
+  login( data : any ){
+    console.log(data)
+    this.http.post(this.url + '/user/login' , data).subscribe(res =>{
+      if(res){
+        alert('hi');
+      }
+    })
+  }
+
   sendOtp(email: string) {
     return this.http.post(this.url + '/user/verifyMail', {
       email,
       role: 'user',
     });
-  }
 
+  }
   validateOtp(otp: string, email: string) {
     return this.http.post(this.url + '/user/verifyOtp', { otp, email });
   }

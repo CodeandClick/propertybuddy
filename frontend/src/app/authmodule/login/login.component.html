@@ -33,7 +33,17 @@
                 <div class="account-login-inner">
                     <form [formGroup]="loginForm" class="ltn__form-box contact-form-box">
                         <input type="text" name="email" placeholder="Email*" formControlName="email">
-                        <input type="password" name="password" placeholder="Password*" formControlName="password">
+                        <!-- <input type="password" name="password" placeholder="Password*" formControlName="password"> -->
+
+                        <div class="passwordShow">
+                            <input [type]="passwordFieldType" 
+                              [class.error-input]="getControl('password')?.invalid && getControl('password')?.touched"
+                              [class.success-input]="getControl('password')?.valid && getControl('password')?.touched"
+                              formControlName="password" name="password" placeholder="Password*"  />
+                            <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'"
+                              (click)="togglePasswordVisibility()"></i>
+                        </div>
+
                         <div class="btn-wrapper mt-0">
                             <a>
                                 <button class="theme-btn-1 btn btn-block" (click)="onSubmit()">SIGN IN</button>
@@ -77,7 +87,7 @@
 
 
 <!-- OVERLAY FOR CREATE ACCTOUNT START -->
-<app-role-select *ngIf="isOverlayVisible"></app-role-select>
+<app-role-select *ngIf="isOverlayVisible"  (closeOverlayEvent)="closeOverlay($event)"></app-role-select>
 <!-- OVERLAY END -->
 
 

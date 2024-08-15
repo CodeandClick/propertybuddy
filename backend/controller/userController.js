@@ -90,6 +90,8 @@ const userAddressRegister = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    console.log("res",req.body);
+    
     const { email, password } = req.body;
     const mailValid = await loginValidation(email);
     if (mailValid.error) {
@@ -100,6 +102,10 @@ const login = async (req, res) => {
     const agent = await AgentDb.findOne({ email: email });
     const user = await UserDb.findOne({ email: email });
 
+    console.log("agent :",agent);
+    console.log("user :",user);
+    
+    
     if (agent) {
       //verify the password
       const result = await argon2.verify(agent.password, password);
@@ -119,9 +125,17 @@ const login = async (req, res) => {
         });
       }
     } else if (user) {
+    
       const result = await argon2.verify(user.password, password);
+      console.log("resul ",result);
+
+      
       if (result) {
         const token = await generateToken(user);
+        console.log(token);
+        console.log("hello");
+        
+        
         res.status(201).json({
           error: false,
           message: "User logged in successfully.",

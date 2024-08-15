@@ -208,7 +208,6 @@ export class AgentregistrationComponent {
 
   closeModal(event: boolean) {
     this.showModal = event;
-    this.verificationStatus = true;
     this.emailStatus = true;
   }
 }
