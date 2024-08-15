@@ -20,11 +20,12 @@ const generateToken = async (user) => {
 
         // Ensure userId is correctly referenced
         const userToken = await TokenDb.findOne({ userId: user._id });
-        if (userToken) await userToken.remove();
+        if (userToken) await TokenDb.deleteOne({userId:user._id})
 
         await new TokenDb({ userId: user._id, token: refreshToken }).save();
         return { accessToken, refreshToken };
     } catch (error) {
+        console.log(error)
         throw error; // Use throw to reject the promise
     }
 };

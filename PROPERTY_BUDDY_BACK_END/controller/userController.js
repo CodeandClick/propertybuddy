@@ -100,13 +100,13 @@ const login = async (req , res)=>{
         if(mailValid.error){
            return res.status(400).json(mailValid)
         }
-
         //check is the email is user or agent
         const agent = await AgentDb.findOne({email:email})
         const user = await UserDb.findOne({email:email})
 
         if(agent){
            //verify the password
+           console.log('agent')
            const result = await argon2.verify(agent.password,password)
            if(result){
             const token  = await generateToken(agent)
@@ -125,6 +125,7 @@ const login = async (req , res)=>{
            }
         }else if (user){
             const result = await argon2.verify(user.password , password)
+            console.log(result)
             if(result){
                 const token = await generateToken(user)
                 res.status(201).json({
@@ -134,6 +135,11 @@ const login = async (req , res)=>{
                     accessToken : token.accessToken,
                     refreshToken : token.refreshToken
                 });
+            }else{
+                res.status(403).json({
+                    error:true ,
+                    message:'incorrect password'
+                })
             }
         }else{
             res.status(400).json({
