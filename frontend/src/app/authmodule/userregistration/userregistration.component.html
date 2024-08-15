@@ -71,23 +71,37 @@
             </button>
 
 
-            <span style="color: red;" *ngIf=" getControl('password')?.dirty && getControl('password')?.touched">
-
-              @if (userRegistrationForm.get('password')?.errors?.['required']) {
-              <span class="error">Password is required.<br></span>
-              }@else if (userRegistrationForm.get('password')?.errors?.['hasUpperCase']) {
-              <span class="error">Password must contain at least one uppercase letter.<br></span>
-              }@else if (userRegistrationForm.get('password')?.errors?.['hasNumber']) {
-              <span class="error">Password must contain at least one number.<br></span>
-              }@else if (userRegistrationForm.get('password')?.errors?.['hasLowerCase']) {
-              <span class="error">Password must contain at least one lowercase letter.<br></span>
-              }@else if (userRegistrationForm.get('password')?.errors?.['hasSpecialCharacter']) {
-              <span class="error">Password must contain at least one special character.</span>
-              }@else if (userRegistrationForm.get('password')?.errors?.['minlength']) {
-              <span class="error">Password must be at least 8 characters long.<br></span>
-              }
-
-            </span>
+            <div class="password-field">
+              <span style="color: red;" *ngIf=" getControl('password')?.invalid &&getControl('password')?.touched">
+                @if (getControl('password')?.errors?.['required']) {
+                <span class="error">Password is required.<br></span>
+                }@else if (getControl('password')?.errors?.['hasUpperCase']) {
+                <span class="error">Password must contain at least one uppercase letter.<br></span>
+                }@else if (getControl('password')?.errors?.['hasNumber']) {
+                <span class="error">Password must contain at least one number.<br></span>
+                }@else if (getControl('password')?.errors?.['hasLowerCase']) {
+                <span class="error">Password must contain at least one lowercase letter.<br></span>
+                }@else if (getControl('password')?.errors?.['hasSpecialCharacter']) {
+                <span class="error">Password must contain at least one special character.</span>
+                }@else if (getControl('password')?.errors?.['minlength']) {
+                <span class="error">Password must be at least 8 characters long.<br></span>
+                }
+              </span>
+  
+              
+                <span class="hint-icon">
+                  <i class="fa fa-question-circle"></i>
+                  <span class="tooltip-text">
+                    <ul>
+                      <li>Password must contain at least one uppercase letter.</li>
+                      <li>Password must contain at least one number.</li>
+                      <li>Password must contain at least one lowercase letter.</li>
+                      <li>Password must contain at least one special character.</li>
+                      <li>Password must be at least 8 characters long.</li>
+                    </ul>
+                  </span>
+                </span>
+              </div>
 
             <div class="passwordShow">
               <input [type]="passwordFieldType" class=""

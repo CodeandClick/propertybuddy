@@ -4,7 +4,6 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ltn__breadcrumb-inner">
-                    <h1 class="page-title">Account</h1>
                     <div class="ltn__breadcrumb-list">
                         <ul>
                             <li><a [routerLink]="['../login']"><span class="ltn__secondary-color"><i
@@ -32,16 +31,26 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="account-login-inner">
-                    <form action="#" class="ltn__form-box contact-form-box">
-                        <input type="text" name="email" placeholder="Email*">
-                        <input type="password" name="password" placeholder="Password*">
+                    <form [formGroup]="loginForm" class="ltn__form-box contact-form-box">
+                        <input type="text" name="email" placeholder="Email*" formControlName="email">
+                        <!-- <input type="password" name="password" placeholder="Password*" formControlName="password"> -->
+
+                        <div class="passwordShow">
+                            <input [type]="passwordFieldType" 
+                              [class.error-input]="getControl('password')?.invalid && getControl('password')?.touched"
+                              [class.success-input]="getControl('password')?.valid && getControl('password')?.touched"
+                              formControlName="password" name="password" placeholder="Password*"  />
+                            <i [class]="passwordFieldType == 'password' ? 'fas fa-eye-slash' : 'fas fa-eye'"
+                              (click)="togglePasswordVisibility()"></i>
+                        </div>
+
                         <div class="btn-wrapper mt-0">
-                            <a [routerLink]="'/user'">
-                                <button class="theme-btn-1 btn btn-block">SIGN IN</button>
+                            <a>
+                                <button class="theme-btn-1 btn btn-block" (click)="onSubmit()">SIGN IN</button>
                             </a>
                         </div>
                         <div class="go-to-btn mt-20">
-                            <a href="#" title="Forgot Password?" data-bs-toggle="modal"
+                            <a  title="Forgot Password?" data-bs-toggle="modal"
                                 data-bs-target="#ltn_forget_password_modal"><small>FORGOTTEN YOUR PASSWORD?</small></a>
                         </div>
                     </form>
@@ -78,47 +87,7 @@
 
 
 <!-- OVERLAY FOR CREATE ACCTOUNT START -->
-<div class="overlay" *ngIf="isOverlayVisible" (click)="hideOverlay($event)">
-    <div class="icon-container" (click)="$event.stopPropagation()">
-        <div class="ltn__feature-area section-bg-1 pt-120 pb-90 mb-120---">
-            <div class="container">
-                <div class="row ltn__custom-gutter--- justify-content-center ">
-                    <div class="col-lg-4 col-sm-6 col-12">
-                        <div class="ltn__feature-item ltn__feature-item-6 text-center bg-white  box-shadow-1">
-                            <div class="ltn__feature-icon">
-                                <span><i class="flaticon-house-3"></i></span>
-                                <img src="img/icons/icon-img/22.png" alt="#">
-                            </div>
-                            <div class="ltn__feature-info">
-                                <h3><a href="service-details.html">User</a></h3>
-                                <p>over 1 million+ homes for sale available on the website, we can match you with a
-                                    house you will want to call home.</p>
-                                <a class="ltn__service-btn" [routerLink]="['../userregistration']">Register Now <i
-                                        class="flaticon-right-arrow"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
-                        <div class="ltn__feature-item ltn__feature-item-6 text-center bg-white  box-shadow-1">
-                            <div class="ltn__feature-icon">
-                                <span><i class="flaticon-deal-1"></i></span>
-                                <img src="img/icons/icon-img/23.png" alt="#">
-                            </div>
-                            <div class="ltn__feature-info">
-                                <h3><a href="service-details.html">Agent</a></h3>
-                                <p>over 1 million+ homes for sale available on the website, we can match you with a
-                                    house you will want to call home.</p>
-                                <a class="ltn__service-btn" [routerLink]="['../agentregistration']">Register Now <i
-                                        class="flaticon-right-arrow"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+<app-role-select *ngIf="isOverlayVisible"  (closeOverlayEvent)="closeOverlay($event)"></app-role-select>
 <!-- OVERLAY END -->
 
 

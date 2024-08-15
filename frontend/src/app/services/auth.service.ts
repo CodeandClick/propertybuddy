@@ -12,13 +12,22 @@ export class AuthService {
   private url = 'http://localhost:4000';
   constructor(private http: HttpClient, private router: Router) {}
 
+  login( data : any ){
+    console.log(data)
+    this.http.post(this.url + '/user/login' , data).subscribe(res =>{
+      if(res){
+        alert('hi');
+      }
+    })
+  }
+
   sendOtp(email: string) {
     return this.http.post(this.url + '/user/verifyMail', {
       email,
       role: 'user',
     });
-  }
 
+  }
   validateOtp(otp: string, email: string) {
     return this.http.post(this.url + '/user/verifyOtp', { otp, email });
   }
@@ -48,7 +57,8 @@ export class AuthService {
       (res) => {
         if (res) {
           alert('sucess');
-          this.router.navigate(['auth/master/login']);
+          localStorage.setItem("role",user.role)
+          this.router.navigate(['user']);
         }
       },
       (error) => {
@@ -65,7 +75,7 @@ export class AuthService {
           localStorage.setItem('access-token', res.accessToken);
           localStorage.setItem('refresh-token', res.refreshToken);
           alert('success');
-          this.router.navigate(['auth/master/agentlocationregistration']);
+          this.router.navigate(['agent']);
         } else {
           alert('error');
         }
