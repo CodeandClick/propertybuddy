@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CallToActionComponent } from "../call-to-action/call-to-action.component";
+import { CallToActionComponent } from "../components/call-to-action/call-to-action.component";
 
 @Component({
   selector: 'app-wishlist',

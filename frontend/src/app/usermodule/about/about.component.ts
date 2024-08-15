@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { CallToActionComponent } from "../call-to-action/call-to-action.component";
+import { CallToActionComponent } from "../components/call-to-action/call-to-action.component";
+import { BreadcrumbComponent } from "../components/breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [ CallToActionComponent],
+  imports: [CallToActionComponent, BreadcrumbComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })

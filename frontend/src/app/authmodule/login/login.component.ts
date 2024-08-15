@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CallToActionComponent } from "../../usermodule/call-to-action/call-to-action.component";
+import { CallToActionComponent } from "../../usermodule/components/call-to-action/call-to-action.component";
 import { ForgotpasswordComponent } from "../forgotpassword/forgotpassword.component";
 import { RoleSelectComponent } from "../components/role-select/role-select.component";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';

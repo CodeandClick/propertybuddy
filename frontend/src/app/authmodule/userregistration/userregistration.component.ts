@@ -21,7 +21,7 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { CallToActionComponent } from '../../usermodule/call-to-action/call-to-action.component';
+import { CallToActionComponent } from '../../usermodule/components/call-to-action/call-to-action.component';
 import { OtpmodalComponent } from '../otpmodal/otpmodal.component';
 
 @Component({

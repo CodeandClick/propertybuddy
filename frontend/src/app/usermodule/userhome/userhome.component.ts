@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PremiumComponent } from "../premium/premium.component";
 import { CommonModule } from '@angular/common';
-import { CallToActionComponent } from "../call-to-action/call-to-action.component";
+import { CallToActionComponent } from "../components/call-to-action/call-to-action.component";
 import { HeaderComponent } from '../components/header/header.component';
 
 @Component({

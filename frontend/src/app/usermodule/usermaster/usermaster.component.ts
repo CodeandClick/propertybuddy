@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { PremiumComponent } from "../premium/premium.component";
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from "../components/footer/footer.component";
+import { HeaderSecondaryComponent } from "../components/header-secondary/header-secondary.component";
 
 @Component({
   selector: 'app-usermaster',
@@ -10,7 +12,9 @@ import { CommonModule } from '@angular/common';
     RouterLink,
     RouterOutlet,
     PremiumComponent,
-    CommonModule
+    CommonModule,
+    FooterComponent,
+    HeaderSecondaryComponent
 ],
   templateUrl: './usermaster.component.html',
   styleUrls: ['./usermaster.component.css'],
