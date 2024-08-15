@@ -6,23 +6,22 @@ import AdminUser from "../comonents/Pages/adminUsers/AdminUser";
 import AdminAgent from "../comonents/Pages/adminAgent/AdminAgent";
 import AdminProperty from "../comonents/Pages/adminProperty/AdminProperty";
 import AdminOrder from "../comonents/Pages/adminOrder/AdminOrder";
+import Protectedroute from "./Secureroutes";
 
 function Layoutroutes() {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route>
-            <Route path="/" element={<Adminlogin />} />
-            <Route path="/admin/home" element={<AdminHome />} />
-            <Route path="/admin/user" element={<AdminUser />} />
-            <Route path="/admin/agent" element={<AdminAgent />} />
-            <Route path="/admin/property" element={<AdminProperty />} />
-            <Route path="/admin/order" element={<AdminOrder />} />
-          </Route>
-        </Routes>
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Adminlogin />} />
+        <Route element={<Protectedroute />}>
+          <Route path="/admin/home" element={<AdminHome />} />
+          <Route path="/admin/user" element={<AdminUser />} />
+          <Route path="/admin/agent" element={<AdminAgent />} />
+          <Route path="/admin/property" element={<AdminProperty />} />
+          <Route path="/admin/order" element={<AdminOrder />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
